@@ -1,2 +1,3 @@
 # lein-nvd-scan
-National Vulnerabilities Database dependency-checker plugin for Leiningen
+
+[National Vulnerability Database](https://nvd.nist.gov/) dependency-checker plugin for Leiningen.
