@@ -1,11 +1,11 @@
-# lein-nvd-scan
+# lein-nvd
 [![Build Status](https://travis-ci.org/rm-hull/lein-nvd-scan.svg?branch=master)](http://travis-ci.org/rm-hull/lein-nvd-scan) [![Coverage Status](https://coveralls.io/repos/rm-hull/lein-nvd-scan/badge.svg?branch=master)](https://coveralls.io/r/rm-hull/lein-nvd-scan?branch=master) [![Dependencies Status](https://jarkeeper.com/rm-hull/lein-nvd-scan/status.svg)](https://jarkeeper.com/rm-hull/lein-nvd-scan) [![Downloads](https://jarkeeper.com/rm-hull/lein-nvd-scan/downloads.svg)](https://jarkeeper.com/rm-hull/lein-nvd-scan) [![Clojars Project](https://img.shields.io/clojars/v/rm-hull/lein-nvd-scan.svg)](https://clojars.org/rm-hull/lein-nvd-scan)
 
 [National Vulnerability Database](https://nvd.nist.gov/) dependency-checker plugin for Leiningen.
 
 ### Installation
 
-Put `[lein-nvd-scan "0.1.0"]` into the `:plugins` vector of your `:user` profile.
+Put `[lein-nvd "0.1.0"]` into the `:plugins` vector of your `:user` profile.
 
 ## Usage
 
