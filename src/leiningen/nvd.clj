@@ -34,34 +34,61 @@
 ; this way, all SLF4J messages from core end up coming through this tasks logger
 ;(.setTask (StaticLoggerBinder/getSingleton) this)
 
+(def ^:private string-mappings {
+  Settings$KEYS/ANALYZER_NEXUS_URL [:analyzer :nexus-url]
+  Settings$KEYS/ANALYZER_ASSEMBLY_MONO_PATH [:analyzer :path-to-mono]
+  Settings$KEYS/SUPPRESSION_FILE [:suppression-file]
+  Settings$KEYS/ADDITIONAL_ZIP_EXTENSIONS [:zip-extensions]
+  Settings$KEYS/PROXY_SERVER [:proxy :server]
+  Settings$KEYS/PROXY_PORT [:proxy :port]
+  Settings$KEYS/PROXY_USERNAME [:proxy :user]
+  Settings$KEYS/PROXY_PASSWORD [:proxy :password]
+  Settings$KEYS/CONNECTION_TIMEOUT [:database :connection-timeout]
+  Settings$KEYS/DB_DRIVER_NAME [:database :driver-name]
+  Settings$KEYS/DB_DRIVER_PATH [:database :driver-path]
+  Settings$KEYS/DB_CONNECTION_STRING [:database :connection-string]
+  Settings$KEYS/DB_USER [:database :user]
+  Settings$KEYS/DB_PASSWORD [:database :password]
+  Settings$KEYS/CVE_MODIFIED_12_URL [:cve :url-1.2-modified]
+  Settings$KEYS/CVE_MODIFIED_20_URL[:cve :url-2.0-modified]
+  Settings$KEYS/CVE_SCHEMA_1_2 [:cve :url-1.2-base]
+  Settings$KEYS/CVE_SCHEMA_2_0 [:cve :url-2.0-base]})
+
+(def ^:private boolean-mappings {
+  Settings$KEYS/AUTO_UPDATE [:auto-update]
+  Settings$KEYS/ANALYZER_EXPERIMENTAL_ENABLED [:analyzer :experimental-enabled]
+  Settings$KEYS/ANALYZER_JAR_ENABLED [:analyzer :jar-enabled]
+  Settings$KEYS/ANALYZER_PYTHON_DISTRIBUTION_ENABLED [:analyzer :python-distribution-enabled]
+  Settings$KEYS/ANALYZER_PYTHON_PACKAGE_ENABLED [:analyzer :python-package-enabled]
+  Settings$KEYS/ANALYZER_RUBY_GEMSPEC_ENABLED [:analyzer :ruby-gemspec-enabled]
+  Settings$KEYS/ANALYZER_OPENSSL_ENABLED [:analyzer :openssl-enabled]
+  Settings$KEYS/ANALYZER_CMAKE_ENABLED [:analyzer :cmake-enabled]
+  Settings$KEYS/ANALYZER_AUTOCONF_ENABLED [:analyzer :autoconf-enabled]
+  Settings$KEYS/ANALYZER_COMPOSER_LOCK_ENABLED [:analyzer :composer-lock-enabled]
+  Settings$KEYS/ANALYZER_NODE_PACKAGE_ENABLED [:analyzer :node-package-enabled]
+  Settings$KEYS/ANALYZER_NUSPEC_ENABLED [:analyzer :nuspec-enabled]
+  Settings$KEYS/ANALYZER_CENTRAL_ENABLED [:analyzer :central-enabled]
+  Settings$KEYS/ANALYZER_NEXUS_ENABLED [:analyzer :nexus-enabled]
+  Settings$KEYS/ANALYZER_ARCHIVE_ENABLED [:analyzer :archive-enabled]
+  Settings$KEYS/ANALYZER_ASSEMBLY_ENABLED [:analyzer :assembly-enabled]
+  Settings$KEYS/ANALYZER_NEXUS_USES_PROXY [:analyzer :nexus-uses-proxy]
+  })
+
+
 (defn- populate-settings! [settings]
-  (let [mappings {
-          Settings$KEYS/PROXY_SERVER [:proxy :server]
-          Settings$KEYS/PROXY_PORT [:proxy :port]
-          Settings$KEYS/PROXY_USERNAME [:proxy :user]
-          Settings$KEYS/PROXY_PASSWORD [:proxy :password]
-          Settings$KEYS/CONNECTION_TIMEOUT [:database :connection-timeout]
-          Settings$KEYS/DB_DRIVER_NAME [:database :driver-name]
-          Settings$KEYS/DB_DRIVER_PATH [:database :driver-path]
-          Settings$KEYS/DB_CONNECTION_STRING [:database :connection-string]
-          Settings$KEYS/DB_USER [:database :user]
-          Settings$KEYS/DB_PASSWORD [:database :password]
-          Settings$KEYS/CVE_MODIFIED_12_URL [:cve :url-1.2-modified]
-          Settings$KEYS/CVE_MODIFIED_20_URL[:cve :url-2.0-modified]
-          Settings$KEYS/CVE_SCHEMA_1_2 [:cve :url-1.2-base]
-          Settings$KEYS/CVE_SCHEMA_2_0 [:cve :url-2.0-base]}]
-    (Settings/initialize)
-    (when-let [cve-valid-for-hours (get-in settings [:cve :valid-for-hours])]
-      (Settings/setInt Settings$KEYS/CVE_CHECK_VALID_FOR_HOURS cve-valid-for-hours))
-    (if-let [data-directory (get-in settings [:data-directory])]
-      (Settings/setString Settings$KEYS/DATA_DIRECTORY data-directory)
-      (Settings/setString Settings$KEYS/DATA_DIRECTORY (str (System/getProperty "user.home") "/.lein/.nvd")))
-    (doseq [[prop path] mappings]
-      (Settings/setStringIfNotEmpty prop (str (get-in settings path))))))
+  (Settings/initialize)
+  (when-let [cve-valid-for-hours (get-in settings [:cve :valid-for-hours])]
+    (Settings/setInt Settings$KEYS/CVE_CHECK_VALID_FOR_HOURS cve-valid-for-hours))
+  (if-let [data-directory (get-in settings [:data-directory])]
+    (Settings/setString Settings$KEYS/DATA_DIRECTORY data-directory)
+    (Settings/setString Settings$KEYS/DATA_DIRECTORY (str (System/getProperty "user.home") "/.lein/.nvd")))
+  (doseq [[prop path] boolean-mappings]
+    (Settings/setBooleanIfNotNull prop (get-in settings path)))
+  (doseq [[prop path] string-mappings]
+    (Settings/setStringIfNotEmpty prop (str (get-in settings path)))))
 
 (defn- create-engine []
   (Engine. (.getClassLoader (class populate-settings!))))
-
 
 (defn update-database!
   "Download the latest data from the National Vulnerability Database
