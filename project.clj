@@ -24,8 +24,4 @@
         [lein-cloverage "1.0.6"]]}}
   :eval-in-leiningen true
   :nvd {
-    :proxy {
-      :server "bargle"
-      :port 9090
-    }
   })
