@@ -26,7 +26,7 @@
     [leiningen.run :as run]
     [leiningen.core.main :as main])
   (:import
-;    [org.slf4j.impl StaticLoggerBinder]
+    [org.slf4j.impl StaticLoggerBinder]
     [org.owasp.dependencycheck Engine]
     [org.owasp.dependencycheck.utils Settings Settings$KEYS]))
 
