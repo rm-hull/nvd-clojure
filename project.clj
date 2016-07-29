@@ -1,6 +1,6 @@
 (defproject rm-hull/lein-nvd "0.1.0"
   :description "National Vulnerability Database [https://nvd.nist.gov/] dependency-checker plugin for Leiningen."
-  :url "https://github.com/rm-hull/lein-nvd-scan"
+  :url "https://github.com/rm-hull/lein-nvd"
   :license {
     :name "The MIT License (MIT)"
     :url "http://opensource.org/licenses/MIT"}
