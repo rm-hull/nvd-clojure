@@ -97,7 +97,7 @@
       (Settings/setStringIfNotEmpty prop (str (get-in plugin-settings path))))))
 
 (defn- ^Engine create-engine []
-  (Engine. (.getClassLoader (class populate-settings!))))
+  (Engine.))
 
 (defn update-database!
   "Download the latest data from the National Vulnerability Database

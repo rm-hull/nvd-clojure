@@ -1,0 +1,24 @@
+<configuration>
+
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%d{HH:mm:ss.SSS} %-5level - %msg%n</pattern>
+    </encoder>
+  </appender>
+
+
+  <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+    <file>target/nvd.log</file>
+    <encoder>
+      <pattern>%date %-5level [%thread] %logger [%file:%line] %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <logger level="info">
+    <appender-ref ref="STDOUT" />
+  </logger>
+
+  <root level="debug">
+    <appender-ref ref="FILE" />
+  </root>
+</configuration>
