@@ -20,4 +20,11 @@
       :global-vars {*warn-on-reflection* true}
       :plugins [
         [lein-codox "0.9.5"]
-        [lein-cloverage "1.0.6"]]}})
+        [lein-cloverage "1.0.6"]]}}
+  :eval-in-leiningen true
+  :nvd {
+    :proxy {
+      :server "bargle"
+      :port 9090
+    }
+  })
