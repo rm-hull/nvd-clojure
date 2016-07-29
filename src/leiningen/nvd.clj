@@ -24,10 +24,13 @@
   (:require
     [clojure.java.io :as io]
     [leiningen.run :as run]
-    [leiningen.core.main :as main])
+    [leiningen.core.main :as main]
+    [leiningen.core.classpath :refer [get-classpath]])
   (:import
     [org.slf4j.impl StaticLoggerBinder]
     [org.owasp.dependencycheck Engine]
+    [org.owasp.dependencycheck.data.nvdcve CveDB DatabaseException DatabaseProperties]
+    [org.owasp.dependencycheck.reporting ReportGenerator]
     [org.owasp.dependencycheck.utils Settings Settings$KEYS]))
 
 ; Call this before Dependency Check Core starts logging anything -
@@ -73,6 +76,12 @@
   Settings$KEYS/ANALYZER_ASSEMBLY_ENABLED [:analyzer :assembly-enabled]
   Settings$KEYS/ANALYZER_NEXUS_USES_PROXY [:analyzer :nexus-uses-proxy]})
 
+(defn- app-name [project]
+  (let [name (:name project)
+        group (:group project)]
+    (if (not= group name)
+      (str group "/" name)
+      (:name project))))
 
 (defn- populate-settings! [project]
   (Settings/initialize)
@@ -94,30 +103,63 @@
   "Download the latest data from the National Vulnerability Database
   (NVD) and store a copy in the local database."
 
-  []
+  [project & args]
   (let [engine (create-engine)]
-    (.doUpdates engine)))
+    (try
+      (.doUpdates engine)
+      (finally
+        (.cleanup engine)))))
 
 (defn purge-database!
-  []
+  [project & args]
   (let [db (io/file (Settings/getDataDirectory) "dc.h2.db")]
     (when (.exists db)
       (.delete db)
       (main/info "Database file purged; local copy of the NVD has been removed"))))
 
+(defn- scan-and-analyze [^Engine engine project]
+  (doseq [p (get-classpath project)]
+    (.scan engine (str p)))
+  (.analyzeDependencies engine))
+
+(defn- ^DatabaseProperties db-props []
+  (let [cve (CveDB.)]
+    (try
+      (.open cve)
+      (.getDatabaseProperties cve)
+      (finally
+        (.close cve)))))
+
+(defn- generate-report [^Engine engine project]
+  (let [app-name (str (app-name project) " " (:version project))
+        output-dir (get-in project [:nvd :output-dir] "target/nvd")
+        output-fmt (get-in project [:nvd :output-format] "ALL")
+        deps (.getDependencies engine)
+        analyzers (.getAnalyzers engine)
+        db-props (db-props)
+        r (ReportGenerator. app-name deps analyzers db-props)]
+    (.generateReports r output-dir output-fmt)))
+
 (defn check
-  ; TODO
-  [])
+  [project & args]
+  (let [engine (create-engine)]
+    (try
+      (scan-and-analyze engine project)
+      (generate-report engine project)
+      (finally
+        (.cleanup engine)))))
 
 (defn nvd
   "Scan project dependencies and report known vulnerabilities."
   [project & args]
   (populate-settings! project)
   (try
-    (condp = (first args)
-      "check" (check)
-      "purge" (purge-database!)
-      "update" (update-database!)
-      (main/warn "No such subtask:" (first args)))
+    (let [subtask (first args)
+          run #(apply % project (rest args))]
+      (case subtask
+        "check" (run check)
+        "purge" (run purge-database!)
+        "update" (run update-database!)
+        (main/abort "No such subtask:" subtask)))
     (finally
       (Settings/cleanup true))))
