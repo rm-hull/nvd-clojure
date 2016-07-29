@@ -5,7 +5,8 @@
     :name "The MIT License (MIT)"
     :url "http://opensource.org/licenses/MIT"}
   :dependencies [
-    [org.clojure/clojure "1.8.0"]]
+    [org.clojure/clojure "1.8.0"]
+    [org.owasp/dependency-check-core "1.4.0"]]
   :scm {:url "git@github.com:rm-hull/lein-nvd-scan.git"}
   :source-paths ["src"]
   :jar-exclusions [#"(?:^|/).git"]
