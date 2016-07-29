@@ -59,7 +59,7 @@
 
 (def ^:private boolean-mappings {
   Settings$KEYS/AUTO_UPDATE [:auto-update]
-  Settings$KEYS/ANALYZER_EXPERIMENTAL_ENABLED [:analyzer :experimental-enabled]
+;  Settings$KEYS/ANALYZER_EXPERIMENTAL_ENABLED [:analyzer :experimental-enabled]
   Settings$KEYS/ANALYZER_JAR_ENABLED [:analyzer :jar-enabled]
   Settings$KEYS/ANALYZER_PYTHON_DISTRIBUTION_ENABLED [:analyzer :python-distribution-enabled]
   Settings$KEYS/ANALYZER_PYTHON_PACKAGE_ENABLED [:analyzer :python-package-enabled]
