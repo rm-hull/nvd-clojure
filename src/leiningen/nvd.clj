@@ -71,21 +71,21 @@
   Settings$KEYS/ANALYZER_NEXUS_ENABLED [:analyzer :nexus-enabled]
   Settings$KEYS/ANALYZER_ARCHIVE_ENABLED [:analyzer :archive-enabled]
   Settings$KEYS/ANALYZER_ASSEMBLY_ENABLED [:analyzer :assembly-enabled]
-  Settings$KEYS/ANALYZER_NEXUS_USES_PROXY [:analyzer :nexus-uses-proxy]
-  })
+  Settings$KEYS/ANALYZER_NEXUS_USES_PROXY [:analyzer :nexus-uses-proxy]})
 
 
-(defn- populate-settings! [settings]
+(defn- populate-settings! [project]
   (Settings/initialize)
-  (when-let [cve-valid-for-hours (get-in settings [:cve :valid-for-hours])]
-    (Settings/setInt Settings$KEYS/CVE_CHECK_VALID_FOR_HOURS cve-valid-for-hours))
-  (if-let [data-directory (get-in settings [:data-directory])]
-    (Settings/setString Settings$KEYS/DATA_DIRECTORY data-directory)
-    (Settings/setString Settings$KEYS/DATA_DIRECTORY (str (System/getProperty "user.home") "/.lein/.nvd")))
-  (doseq [[prop path] boolean-mappings]
-    (Settings/setBooleanIfNotNull prop (get-in settings path)))
-  (doseq [[prop path] string-mappings]
-    (Settings/setStringIfNotEmpty prop (str (get-in settings path)))))
+  (let [plugin-settings (:nvd project)]
+    (when-let [cve-valid-for-hours (get-in plugin-settings [:cve :valid-for-hours])]
+      (Settings/setInt Settings$KEYS/CVE_CHECK_VALID_FOR_HOURS cve-valid-for-hours))
+    (if-let [data-directory (get-in plugin-settings [:data-directory])]
+      (Settings/setString Settings$KEYS/DATA_DIRECTORY data-directory)
+      (Settings/setString Settings$KEYS/DATA_DIRECTORY (str (System/getProperty "user.home") "/.lein/.nvd")))
+    (doseq [[prop path] boolean-mappings]
+      (Settings/setBooleanIfNotNull prop (get-in plugin-settings path)))
+    (doseq [[prop path] string-mappings]
+      (Settings/setStringIfNotEmpty prop (str (get-in plugin-settings path))))))
 
 (defn- create-engine []
   (Engine. (.getClassLoader (class populate-settings!))))
@@ -112,7 +112,7 @@
 (defn nvd
   "Scan project dependencies and report known vulnerabilities."
   [project & args]
-  (populate-settings! (:nvd project))
+  (populate-settings! project)
   (try
     (condp = (first args)
       "check" (check)
