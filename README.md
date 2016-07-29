@@ -3,12 +3,13 @@
 
 [National Vulnerability Database](https://nvd.nist.gov/) dependency-checker plugin for Leiningen.
 
-### Pre-requisites
+### Installation
 
-You will need [Leiningen](https://github.com/technomancy/leiningen) 2.6.1 or above installed.
+Put `[lein-nvd-scan "0.1.0"]` into the `:plugins` vector of your `:user` profile.
 
 ## Usage
-> TODO
+
+Run `lein nvd check` in your project.
 
 ## References
 
