@@ -87,7 +87,7 @@
     (doseq [[prop path] string-mappings]
       (Settings/setStringIfNotEmpty prop (str (get-in plugin-settings path))))))
 
-(defn- create-engine []
+(defn- ^Engine create-engine []
   (Engine. (.getClassLoader (class populate-settings!))))
 
 (defn update-database!
