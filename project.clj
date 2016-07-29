@@ -27,6 +27,6 @@
       :plugins [
         [lein-codox "0.9.5"]
         [lein-cloverage "1.0.6"]]}}
- ; :eval-in-leiningen true
+  :eval-in-leiningen true
   :nvd {
   })
