@@ -79,9 +79,9 @@
 (defn- app-name [project]
   (let [name (:name project)
         group (:group project)]
-    (if (not= group name)
-      (str group "/" name)
-      (:name project))))
+    (if (= group name)
+      (:name project)
+      (str group "/" name))))
 
 (defn- populate-settings! [project]
   (Settings/initialize)
