@@ -6,7 +6,7 @@
     :url "http://opensource.org/licenses/MIT"}
   :dependencies [
     [org.clojure/clojure "1.8.0"]
-    [org.owasp/dependency-check-core "1.4.0"]
+    [org.owasp/dependency-check-core "1.4.1"]
     [ch.qos.logback/logback-classic "1.1.7"]
     [jansi-clj "0.1.0"]]
   :scm {:url "git@github.com:rm-hull/lein-nvd.git"}
