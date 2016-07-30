@@ -77,11 +77,11 @@
   Settings$KEYS/ANALYZER_ASSEMBLY_ENABLED [:analyzer :assembly-enabled]
   Settings$KEYS/ANALYZER_NEXUS_USES_PROXY [:analyzer :nexus-uses-proxy]})
 
-(defn- app-name [project]
-  (let [name (:name project)
-        group (:group project)]
+(defn app-name [project]
+  (let [name (get project :name "unknown")
+        group (get project :group name)]
     (if (= group name)
-      (:name project)
+      name
       (str group "/" name))))
 
 (defn- populate-settings! [project]
