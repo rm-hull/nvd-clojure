@@ -6,19 +6,7 @@
     </encoder>
   </appender>
 
-
-  <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-    <file>target/nvd.log</file>
-    <encoder>
-      <pattern>%date %-5level [%thread] %logger [%file:%line] %msg%n</pattern>
-    </encoder>
-  </appender>
-
-  <logger level="info">
-    <appender-ref ref="STDOUT" />
-  </logger>
-
   <root level="debug">
-    <appender-ref ref="FILE" />
+    <appender-ref ref="STDOUT" />
   </root>
 </configuration>
