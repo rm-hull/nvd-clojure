@@ -22,7 +22,6 @@
 
 (ns leiningen.nvd
   (:require
-    [clojure.string :as s]
     [clojure.java.io :as io]
     [leiningen.run :as run]
     [leiningen.core.main :as main]
@@ -120,7 +119,7 @@
 
 (defn- scan-and-analyze [^Engine engine project]
   (doseq [p (get-classpath project)]
-    (when (s/ends-with? p ".jar")
+    (when (.endsWith p ".jar")
       (.scan engine (str p))))
   (.analyzeDependencies engine))
 
