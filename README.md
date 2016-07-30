@@ -1,5 +1,5 @@
 # lein-nvd
-[![Build Status](https://travis-ci.org/rm-hull/lein-nvd.svg?branch=master)](http://travis-ci.org/rm-hull/lein-nvd) [![Coverage Status](https://coveralls.io/repos/rm-hull/lein-nvd/badge.svg?branch=master)](https://coveralls.io/r/rm-hull/lein-nvd?branch=master) [![Dependencies Status](https://jarkeeper.com/rm-hull/lein-nvd/status.svg)](https://jarkeeper.com/rm-hull/lein-nvd) [![Downloads](https://jarkeeper.com/rm-hull/lein-nvd/downloads.svg)](https://jarkeeper.com/rm-hull/lein-nvd) [![Clojars Project](https://img.shields.io/clojars/v/rm-hull/lein-nvd.svg)](https://clojars.org/rm-hull/lein-nvd)
+[![Build Status](https://travis-ci.org/rm-hull/lein-nvd.svg?branch=master)](http://travis-ci.org/rm-hull/lein-nvd) [![Coverage Status](https://coveralls.io/repos/rm-hull/lein-nvd/badge.svg?branch=master)](https://coveralls.io/r/rm-hull/lein-nvd?branch=master) [![Dependencies Status](https://jarkeeper.com/rm-hull/lein-nvd/status.svg)](https://jarkeeper.com/rm-hull/lein-nvd) [![Downloads](https://jarkeeper.com/rm-hull/lein-nvd/downloads.svg)](https://jarkeeper.com/rm-hull/lein-nvd) [![Clojars Project](https://img.shields.io/clojars/v/lein-nvd.svg)](https://clojars.org/lein-nvd)
 
 [National Vulnerability Database](https://nvd.nist.gov/) dependency-checker plugin for Leiningen.
 
