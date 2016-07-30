@@ -11,7 +11,7 @@ Put `[lein-nvd "0.1.0"]` into the `:plugins` vector of your `:user` profile.
 
 ## Usage
 
-Run `lein nvd check` in your project. The first time the plugin rules, it
+Run `lein nvd check` in your project. The first time the plugin runs, it
 will download (and cache) various databases from https://nvd.nist.gov and
 periodically check and update them on subsequent runs. A suite of reports
 will be produced in the project's **target/nvd** directory.
