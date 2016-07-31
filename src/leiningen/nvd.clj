@@ -28,7 +28,8 @@
     [leiningen.core.classpath :refer [get-classpath]])
   (:import
     [org.owasp.dependencycheck Engine]
-    [org.owasp.dependencycheck.data.nvdcve CveDB DatabaseException DatabaseProperties]
+    [org.owasp.dependencycheck.data.nvdcve CveDB DatabaseProperties]
+    [org.owasp.dependencycheck.exception ExceptionCollection]
     [org.owasp.dependencycheck.reporting ReportGenerator]
     [org.owasp.dependencycheck.utils Settings Settings$KEYS]))
 
@@ -149,13 +150,16 @@
   "Scan project dependencies and report known vulnerabilities."
   [project & args]
   (populate-settings! project)
-  (try
-    (let [subtask (first args)
-          run #(apply % project (rest args))]
+  (let [subtask (first args)
+        run #(apply % project (rest args))]
+    (try
       (case subtask
         "check" (run check)
         "purge" (run purge-database!)
         "update" (run update-database!)
-        (main/abort "No such subtask:" subtask)))
+        (main/abort "No such subtask:" subtask))
+    (catch ExceptionCollection e
+      (.printStackTrace e)
+      (main/abort subtask "aborted"))
     (finally
-      (Settings/cleanup true))))
+      (Settings/cleanup true)))))
