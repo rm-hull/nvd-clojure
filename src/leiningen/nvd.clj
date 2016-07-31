@@ -27,15 +27,10 @@
     [leiningen.core.main :as main]
     [leiningen.core.classpath :refer [get-classpath]])
   (:import
-    [org.slf4j.impl StaticLoggerBinder]
     [org.owasp.dependencycheck Engine]
     [org.owasp.dependencycheck.data.nvdcve CveDB DatabaseException DatabaseProperties]
     [org.owasp.dependencycheck.reporting ReportGenerator]
     [org.owasp.dependencycheck.utils Settings Settings$KEYS]))
-
-; Call this before Dependency Check Core starts logging anything -
-; this way, all SLF4J messages from core end up coming through this tasks logger
-;(.setTask (StaticLoggerBinder/getSingleton) this)
 
 (def ^:private string-mappings {
   Settings$KEYS/ANALYZER_NEXUS_URL [:analyzer :nexus-url]
