@@ -120,8 +120,7 @@
         db-props (db-props)
         r (ReportGenerator. app-name deps analyzers db-props)]
     (.generateReports r output-dir output-fmt)
-    (clojure.pprint/pprint r)
-    ))
+    (clojure.pprint/pprint r)))
 
 (defn- read-opts [config-file]
   (json/read-str
@@ -130,8 +129,8 @@
 
 (defn- vulnerabilities [engine]
   (apply concat
-    (for [dep (.getDependencies engine)]
-      (set (.getVulnerabilities dep)))))
+         (for [dep (.getDependencies engine)]
+           (set (.getVulnerabilities dep)))))
 
 (defn update-database!
   "Download the latest data from the National Vulnerability Database
