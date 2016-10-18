@@ -141,8 +141,8 @@
 
 (defn read-opts [config-file]
   (json/read-str
-    (slurp config-file)
-    :key-fn keyword))
+   (slurp config-file)
+   :key-fn keyword))
 
 (defn check [config-file]
   (let [project (populate-settings! (read-opts config-file))

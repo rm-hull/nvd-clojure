@@ -22,12 +22,12 @@
 
 (ns leiningen.nvd
   (:require
-    [clojure.string :as s]
-    [clojure.data.json :as json]
-    [leiningen.core.main :as main]
-    [leiningen.core.eval :refer [eval-in-project]]
-    [leiningen.core.project :refer [merge-profiles]]
-    [leiningen.core.classpath :refer [get-classpath]]))
+   [clojure.string :as s]
+   [clojure.data.json :as json]
+   [leiningen.core.main :as main]
+   [leiningen.core.eval :refer [eval-in-project]]
+   [leiningen.core.project :refer [merge-profiles]]
+   [leiningen.core.classpath :refer [get-classpath]]))
 
 (defn get-lib-version []
   (or (System/getenv "CLOVERAGE_VERSION") "0.1.1-SNAPSHOT"))
