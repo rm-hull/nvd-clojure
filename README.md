@@ -41,7 +41,7 @@ as follows:
 
 ## Attribution
 
-_lein-nvd_ uses **Jeremy Long**'s [DependencyCheck](https://github.com/jeremylong/DependencyCheck) 
+_lein-nvd_ uses **Jeremy Long**'s [DependencyCheck](https://github.com/jeremylong/DependencyCheck)
 library to do the heavy lifting
 
 ## References
