@@ -22,9 +22,11 @@
 
 (ns nvd.core
   (:require
+   [clojure.set :refer [union]]
    [clojure.string :as s]
    [clojure.java.io :as io]
-   [clojure.data.json :as json])
+   [clojure.data.json :as json]
+   [clansi :refer [style]])
   (:import
    [org.owasp.dependencycheck Engine]
    [org.owasp.dependencycheck.data.nvdcve CveDB DatabaseProperties]
@@ -95,28 +97,6 @@
 (defn- ^Engine create-engine []
   (Engine.))
 
-(defn update-database!
-  "Download the latest data from the National Vulnerability Database
-  (NVD) and store a copy in the local database."
-
-  [project & opts]
-  (populate-settings! project)
-  (let [engine (create-engine)]
-    (try
-      (.doUpdates engine)
-      (finally
-        (.cleanup engine)
-        (Settings/cleanup true)))))
-
-(defn purge-database!
-  [project & opts]
-  (populate-settings! project)
-  (let [db (io/file (Settings/getDataDirectory) "dc.h2.db")]
-    (when (.exists db)
-      (.delete db)
-      (println "Database file purged; local copy of the NVD has been removed")
-      (Settings/cleanup true))))
-
 (defn- scan-and-analyze [^Engine engine project]
   (doseq [^String p (:classpath project)]
     (when (.endsWith p ".jar")
@@ -139,20 +119,54 @@
         analyzers (.getAnalyzers engine)
         db-props (db-props)
         r (ReportGenerator. app-name deps analyzers db-props)]
-    (.generateReports r output-dir output-fmt)))
+    (.generateReports r output-dir output-fmt)
+    (clojure.pprint/pprint r)
+    ))
 
-(defn read-opts [config-file]
+(defn- read-opts [config-file]
   (json/read-str
    (slurp config-file)
    :key-fn keyword))
 
-(defn check [config-file]
+(defn- vulnerabilities [engine]
+  (apply concat
+    (for [dep (.getDependencies engine)]
+      (set (.getVulnerabilities dep)))))
+
+(defn update-database!
+  "Download the latest data from the National Vulnerability Database
+  (NVD) and store a copy in the local database."
+
+  [config-file]
   (let [project (populate-settings! (read-opts config-file))
         engine (create-engine)]
     (try
-      (.deleteOnExit (java.io.File. config-file))
-      (scan-and-analyze engine project)
-      (generate-report engine project)
+      (.doUpdates engine)
       (finally
         (.cleanup engine)
         (Settings/cleanup true)))))
+
+(defn purge-database! [config-file]
+  (let [project (populate-settings! (read-opts config-file))
+        db (io/file (Settings/getDataDirectory) "dc.h2.db")]
+    (when (.exists db)
+      (.delete db)
+      (println "Database file purged; local copy of the NVD has been removed")
+      (Settings/cleanup true))))
+
+(defn check [config-file]
+  (let [project (populate-settings! (read-opts config-file))
+        engine (create-engine)
+        app-name (str (app-name project) " " (:version project))]
+    (try
+      (println "Checking dependencies for" (style app-name :bright :yellow) "...")
+      (.deleteOnExit (java.io.File. config-file))
+      (scan-and-analyze engine project)
+      (generate-report engine project)
+      (doseq [vuln (vulnerabilities engine)]
+        (println (style vuln :red :bright)))
+      (finally
+        (.cleanup engine)
+        (Settings/cleanup true)
+        (if (pos? (count (vulnerabilities engine)))
+          (System/exit -1))))))
