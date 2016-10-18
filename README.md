@@ -35,7 +35,14 @@ This can be demonstrated by running the following:
 This will create dependency-check reports (both HTML & XML) in **example/target/nvd**
 as follows:
 
+---
 ![report](https://raw.githubusercontent.com/rm-hull/lein-nvd/master/example/report.png)
+---
+
+## Attribution
+
+_lein-nvd_ uses **Jeremy Long**'s [DependencyCheck](https://github.com/jeremylong/DependencyCheck) 
+library to do the heavy lifting
 
 ## References
 
