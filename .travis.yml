@@ -1,8 +1,12 @@
 language: clojure
-lein: lein2
-script: 
-  - lein2 install
-  - lein2 with-profile +dev cloverage --coveralls
+lein: 2.7.1
+before_script:
+  - npm install -g eclint
+  - eclint check .* * src/** test/**
+  - lein install
+  - lein cljfmt check
+script:
+  - lein with-profile +dev cloverage --coveralls
   - curl -F 'json_file=@target/coverage/coveralls.json' 'https://coveralls.io/api/v1/jobs'
 jdk:
   - oraclejdk8

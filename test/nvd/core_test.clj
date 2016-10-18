@@ -20,10 +20,10 @@
 ;; OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 ;; SOFTWARE.
 
-(ns leiningen.nvd-test
+(ns nvd.core-test
   (:require
-    [clojure.test :refer :all]
-    [leiningen.nvd :refer :all]))
+   [clojure.test :refer :all]
+   [nvd.core :refer :all]))
 
 (deftest check-app-name
   (is (= "unknown" (app-name {:nome "hello-world" :version "0.0.1"})))
