@@ -11,4 +11,4 @@
   :profiles {
     :dev {
       :plugins [
-        [lein-nvd "0.1.1-SNAPSHOT"]]}})
+        [lein-nvd "0.2.0"]]}})

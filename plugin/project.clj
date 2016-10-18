@@ -1,4 +1,4 @@
-(defproject lein-nvd "0.1.1-SNAPSHOT"
+(defproject lein-nvd "0.2.0"
   :description "National Vulnerability Database [https://nvd.nist.gov/] dependency-checker leiningen plugin."
   :url "https://github.com/rm-hull/lein-nvd/plugin"
   :license {
@@ -12,7 +12,7 @@
     :source-paths ["src"]
     :output-path "doc/api"
     :source-uri "http://github.com/rm-hull/lein-nvd/blob/master/{filepath}#L{line}"  }
-  :min-lein-version "2.6.1"
+  :min-lein-version "2.7.1"
   :profiles {
     :dev {
       :global-vars {*warn-on-reflection* true}
