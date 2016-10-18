@@ -30,7 +30,7 @@
    [leiningen.core.classpath :refer [get-classpath]]))
 
 (defn get-lib-version []
-  (or (System/getenv "CLOVERAGE_VERSION") "0.1.1-SNAPSHOT"))
+  (or (System/getenv "NVD_VERSION") "RELEASE"))
 
 (defn nvd-profile []
   {:dependencies [['org.clojure/clojure "1.8.0"]
