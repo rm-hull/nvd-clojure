@@ -52,8 +52,8 @@
     (spit path (json/write-str opts))
 
     (case subtask
-      "check"  (eval-in-project project `(nvd.core/check ~path) '(require 'nvd.core))
-      "purge"  (eval-in-project project `(nvd.core/purge-database! ~path) '(require 'nvd.core))
-      "update" (eval-in-project project `(nvd.core/update-database! ~path) '(require 'nvd.core))
+      "check"  (eval-in-project project `(nvd.task.check/-main ~path) '(require 'nvd.core))
+      "purge"  (eval-in-project project `(nvd.task.purge/-main ~path) '(require 'nvd.core))
+      "update" (eval-in-project project `(nvd.task.update/-main ~path) '(require 'nvd.core))
       (main/abort "No such subtask:" subtask))))
 
