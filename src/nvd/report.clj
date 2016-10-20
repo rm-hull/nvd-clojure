@@ -89,3 +89,9 @@
     (println "Detailed reports saved in:" (style output-dir :bright))
     (println)
     project))
+
+(defn fail-build? [project]
+  (let [^Engine engine (:engine project)
+        highest-score (apply max 0 (scores engine))
+        fail-threshold (get-in project [:nvd :fail-threshold] 0)]
+    (> highest-score fail-threshold)))

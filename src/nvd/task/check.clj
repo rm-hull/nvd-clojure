@@ -24,7 +24,7 @@
   (:require
    [clansi :refer [style]]
    [nvd.config :refer [with-config]]
-   [nvd.report :refer [generate-report print-summary]])
+   [nvd.report :refer [generate-report print-summary fail-build?]])
   (:import
    [org.owasp.dependencycheck Engine]))
 
@@ -45,7 +45,7 @@
     (-> project
         scan-and-analyze
         generate-report
-        print-summary)
-;      (if (pos? (count (vulnerabilities engine)))
-;        (System/exit -1))
-))
+        print-summary
+        fail-build?
+        (if -1 0)
+        System/exit)))
