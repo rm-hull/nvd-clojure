@@ -20,12 +20,15 @@
 ;; OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 ;; SOFTWARE.
 
-(ns nvd.core
+(ns nvd.task.purge-database
   (:require
-   [nvd.task.update-database]
-   [nvd.task.purge-database]
-   [nvd.task.check]))
+   [clojure.java.io :as io]
+   [nvd.config :refer [with-config]]))
 
-(def ^:deprecated update-database! nvd.task.update-database/-main)
-(def ^:deprecated purge-database! nvd.task.purge-database/-main)
-(def ^:deprecated check nvd.task.check/-main)
+(defn -main [config-file]
+  (with-config [project config-file]
+    (let [db (io/file (get-in project [:nvd :data-directory]) "dc.h2.db")]
+      (when (.exists db)
+        (.delete db)
+        (println "Database file purged; local copy of the NVD has been removed.")
+        true))))

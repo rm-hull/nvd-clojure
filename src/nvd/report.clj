@@ -20,12 +20,33 @@
 ;; OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 ;; SOFTWARE.
 
-(ns nvd.core
+(ns nvd.report
   (:require
-   [nvd.task.update-database]
-   [nvd.task.purge-database]
-   [nvd.task.check]))
+   [clansi :refer [style]]
+   [nvd.config :as config])
+  (:import
+   [org.owasp.dependencycheck Engine]
+   [org.owasp.dependencycheck.reporting ReportGenerator]))
 
-(def ^:deprecated update-database! nvd.task.update-database/-main)
-(def ^:deprecated purge-database! nvd.task.purge-database/-main)
-(def ^:deprecated check nvd.task.check/-main)
+(defn  generate-report [project]
+  (let [^Engine engine (:engine project)
+        title (:title project)
+        output-dir (get-in project [:nvd :output-dir] "target/nvd")
+        output-fmt (get-in project [:nvd :output-format] "ALL")
+        db-props (:db-props project)
+        deps (.getDependencies engine)
+        analyzers (.getAnalyzers engine)
+        rg (ReportGenerator. title deps analyzers db-props)]
+    (.generateReports rg output-dir output-fmt)
+    project))
+
+(defn- vulnerabilities [engine]
+  (apply concat
+         (for [dep (.getDependencies engine)]
+           (set (.getVulnerabilities dep)))))
+
+(defn print-summary [project]
+  (let [^Engine engine (:engine project)]
+    (doseq [vuln (vulnerabilities engine)]
+      (println (style vuln :red :bright)))
+    project))

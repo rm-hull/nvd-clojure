@@ -20,12 +20,16 @@
 ;; OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 ;; SOFTWARE.
 
-(ns nvd.core
+(ns nvd.task.update-database
   (:require
-   [nvd.task.update-database]
-   [nvd.task.purge-database]
-   [nvd.task.check]))
+   [nvd.config :refer [with-config]])
+  (:import
+   [org.owasp.dependencycheck Engine]))
 
-(def ^:deprecated update-database! nvd.task.update-database/-main)
-(def ^:deprecated purge-database! nvd.task.purge-database/-main)
-(def ^:deprecated check nvd.task.check/-main)
+(defn -main
+  "Download the latest data from the National Vulnerability Database
+  (NVD) and store a copy in the local database."
+
+  [config-file]
+  (with-config [project config-file]
+    (.doUpdates ^Engine (:engine project))))

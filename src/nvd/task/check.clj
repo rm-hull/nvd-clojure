@@ -20,12 +20,32 @@
 ;; OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 ;; SOFTWARE.
 
-(ns nvd.core
+(ns nvd.task.check
   (:require
-   [nvd.task.update-database]
-   [nvd.task.purge-database]
-   [nvd.task.check]))
+   [clansi :refer [style]]
+   [nvd.config :refer [with-config]]
+   [nvd.report :refer [generate-report print-summary]])
+  (:import
+   [org.owasp.dependencycheck Engine]))
 
-(def ^:deprecated update-database! nvd.task.update-database/-main)
-(def ^:deprecated purge-database! nvd.task.purge-database/-main)
-(def ^:deprecated check nvd.task.check/-main)
+(defn jar? [^String filename]
+  (.endsWith filename ".jar"))
+
+(defn- scan-and-analyze [project]
+  (let [^Engine engine (:engine project)]
+    (doseq [p (:classpath project)]
+      (when (jar? p)
+        (.scan engine (str p))))
+    (.analyzeDependencies engine)
+    project))
+
+(defn -main [config-file]
+  (with-config [project config-file]
+    (println "Checking dependencies for" (style (:title project) :bright :yellow) "...")
+    (-> project
+        scan-and-analyze
+        generate-report
+        print-summary)
+;      (if (pos? (count (vulnerabilities engine)))
+;        (System/exit -1))
+))
