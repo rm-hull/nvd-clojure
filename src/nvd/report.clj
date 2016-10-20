@@ -22,16 +22,21 @@
 
 (ns nvd.report
   (:require
+   [clojure.string :as s]
    [clansi :refer [style]]
+   [table.core :refer [table]]
    [nvd.config :as config])
   (:import
    [org.owasp.dependencycheck Engine]
+   [org.owasp.dependencycheck.dependency Dependency Vulnerability]
    [org.owasp.dependencycheck.reporting ReportGenerator]))
+
+(def default-output-dir "./target/nvd")
 
 (defn  generate-report [project]
   (let [^Engine engine (:engine project)
         title (:title project)
-        output-dir (get-in project [:nvd :output-dir] "target/nvd")
+        output-dir (get-in project [:nvd :output-dir] default-output-dir)
         output-fmt (get-in project [:nvd :output-format] "ALL")
         db-props (:db-props project)
         deps (.getDependencies engine)
@@ -40,13 +45,47 @@
     (.generateReports rg output-dir output-fmt)
     project))
 
-(defn- vulnerabilities [engine]
-  (apply concat
-         (for [dep (.getDependencies engine)]
-           (set (.getVulnerabilities dep)))))
+(defn- severity [cvssScore]
+  (cond
+    (= cvssScore 0) :none
+    (< cvssScore 4) :low
+    (>= cvssScore 7) :high
+    :else :medium))
+
+(defn- color [severity]
+  (get {:none :green :low :cyan :medium :yellow :high :red} severity))
+
+(defn- vuln-status [^Dependency dep]
+  (let [vulns (.getVulnerabilities dep)]
+    (if (empty? vulns)
+      (style "OK" :green :bright)
+      (s/join " "
+              (for [^Vulnerability v vulns
+                    :let [color (-> (.getCvssScore v) severity color)]]
+                (style (.getName v) color :bright))))))
+
+(defn- vulnerabilities [^Engine engine]
+  (sort-by :dependency
+           (for [^Dependency dep (.getDependencies engine)]
+             {:dependency (.getFileName dep) :status (vuln-status dep)})))
+
+(defn- scores [^Engine engine]
+  (flatten (for [^Dependency dep (.getDependencies engine)
+                 ^Vulnerability vuln (.getVulnerabilities dep)]
+             (.getCvssScore vuln))))
 
 (defn print-summary [project]
-  (let [^Engine engine (:engine project)]
-    (doseq [vuln (vulnerabilities engine)]
-      (println (style vuln :red :bright)))
+  (let [^Engine engine (:engine project)
+        output-dir (get-in project [:nvd :output-dir] default-output-dir)
+        summary (vulnerabilities engine)
+        scores  (scores engine)
+        highest-score (apply max 0 scores)
+        color (-> highest-score severity color)
+        severity (-> highest-score severity name s/upper-case)]
+    (table summary)
+    (println)
+    (print (count scores) "vulnerabilities detected. Severity: ")
+    (println (style severity color :bright))
+    (println "Detailed reports saved in:" (style output-dir :bright))
+    (println)
     project))
