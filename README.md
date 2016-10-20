@@ -6,7 +6,7 @@
 [![Clojars Project](https://img.shields.io/clojars/v/lein-nvd.svg)](https://clojars.org/lein-nvd)
 [![Maintenance](https://img.shields.io/maintenance/yes/2016.svg?maxAge=2592000)]()
 
-> NOT FIT FOR HUMAN CONSUMPTION JUST YET...
+> NEARLY FIT FOR HUMAN CONSUMPTION ... (▀̿Ĺ̯▀̿ ̿) HOLD TIGHT !!!
 
 [National Vulnerability Database](https://nvd.nist.gov/) dependency-checker plugin for Leiningen.
 When run in your project, all the JARs on the classpath will be checked for
@@ -14,7 +14,7 @@ known security vulnerabilities.
 
 ### Installation
 
-Put `[lein-nvd "0.2.0"]` into the `:plugins` vector of your `:user` profile.
+Put `[lein-nvd "0.2.1"]` into the `:plugins` vector of your `:user` profile.
 
 ## Usage
 
@@ -37,7 +37,10 @@ as follows:
 
 ---
 ![report](https://raw.githubusercontent.com/rm-hull/lein-nvd/master/example/report.png)
----
+
+## Configuration options
+
+> TODO
 
 ## Attribution
 
