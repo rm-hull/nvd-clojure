@@ -20,14 +20,13 @@
 ;; OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 ;; SOFTWARE.
 
-(ns nvd.core-test
+(ns nvd.config-test
   (:require
    [clojure.test :refer :all]
-   [nvd.core :refer :all]))
+   [nvd.config :refer :all]))
 
 (deftest check-app-name
   (is (= "unknown" (app-name {:nome "hello-world" :version "0.0.1"})))
   (is (= "hello-world" (app-name {:name "hello-world" :version "0.0.1"})))
   (is (= "hello-world" (app-name {:name "hello-world" :group "hello-world" :version "0.0.1"})))
   (is (= "fred/hello-world" (app-name {:name "hello-world" :group "fred" :version "0.0.1"}))))
-
