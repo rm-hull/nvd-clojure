@@ -21,7 +21,7 @@ Put `[lein-nvd "0.2.1"]` into the `:plugins` vector of your `:user` profile.
 Run `lein nvd check` in your project. The first time the plugin runs, it
 will download (and cache) various databases from https://nvd.nist.gov and
 periodically check and update them on subsequent runs. A suite of reports
-will be produced in the project's **target/nvd** directory.
+will be produced in the project's _./target/nvd/_ directory.
 
 ### Example
 
@@ -32,11 +32,17 @@ This can be demonstrated by running the following:
     $ cd example
     $ lein nvd check
 
-This will create dependency-check reports (both HTML & XML) in **example/target/nvd**
-as follows:
+This will download the NVD database, and then cross-check the classpath dependencies
+against known vulnerabilities. The following summary report will be displayed on the
+console:
+
+![summary-report](https://raw.githubusercontent.com/rm-hull/lein-nvd/master/example/img/summary-report.png)
+
+A more detailed reports (both HTML & XML) are written into the
+_./example/target/nvd/_ directory as follows:
 
 ---
-![report](https://raw.githubusercontent.com/rm-hull/lein-nvd/master/example/report.png)
+![detail-report](https://raw.githubusercontent.com/rm-hull/lein-nvd/master/example/img/detail-report.png)
 
 ## Configuration options
 
@@ -45,7 +51,7 @@ as follows:
 ## Attribution
 
 _lein-nvd_ uses **Jeremy Long**'s [DependencyCheck](https://github.com/jeremylong/DependencyCheck)
-library to do the heavy lifting
+library to do the heavy lifting.
 
 ## References
 
