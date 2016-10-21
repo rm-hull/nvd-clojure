@@ -78,8 +78,11 @@
 (defn- read-opts [config-file]
   (json/read-str (slurp config-file) :key-fn keyword))
 
+(def default-settings
+  {:nvd {:analyzer {:assembly-enabled false}}})
+
 (defn populate-settings! [config-file]
-  (let [project (read-opts config-file)
+  (let [project (merge default-settings (read-opts config-file))
         plugin-settings (:nvd project)]
     (Settings/initialize)
     (when-let [cve-valid-for-hours (get-in plugin-settings [:cve :valid-for-hours])]
