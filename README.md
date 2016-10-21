@@ -14,7 +14,7 @@ known security vulnerabilities.
 
 ### Installation
 
-Put `[lein-nvd "0.2.1"]` into the `:plugins` vector of your `:user` profile.
+Put `[lein-nvd "0.2.2"]` into the `:plugins` vector of your `:user` profile.
 
 ## Usage
 
