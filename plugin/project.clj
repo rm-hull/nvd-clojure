@@ -20,4 +20,5 @@
         [org.clojure/clojure "1.8.0"] ]
       :plugins [
         [lein-codox "0.10.1"]
-        [lein-cloverage "1.0.8"]]}})
+        [lein-cloverage "1.0.8"]]}}
+  :eval-in-leiningen true)
