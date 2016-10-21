@@ -59,7 +59,7 @@
   (let [vulns (.getVulnerabilities dep)]
     (if (empty? vulns)
       (style "OK" :green :bright)
-      (s/join " "
+      (s/join ", "
               (for [^Vulnerability v vulns
                     :let [color (-> (.getCvssScore v) severity color)]]
                 (style (.getName v) color :bright))))))
