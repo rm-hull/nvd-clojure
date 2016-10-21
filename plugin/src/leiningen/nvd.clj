@@ -26,8 +26,8 @@
    [clojure.data.json :as json]
    [leiningen.core.main :as main]
    [leiningen.core.eval :refer [eval-in-project]]
-   [leiningen.core.project :refer [merge-profiles]]
-   [leiningen.core.classpath :refer [get-classpath]]))
+   [leiningen.core.project :as p :refer [merge-profiles]]
+   [leiningen.nvd.deps :refer [get-classpath]]))
 
 (defn get-lib-version []
   (or (System/getenv "NVD_VERSION") "RELEASE"))
@@ -56,4 +56,3 @@
       "purge"  (eval-in-project project `(nvd.task.purge/-main ~path) '(require 'nvd.core))
       "update" (eval-in-project project `(nvd.task.update/-main ~path) '(require 'nvd.core))
       (main/abort "No such subtask:" subtask))))
-
