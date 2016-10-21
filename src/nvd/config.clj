@@ -39,6 +39,7 @@
    Settings$KEYS/PROXY_USERNAME [:proxy :user]
    Settings$KEYS/PROXY_PASSWORD [:proxy :password]
    Settings$KEYS/CONNECTION_TIMEOUT [:database :connection-timeout]
+   Settings$KEYS/DATA_DIRECTORY [:data-directory]
    Settings$KEYS/DB_DRIVER_NAME [:database :driver-name]
    Settings$KEYS/DB_DRIVER_PATH [:database :driver-path]
    Settings$KEYS/DB_CONNECTION_STRING [:database :connection-string]
@@ -87,9 +88,6 @@
     (Settings/initialize)
     (when-let [cve-valid-for-hours (get-in plugin-settings [:cve :valid-for-hours])]
       (Settings/setInt Settings$KEYS/CVE_CHECK_VALID_FOR_HOURS cve-valid-for-hours))
-    (if-let [data-directory (get-in plugin-settings [:data-directory])]
-      (Settings/setString Settings$KEYS/DATA_DIRECTORY data-directory)
-      (Settings/setString Settings$KEYS/DATA_DIRECTORY (str (System/getProperty "user.home") "/.lein/.nvd")))
     (doseq [[prop path] boolean-mappings]
       (Settings/setBooleanIfNotNull prop (get-in plugin-settings path)))
     (doseq [[prop path] string-mappings]
