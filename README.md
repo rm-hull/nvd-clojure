@@ -20,9 +20,14 @@ Put `[lein-nvd "0.2.2"]` into the `:plugins` vector of your `:user` profile.
 
 Run `lein nvd check` in your project. The first time the plugin runs, it will
 download (and cache) various databases from https://nvd.nist.gov and
-periodically check and update them on subsequent runs, which could be quite
-slow. A suite of reports will be produced in the project's _./target/nvd/_
-directory.
+periodically check and update them on subsequent runs. The initial run could
+therefore be quite slow - of the order of several minutes, so give it time.
+
+On completion, a summary table is output to the console, an a suite of reports
+will be produced in the project's _./target/nvd/_ directory. If there
+vulnerabilities detected, then the check process will exit abnormally, thereby
+causing any CI build environment to error. (This behaviour can be overriden by
+setting a `:fail-threshold` in the project [configuration](#configuration-options)).
 
 ### Example
 
@@ -36,17 +41,34 @@ This can be demonstrated by running the following:
     $ cd example
     $ lein nvd check
 
-This will download the NVD database, and then cross-check the classpath dependencies
-against known vulnerabilities. The following summary report will be displayed on the
-console:
+This will download the NVD database, and then cross-check the classpath
+dependencies against known vulnerabilities. The following summary report will
+be displayed on the console:
 
 ![summary-report](https://raw.githubusercontent.com/rm-hull/lein-nvd/master/example/img/summary-report.png)
 
-A more detailed reports (both HTML & XML) are written into the
+Note that as there were some vulnerabilities detected, the process was aborted,
+with error code -1 hence the reported _subprocess failed_ message.
+
+More detailed reports (both HTML & XML) are written into the
 _./example/target/nvd/_ directory as follows:
 
 ---
 ![detail-report](https://raw.githubusercontent.com/rm-hull/lein-nvd/master/example/img/detail-report.png)
+
+## Upgrading dependencies
+
+You may use the built-in (to Leiningen) dependency-tree reporter to find out what the
+dependency relationships are:
+
+    $ lein deps :tree
+
+Note that this will show the project dependencies, and any plugins/injections
+from your local user profile. `lein nvd` will only run against project dependencies.
+
+[lein-ancient](https://github.com/xsc/lein-ancient) will traverse you
+dependencies, and suggest upgraded versions, and can optionally be configured
+to update your project file.
 
 ## Configuration options
 
@@ -54,13 +76,14 @@ _./example/target/nvd/_ directory as follows:
 
 ## Attribution
 
-_lein-nvd_ uses **Jeremy Long**'s [DependencyCheck](https://github.com/jeremylong/DependencyCheck)
+`lein-nvd` uses **Jeremy Long**'s [DependencyCheck](https://github.com/jeremylong/DependencyCheck)
 library to do the heavy lifting.
 
 ## References
 
 * https://nvd.nist.gov/
 * https://github.com/jeremylong/DependencyCheck
+* https://github.com/xsc/lein-ancient
 
 ## License
 
