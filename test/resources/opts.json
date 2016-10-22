@@ -1,0 +1,17 @@
+{
+    "name": "test-project",
+    "group": "barry-fungus",
+    "version": "1.0.3-SNAPSHOT",
+    "nvd": {
+        "analyzer": {
+            "cmake-enabled": true
+        },
+        "suppression-file": "suppress.xml",
+        "fail-threshold": 11
+    },
+    "classpath": [
+        "file1.jar",
+        "file2.jar"
+    ],
+    "cmd-args": "12 -t hello"
+}

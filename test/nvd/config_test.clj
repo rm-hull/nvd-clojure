@@ -30,3 +30,16 @@
   (is (= "hello-world" (app-name {:name "hello-world" :version "0.0.1"})))
   (is (= "hello-world" (app-name {:name "hello-world" :group "hello-world" :version "0.0.1"})))
   (is (= "fred/hello-world" (app-name {:name "hello-world" :group "fred" :version "0.0.1"}))))
+
+(deftest check-with-config
+  (with-config [project "test/resources/opts.json"]
+    (clojure.pprint/pprint project)
+    (is (true?  (.endsWith (.getAbsolutePath (get-in project [:nvd :data-directory])) "/.m2/repository/org/owasp/dependency-check-utils/1.4.3/data")))
+    (is (= (get-in project [:nvd :suppression-file]) "suppress.xml"))
+    (is (false? (get-in project [:nvd :analyzer :assembly-enabled])))
+    (is (true? (get-in project [:nvd :analyzer :cmake-enabled])))
+    (is (not (nil? (get-in project [:engine]))))
+    (is (= (get-in project [:title]) "barry-fungus/test-project 1.0.3-SNAPSHOT"))
+    (is (= (get-in project [:config-file]) "test/resources/opts.json"))
+    (is (= (get-in project [:cmd-args]) "12 -t hello"))
+    (is (= (get-in project [:classpath]) ["file1.jar", "file2.jar"]))))
