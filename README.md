@@ -18,15 +18,19 @@ Put `[lein-nvd "0.2.2"]` into the `:plugins` vector of your `:user` profile.
 
 ## Usage
 
-Run `lein nvd check` in your project. The first time the plugin runs, it
-will download (and cache) various databases from https://nvd.nist.gov and
-periodically check and update them on subsequent runs. A suite of reports
-will be produced in the project's _./target/nvd/_ directory.
+Run `lein nvd check` in your project. The first time the plugin runs, it will
+download (and cache) various databases from https://nvd.nist.gov and
+periodically check and update them on subsequent runs, which could be quite
+slow. A suite of reports will be produced in the project's _./target/nvd/_
+directory.
 
 ### Example
 
 There is an [example project](https://github.com/rm-hull/lein-nvd/blob/master/example/project.clj)
-which has dependencies with known vulnerabilities ([CVE-2016-3720](https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2016-3720)).
+which has dependencies with known vulnerabilities
+([CVE-2016-3720](https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2016-3720),
+[CVE-2015-5262](https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2015-5262),
+[CVE-2014-3577](https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2014-3577)).
 This can be demonstrated by running the following:
 
     $ cd example
