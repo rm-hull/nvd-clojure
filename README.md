@@ -8,9 +8,16 @@
 
 > NEARLY FIT FOR HUMAN CONSUMPTION ... (▀̿Ĺ̯▀̿ ̿) HOLD TIGHT !!!
 
-[National Vulnerability Database](https://nvd.nist.gov/) dependency-checker plugin for Leiningen.
-When run in your project, all the JARs on the classpath will be checked for
-known security vulnerabilities.
+[National Vulnerability Database](https://nvd.nist.gov/) dependency-checker
+plugin for Leiningen. When run in your project, all the JARs on the classpath
+will be checked for known security vulnerabilities. `lein-nvd` extracts project
+dependencies and passes them to a library called [Dependency-Check](https://github.com/jeremylong/DependencyCheck) which does the vulnerability analysis. Quoting the README for that library:
+
+> Dependency-Check is a utility that attempts to detect publicly disclosed
+> vulnerabilities contained within project dependencies. It does this by
+> determining if there is a Common Platform Enumeration (CPE) identifier for
+> a given dependency. If found, it will generate a report linking to the
+> associated CVE entries.
 
 ### Installation
 
@@ -76,7 +83,7 @@ to update your project file.
 
 ## Attribution
 
-`lein-nvd` uses **Jeremy Long**'s [DependencyCheck](https://github.com/jeremylong/DependencyCheck)
+`lein-nvd` uses **Jeremy Long**'s [Dependency-Check](https://github.com/jeremylong/DependencyCheck)
 library to do the heavy lifting.
 
 ## References
