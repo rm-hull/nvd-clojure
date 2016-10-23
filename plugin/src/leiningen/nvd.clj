@@ -38,21 +38,43 @@
 
 (def temp-file (java.io.File/createTempFile ".lein-nvd_" ".json"))
 
-(defn nvd
-  "Scan project dependencies and report known vulnerabilities."
-  [project & args]
+(defn nvd "
+  Scans project dependencies, attempting to detect publicly disclosed
+  vulnerabilities contained within dependent JAR files. It does this by
+  determininging if there is a Common Platform Enumeration (CPE) identifier
+  for a given dependency. On completion, a summary table is displayed on
+  the console (showing the status for each dependency), and detailed report
+  linking to the associated CVE entries.
+
+  This task should be invoked with one of three commands:
+
+      check  - will optionally download the latest database update files,
+               and then run the analyze and report stages. Typically, if
+               the database has been updated recently, then the update
+               stage will be skipped.
+
+      purge  - will remove the local database files. Subsequently running
+               the 'check' command will force downloading the files again,
+               which could take a long time.
+
+      update - will attempt to download the latest database updates, and
+               incorporate them into the local store. Usually not necessary,
+               as this is incorporated into the 'check' command.
+
+  Any text after the command are treated as arguments and are passed directly
+  directly to the command for further processing."
+  [project command & args]
   (let [profile (merge (:nvd (:profiles project)) (nvd-profile))
         project (merge-profiles project [profile])
         path (.getAbsolutePath temp-file)
-        subtask (first args)
         opts    (merge
                  (select-keys project [:name :group :version :nvd])
-                 {:classpath (get-classpath project) :cmd-args (next args)})]
+                 {:classpath (get-classpath project) :cmd-args args})]
 
     (spit path (json/write-str opts))
 
-    (case subtask
+    (case command
       "check"  (eval-in-project project `(nvd.task.check/-main ~path) '(require 'nvd.core))
-      "purge"  (eval-in-project project `(nvd.task.purge/-main ~path) '(require 'nvd.core))
-      "update" (eval-in-project project `(nvd.task.update/-main ~path) '(require 'nvd.core))
-      (main/abort "No such subtask:" subtask))))
+      "purge"  (eval-in-project project `(nvd.task.purge-database/-main ~path) '(require 'nvd.core))
+      "update" (eval-in-project project `(nvd.task.update-database/-main ~path) '(require 'nvd.core))
+      (main/abort "No such command:" command))))
