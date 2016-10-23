@@ -21,7 +21,9 @@ dependencies and passes them to a library called [Dependency-Check](https://gith
 
 ### Installation
 
-Put `[lein-nvd "0.2.2"]` into the `:plugins` vector of your `:user` profile.
+To install globally, add `[lein-nvd "0.2.2"]` into the `:plugins` vector of
+your `:user` profile in _~/.lein/profiles.clj_, or on a per-project basis, add
+to the profiles section of your _project.clj_.
 
 ## Usage
 
