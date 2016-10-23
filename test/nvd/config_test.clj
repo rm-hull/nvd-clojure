@@ -33,7 +33,6 @@
 
 (deftest check-with-config
   (with-config [project "test/resources/opts.json"]
-    (clojure.pprint/pprint project)
     (is (true?  (.endsWith (.getAbsolutePath (get-in project [:nvd :data-directory])) "/.m2/repository/org/owasp/dependency-check-utils/1.4.3/data")))
     (is (= (get-in project [:nvd :suppression-file]) "suppress.xml"))
     (is (false? (get-in project [:nvd :analyzer :assembly-enabled])))
