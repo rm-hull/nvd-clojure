@@ -10,7 +10,7 @@
     [org.clojure/data.json "0.2.6"]
     [org.slf4j/slf4j-simple "1.7.21"]
     [org.owasp/dependency-check-core "1.4.3"]
-    [rm-hull/table "0.6.2"]]
+    [rm-hull/table "0.6.3"]]
   :scm {:url "git@github.com:rm-hull/lein-nvd.git"}
   :source-paths ["src"]
   :jar-exclusions [#"(?:^|/).git"]
