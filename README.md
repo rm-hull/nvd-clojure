@@ -28,13 +28,13 @@ to the profiles section of your _project.clj_.
 ## Usage
 
 Run `lein nvd check` in your project. The first time the plugin runs, it will
-download (and cache) various databases from https://nvd.nist.gov and
-periodically check and update them on subsequent runs. The initial run could
-therefore be quite slow - of the order of several minutes, so give it time.
+download (and cache) various databases from https://nvd.nist.gov. Subsequent
+runs will periodically check and update the local database, but the initial run
+could therefore be quite slow - of the order of several minutes, so give it time.
 
-On completion, a summary table is output to the console, an a suite of reports
-will be produced in the project's _./target/nvd/_ directory. If there
-vulnerabilities detected, then the check process will exit abnormally, thereby
+On completion, a summary table is output to the console, and a suite of reports
+will be produced in the project's _./target/nvd/_ directory. If vulnerabilities
+are detected, then the check process will exit abnormally, thereby
 causing any CI build environment to error. (This behaviour can be overriden by
 setting a `:fail-threshold` in the project [configuration](#configuration-options)).
 
