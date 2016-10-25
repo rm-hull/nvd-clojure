@@ -23,6 +23,7 @@
 (ns nvd.config
   (:require
    [clojure.string :as s]
+   [clojure.java.io :as io]
    [clojure.data.json :as json])
   (:import
    [org.owasp.dependencycheck Engine]
@@ -120,7 +121,7 @@
   (.cleanup ^Engine (:engine project))
   (Settings/cleanup true)
   (when (:delete-config? project)
-    (.deleteOnExit (java.io.File. ^String (:config-file project)))))
+    (.deleteOnExit (io/file (:config-file project)))))
 
 (defmacro with-config
   [[binding config-file] & body]
