@@ -82,8 +82,15 @@
 (def default-settings
   {:nvd {:analyzer {:assembly-enabled false}}})
 
+(defn deep-merge [a b]
+  (merge-with (fn [x y]
+                (cond (map? y) (deep-merge x y)
+                      (vector? y) (concat x y)
+                      :else y))
+                 a b))
+
 (defn populate-settings! [config-file]
-  (let [project (merge-with (partial merge-with merge) default-settings (read-opts config-file))
+  (let [project (deep-merge default-settings (read-opts config-file))
         plugin-settings (:nvd project)]
     (Settings/initialize)
     (when-let [cve-valid-for-hours (get-in plugin-settings [:cve :valid-for-hours])]
