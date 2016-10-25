@@ -22,6 +22,7 @@
 
 (ns nvd.task.check
   (:require
+   [clojure.string :as s]
    [clansi :refer [style]]
    [nvd.config :refer [with-config]]
    [nvd.report :refer [generate-report print-summary fail-build?]])
@@ -31,11 +32,14 @@
 (defn jar? [^String filename]
   (.endsWith filename ".jar"))
 
+(defn absolute-path [file]
+  (s/replace-first file #"^~" (System/getProperty "user.home")))
+
 (defn- scan-and-analyze [project]
   (let [^Engine engine (:engine project)]
     (doseq [p (:classpath project)]
       (when (jar? p)
-        (.scan engine (str p))))
+        (.scan engine (absolute-path p))))
     (.analyzeDependencies engine)
     project))
 
