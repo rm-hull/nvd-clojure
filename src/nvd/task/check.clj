@@ -32,7 +32,7 @@
 (defn jar? [^String filename]
   (.endsWith filename ".jar"))
 
-(defn absolute-path [file]
+(defn ^String absolute-path [file]
   (s/replace-first file #"^~" (System/getProperty "user.home")))
 
 (defn- scan-and-analyze [project]
