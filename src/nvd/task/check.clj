@@ -43,6 +43,11 @@
     (.analyzeDependencies engine)
     project))
 
+(defn conditional-exit [project]
+  (if (:exit-after-check project)
+    (System/exit (if (:failed? project) -1 0))
+    project))
+
 (defn -main [config-file]
   (with-config [project config-file]
     (println "Checking dependencies for" (style (:title project) :bright :yellow) "...")
@@ -51,5 +56,4 @@
         generate-report
         print-summary
         fail-build?
-        (if -1 0)
-        System/exit)))
+        conditional-exit)))
