@@ -90,7 +90,7 @@
                 (cond (map? y) (deep-merge x y)
                       (vector? y) (concat x y)
                       :else y))
-                 a b))
+              a b))
 
 (defn populate-settings! [config-file]
   (let [project (deep-merge default-settings (read-opts config-file))

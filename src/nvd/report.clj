@@ -95,6 +95,6 @@
         highest-score (apply max 0 (scores engine))
         fail-threshold (get-in project [:nvd :fail-threshold] 0)]
     (->
-      project
-      (assoc-in [:nvd :highest-score] highest-score)
-      (assoc :failed? (> highest-score fail-threshold)))))
+     project
+     (assoc-in [:nvd :highest-score] highest-score)
+     (assoc :failed? (> highest-score fail-threshold)))))
