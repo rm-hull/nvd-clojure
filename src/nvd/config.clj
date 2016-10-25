@@ -81,7 +81,9 @@
   (json/read-str (slurp config-file) :key-fn keyword))
 
 (def default-settings
-  {:nvd {:analyzer {:assembly-enabled false}}})
+  {:exit-after-check true
+   :delete-config? true
+   :nvd {:analyzer {:assembly-enabled false}}})
 
 (defn deep-merge [a b]
   (merge-with (fn [x y]
