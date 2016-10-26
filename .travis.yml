@@ -9,7 +9,7 @@ before_install:
   - git-lfs pull
 before_script:
   - npm install -g eclint
-  - eclint check .* * src/** test/**
+  - eclint check .* * src/**/*.clj test/**/*.clj
   - lein install
   - lein cljfmt check
 script:
