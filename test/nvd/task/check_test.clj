@@ -29,5 +29,5 @@
   (let [project (check/-main "test/resources/self-test.json")]
     (is (== 11.0 (get-in project [:nvd :fail-threshold])))
     (is (== 7.5 (get-in project [:nvd :highest-score])))
-    (is (false? (get-in project :failed?)))))
+    (is (false? (project :failed?)))))
 
