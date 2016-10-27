@@ -79,9 +79,63 @@ from your local user profile. `lein nvd` will only run against project dependenc
 dependencies, and suggest upgraded versions, and can optionally be configured
 to update your project file.
 
+## Other commands
+
+Running the following command shows what sub-commands are available:
+
+    $ lein help nvd
+
+      Scans project dependencies, attempting to detect publicly disclosed
+      vulnerabilities contained within dependent JAR files. It does this by
+      determininging if there is a Common Platform Enumeration (CPE) identifier
+      for a given dependency. On completion, a summary table is displayed on
+      the console (showing the status for each dependency), and detailed report
+      linking to the associated CVE entries.
+
+      This task should be invoked with one of three commands:
+
+          check  - will optionally download the latest database update files,
+                   and then run the analyze and report stages. Typically, if
+                   the database has been updated recently, then the update
+                   stage will be skipped.
+
+          purge  - will remove the local database files. Subsequently running
+                   the 'check' command will force downloading the files again,
+                   which could take a long time.
+
+          update - will attempt to download the latest database updates, and
+                   incorporate them into the local store. Usually not necessary,
+                   as this is incorporated into the 'check' command.
+
+      Any text after the command are treated as arguments and are passed directly
+      directly to the command for further processing.
+
+    Arguments: ([command & args])
+
+While `purge` and `update` are available, it is not normally required to use them,
+and purging will cause a subsequent `check` or `update` to download the whole
+database again.
+
 ## Configuration options
 
-> TODO
+The default settings for `lein-nvd` are usually sufficient for most projects, but
+can be customized by adding an `:nvd { ... }` section in your _project.clj_.
+
+There are many dependency-check settings (for example to connect via a proxy, or
+to specify an alternative to the H2 database). The exact settings can be seen
+in the [config.clj](https://github.com/rm-hull/lein-nvd/blob/master/src/nvd/config.clj) source file and cross-referenced to the dependency-check
+wiki.
+
+There are some specific settings below which are worthy of a few comments:
+
+* **:fail-threshold** default value 0 - checks the highest CVSS score across all
+  dependencies, and fails if this threshold is breached. As CVSS score ranges from
+  0 .. 10, the default value will cause a build to fail even for the lowest rated
+  vulnerability. Set to 11 if you never want the build to fail.
+* **:data-directory** default value is _[JAR]/data_ - it shouldn't normally be
+  necessary to change the data directory.
+* **:suppression-file** default unset - allows for CVEs to be permanently
+  suppressed. See dependency-check documentation for the XML file-format.
 
 ## Attribution
 
