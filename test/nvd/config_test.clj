@@ -22,6 +22,7 @@
 
 (ns nvd.config-test
   (:require
+   [clojure.java.io :as io]
    [clojure.test :refer :all]
    [nvd.config :refer :all]))
 
@@ -33,7 +34,7 @@
 
 (deftest check-with-config
   (with-config [project "test/resources/opts.json"]
-    (is (true?  (.endsWith (.getAbsolutePath (get-in project [:nvd :data-directory])) "/.m2/repository/org/owasp/dependency-check-utils/1.4.3/data")))
+    (is (true?  (.endsWith (.getAbsolutePath (io/file (get-in project [:nvd :data-directory]))) "/.m2/repository/org/owasp/dependency-check-utils/1.4.3/data")))
     (is (= (get-in project [:nvd :suppression-file]) "suppress.xml"))
     (is (false? (get-in project [:nvd :analyzer :assembly-enabled])))
     (is (true? (get-in project [:nvd :analyzer :cmake-enabled])))
