@@ -137,6 +137,28 @@ There are some specific settings below which are worthy of a few comments:
 * **:suppression-file** default unset - allows for CVEs to be permanently
   suppressed. See dependency-check documentation for the XML file-format.
 
+## Building locally
+
+`lein-nvd` uses [git-lfs](https://git-lfs.github.com/) to host a copy of the database
+for testing purposes. To checkout the project, ensure that `git-lfs` is properly installed
+- see the [Github LFS Installation Wiki](https://github.com/github/git-lfs/wiki/Installation).
+
+The core module is run outside of leiningen (there is a conflict in the version of
+Lucene that is used in the dependency-check libs vs. the version of Lucene that is
+embedded in Leiningen).
+
+Build and install the core module, then do the same for the plugin:
+
+    $ lein test
+    $ lein install
+    $ cd plugin
+    $ lein test
+    $ lein install
+    $ cd ../example
+    $ lein nvd check
+
+A sample report is available for testing in the _example_ sub-directory.
+
 ## Attribution
 
 `lein-nvd` uses **Jeremy Long**'s [Dependency-Check](https://github.com/jeremylong/DependencyCheck)
