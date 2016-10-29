@@ -23,6 +23,7 @@
 (ns nvd.report
   (:require
    [clojure.string :as s]
+   [clojure.java.io :as io]
    [clansi :refer [style]]
    [table.core :refer [table]]
    [nvd.config :as config])
@@ -31,7 +32,7 @@
    [org.owasp.dependencycheck.dependency Dependency Vulnerability]
    [org.owasp.dependencycheck.reporting ReportGenerator]))
 
-(def default-output-dir "./target/nvd")
+(def default-output-dir "target/nvd")
 
 (defn  generate-report [project]
   (let [^Engine engine (:engine project)
@@ -86,7 +87,7 @@
     (println)
     (print (count scores) "vulnerabilities detected. Severity: ")
     (println (style severity color :bright))
-    (println "Detailed reports saved in:" (style output-dir :bright))
+    (println "Detailed reports saved in:" (style (.getAbsolutePath (io/file output-dir)) :bright))
     (println)
     project))
 
