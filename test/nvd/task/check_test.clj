@@ -23,9 +23,11 @@
 (ns nvd.task.check-test
   (:require
    [clojure.test :refer :all]
+   [nvd.task.update-database :as update-db]
    [nvd.task.check :as check]))
 
 (deftest self-check
+  (update-db/-main "test/resources/self-test.json")
   (let [project (check/-main "test/resources/self-test.json")]
     (is (== 11.0 (get-in project [:nvd :fail-threshold])))
     (is (== 7.5 (get-in project [:nvd :highest-score])))
