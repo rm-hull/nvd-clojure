@@ -5,7 +5,7 @@
   "delete-config?": false,
   "exit-after-check": false,
   "nvd": {
-    "data-directory": "./test/resources/",
+    "data-directory": "test/resources/",
     "fail-threshold": 11
   },
   "classpath": [

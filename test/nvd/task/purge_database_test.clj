@@ -20,16 +20,12 @@
 ;; OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 ;; SOFTWARE.
 
-(ns nvd.task.purge-database
+(ns nvd.task.purge-database-test
   (:require
    [clojure.java.io :as io]
-   [clansi :refer [style]]
-   [nvd.config :refer [with-config]]))
+   [clojure.test :refer :all]
+   [nvd.task.purge-database :as purge]))
 
-(defn -main [config-file]
-  (with-config [project config-file]
-    (let [db (io/file (get-in project [:nvd :data-directory]) "dc.h2.db")]
-      (when (and (.exists db) (.delete db))
-        (println "Database file purged:"
-                 (style (.getAbsolutePath db) :bright))
-        true))))
+(deftest check-purge-db
+  (is (true? (purge/-main "test/resources/self-test.json")))
+  (is (false? (.exists (io/file "test/resources/dc.h2.db")))))
