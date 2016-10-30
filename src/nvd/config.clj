@@ -51,6 +51,9 @@
    Settings$KEYS/CVE_SCHEMA_1_2 [:cve :url-1.2-base]
    Settings$KEYS/CVE_SCHEMA_2_0 [:cve :url-2.0-base]})
 
+(def ^:private integer-mappings
+  {Settings$KEYS/CVE_CHECK_VALID_FOR_HOURS [:cve :valid-for-hours]})
+
 (def ^:private boolean-mappings
   {Settings$KEYS/AUTO_UPDATE [:auto-update]
 ;  Settings$KEYS/ANALYZER_EXPERIMENTAL_ENABLED [:analyzer :experimental-enabled]
@@ -104,8 +107,8 @@
   (let [project (deep-merge default-settings (read-opts config-file))
         plugin-settings (:nvd project)]
     (Settings/initialize)
-    (when-let [cve-valid-for-hours (get-in plugin-settings [:cve :valid-for-hours])]
-      (Settings/setInt Settings$KEYS/CVE_CHECK_VALID_FOR_HOURS cve-valid-for-hours))
+    (doseq [[prop path] integer-mappings]
+      (Settings/setIntIfNotNull prop (get-in plugin-settings path)))
     (doseq [[prop path] boolean-mappings]
       (Settings/setBooleanIfNotNull prop (get-in plugin-settings path)))
     (doseq [[prop path] string-mappings]
