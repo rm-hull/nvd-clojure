@@ -92,6 +92,14 @@
                       :else y))
               a b))
 
+(defn- ^DatabaseProperties db-props []
+  (let [cve (CveDB.)]
+    (try
+      (.open cve)
+      (.getDatabaseProperties cve)
+      (finally
+        (.close cve)))))
+
 (defn populate-settings! [config-file]
   (let [project (deep-merge default-settings (read-opts config-file))
         plugin-settings (:nvd project)]
@@ -109,15 +117,8 @@
       :engine (Engine.)
       :title (str (app-name project) " " (:version project))
       :start-time (System/currentTimeMillis)
+      :db-props (db-props)
       :config-file config-file))))
-
-(defn- ^DatabaseProperties db-props []
-  (let [cve (CveDB.)]
-    (try
-      (.open cve)
-      (.getDatabaseProperties cve)
-      (finally
-        (.close cve)))))
 
 (defn cleanup [project]
   (.cleanup ^Engine (:engine project))
