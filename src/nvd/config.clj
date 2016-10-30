@@ -85,7 +85,7 @@
    :delete-config? true
    :nvd {:analyzer {:assembly-enabled false}}})
 
-(defn deep-merge [a b]
+(defn- deep-merge [a b]
   (merge-with (fn [x y]
                 (cond (map? y) (deep-merge x y)
                       (vector? y) (concat x y)
