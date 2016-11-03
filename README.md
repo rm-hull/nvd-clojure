@@ -139,10 +139,6 @@ There are some specific settings below which are worthy of a few comments:
 
 ## Building locally
 
-`lein-nvd` uses [git-lfs](https://git-lfs.github.com/) to host a copy of the database
-for testing purposes. To checkout the project, ensure that `git-lfs` is properly installed
-- see the [Github LFS Installation Wiki](https://github.com/github/git-lfs/wiki/Installation).
-
 The core module is run outside of leiningen (there is a conflict in the version of
 Lucene that is used in the dependency-check libs vs. the version of Lucene that is
 embedded in Leiningen).

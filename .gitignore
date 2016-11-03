@@ -10,3 +10,4 @@ pom.xml.asc
 .lein-plugins/
 .lein-failures
 .nrepl-port
+test/resources/dc.h2.db

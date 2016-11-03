@@ -22,11 +22,25 @@
 
 (ns nvd.task.check-test
   (:require
+   [clojure.java.io :as io]
    [clojure.test :refer :all]
    [nvd.task.update-database :as update-db]
-   [nvd.task.check :as check]))
+   [nvd.task.check :as check])
+  (:import
+   [java.util.zip GZIPInputStream]))
+
+(defn gunzip
+  ; Attribution: https://gist.github.com/bpsm/1858654
+  "Writes the contents of input to output, decompressed.
+  input: something which can be opened by io/input-stream.
+      The bytes supplied by the resulting stream must be gzip compressed.
+  output: something which can be copied to by io/copy."
+  [input output & opts]
+  (with-open [input (-> input io/file io/input-stream GZIPInputStream.)]
+    (apply io/copy input (io/file output) opts)))
 
 (deftest self-check
+  (gunzip "test/resources/dc.h2.db.gz" "test/resources/dc.h2.db")
   (update-db/-main "test/resources/self-test.json")
   (let [project (check/-main "test/resources/self-test.json")]
     (is (== 11.0 (get-in project [:nvd :fail-threshold])))
