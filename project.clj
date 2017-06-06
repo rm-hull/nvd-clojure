@@ -8,8 +8,8 @@
     [org.clojure/clojure "1.8.0"]
     [clansi "1.0.0"]
     [org.clojure/data.json "0.2.6"]
-    [org.slf4j/slf4j-simple "1.7.22"]
-    [org.owasp/dependency-check-core "1.4.4"]
+    [org.slf4j/slf4j-simple "1.7.25"]
+    [org.owasp/dependency-check-core "1.4.5"]
     [rm-hull/table "0.6.4"]]
   :scm {:url "git@github.com:rm-hull/lein-nvd.git"}
   :source-paths ["src"]
@@ -24,5 +24,5 @@
       :global-vars {*warn-on-reflection* true}
       :plugins [
         [lein-cljfmt "0.5.6"]
-        [lein-codox "0.10.2"]
+        [lein-codox "0.10.3"]
         [lein-cloverage "1.0.9"]]}})
