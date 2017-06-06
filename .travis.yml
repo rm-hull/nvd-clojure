@@ -12,7 +12,7 @@ before_script:
   - lein install
   - lein cljfmt check
 script:
-  - lein with-profile +dev cloverage --coveralls
+  - travis_wait lein with-profile +dev cloverage --coveralls
 after_success:
   - curl -F 'json_file=@target/coverage/coveralls.json' 'https://coveralls.io/api/v1/jobs'
 jdk:
