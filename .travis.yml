@@ -1,5 +1,11 @@
 language: clojure
 lein: 2.7.1
+install:
+  # Get recent node:
+  - . $HOME/.nvm/nvm.sh
+  - nvm install stable
+  - nvm use stable
+  - npm install
 before_script:
   - npm install -g eclint
   - eclint check .* * src/**/*.clj test/**/*.clj
