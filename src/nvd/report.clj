@@ -43,7 +43,7 @@
         deps (.getDependencies engine)
         analyzers (.getAnalyzers engine)
         rg (ReportGenerator. title deps analyzers db-props)]
-    (.generateReports rg output-dir output-fmt)
+    (.write rg ^String output-dir ^String output-fmt)
     project))
 
 (defn- severity [cvssScore]
