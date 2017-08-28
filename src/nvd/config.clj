@@ -96,12 +96,8 @@
               a b))
 
 (defn- ^DatabaseProperties db-props []
-  (let [cve (CveDB.)]
-    (try
-      (.open cve)
-      (.getDatabaseProperties cve)
-      (finally
-        (.close cve)))))
+  (with-open [cve (CveDB/getInstance)]
+    (.getDatabaseProperties cve)))
 
 (defn populate-settings! [config-file]
   (let [project (deep-merge default-settings (read-opts config-file))
