@@ -6,8 +6,6 @@
 [![Clojars Project](https://img.shields.io/clojars/v/lein-nvd.svg)](https://clojars.org/lein-nvd)
 [![Maintenance](https://img.shields.io/maintenance/yes/2017.svg?maxAge=2592000)]()
 
-> NEARLY FIT FOR HUMAN CONSUMPTION ... (▀̿Ĺ̯▀̿ ̿) HOLD TIGHT !!!
-
 [National Vulnerability Database](https://nvd.nist.gov/) dependency-checker
 plugin for Leiningen. When run in your project, all the JARs on the classpath
 will be checked for known security vulnerabilities. `lein-nvd` extracts project
@@ -21,7 +19,7 @@ dependencies and passes them to a library called [Dependency-Check](https://gith
 
 ### Installation
 
-To install globally, add `[lein-nvd "0.2.7"]` into the `:plugins` vector of
+To install globally, add `[lein-nvd "0.3.0"]` into the `:plugins` vector of
 your `:user` profile in _~/.lein/profiles.clj_, or on a per-project basis, add
 to the profiles section of your _project.clj_.
 
