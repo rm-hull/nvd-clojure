@@ -41,7 +41,7 @@
 (defn nvd "
   Scans project dependencies, attempting to detect publicly disclosed
   vulnerabilities contained within dependent JAR files. It does this by
-  determininging if there is a Common Platform Enumeration (CPE) identifier
+  determining if there is a Common Platform Enumeration (CPE) identifier
   for a given dependency. On completion, a summary table is displayed on
   the console (showing the status for each dependency), and detailed report
   linking to the associated CVE entries.

@@ -28,7 +28,8 @@ to the profiles section of your _project.clj_.
 Run `lein nvd check` in your project. The first time the plugin runs, it will
 download (and cache) various databases from https://nvd.nist.gov. Subsequent
 runs will periodically check and update the local database, but the initial run
-could therefore be quite slow - of the order of several minutes, so give it time.
+could therefore be quite slow - of the order of ten minutes or more, so give it
+time.
 
 On completion, a summary table is output to the console, and a suite of reports
 will be produced in the project's _./target/nvd/_ directory. If vulnerabilities
@@ -73,9 +74,9 @@ dependency relationships are:
 Note that this will show the project dependencies, and any plugins/injections
 from your local user profile. `lein nvd` will only run against project dependencies.
 
-[lein-ancient](https://github.com/xsc/lein-ancient) will traverse you
+[lein-ancient](https://github.com/xsc/lein-ancient) will traverse your project
 dependencies, and suggest upgraded versions, and can optionally be configured
-to update your project file.
+to update the project file.
 
 ## Other commands
 
@@ -85,7 +86,7 @@ Running the following command shows what sub-commands are available:
 
       Scans project dependencies, attempting to detect publicly disclosed
       vulnerabilities contained within dependent JAR files. It does this by
-      determininging if there is a Common Platform Enumeration (CPE) identifier
+      determining if there is a Common Platform Enumeration (CPE) identifier
       for a given dependency. On completion, a summary table is displayed on
       the console (showing the status for each dependency), and detailed report
       linking to the associated CVE entries.
@@ -161,6 +162,7 @@ library to do the heavy lifting.
 ## References
 
 * https://nvd.nist.gov/
+* https://www.owasp.org/index.php/OWASP_Dependency_Check
 * https://github.com/jeremylong/DependencyCheck
 * https://github.com/xsc/lein-ancient
 
