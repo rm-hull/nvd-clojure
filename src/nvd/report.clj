@@ -89,6 +89,7 @@
     (println (style severity color :bright))
     (println "Detailed reports saved in:" (style (.getAbsolutePath (io/file output-dir)) :bright))
     (println)
+    (println (style "   *** THIS REPORT IS WITHOUT WARRANTY ***" :magenta :bright))
     project))
 
 (defn fail-build? [project]
