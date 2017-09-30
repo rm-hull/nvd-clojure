@@ -7,6 +7,7 @@
     ; No known vulnerabilities, but have dependencies
     [org.clojure/data.json "0.2.6"]
     [korma "0.4.3"]
+    [org.apache.commons/commons-lang3 "3.3"]
 
     ; Sub-dependency has MEDIUM rated-vulnerabilities
     [org.apache.maven.wagon/wagon-http "2.2"]
@@ -21,4 +22,4 @@
       :dependencies [
         [org.clojure/clojure "1.8.0"]]
       :plugins [
-        [lein-nvd "0.3.0"]]}})
+        [lein-nvd "0.3.1"]]}})
