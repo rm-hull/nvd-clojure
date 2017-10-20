@@ -28,6 +28,7 @@
    [table.core :refer [table]]
    [nvd.config :as config])
   (:import
+   [java.util Arrays]
    [org.owasp.dependencycheck Engine]
    [org.owasp.dependencycheck.dependency Dependency Vulnerability]
    [org.owasp.dependencycheck.reporting ReportGenerator]))
@@ -39,10 +40,11 @@
         title (:title project)
         output-dir (get-in project [:nvd :output-dir] default-output-dir)
         output-fmt (get-in project [:nvd :output-format] "ALL")
-        db-props (:db-props project)
-        deps (.getDependencies engine)
+        db-props (.getDatabaseProperties (.getDatabase engine))
+        deps (Arrays/asList (.getDependencies engine))
         analyzers (.getAnalyzers engine)
-        rg (ReportGenerator. title deps analyzers db-props)]
+        settings (.getSettings engine)
+        rg (ReportGenerator. title deps analyzers db-props settings)]
     (.write rg ^String output-dir ^String output-fmt)
     project))
 

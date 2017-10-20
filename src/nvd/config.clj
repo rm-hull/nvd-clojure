@@ -95,35 +95,33 @@
                       :else y))
               a b))
 
-(defn- ^DatabaseProperties db-props []
-  (with-open [cve (CveDB/getInstance)]
-    (.getDatabaseProperties cve)))
-
 (defn populate-settings! [config-file]
   (let [project (deep-merge default-settings (read-opts config-file))
-        plugin-settings (:nvd project)]
-    (Settings/initialize)
+        plugin-settings (:nvd project)
+        settings (Settings.)
+        engine (Engine. settings)]
     (doseq [[prop path] integer-mappings]
-      (Settings/setIntIfNotNull prop (get-in plugin-settings path)))
+      (.setIntIfNotNull settings prop (get-in plugin-settings path)))
     (doseq [[prop path] boolean-mappings]
-      (Settings/setBooleanIfNotNull prop (get-in plugin-settings path)))
+      (.setBooleanIfNotNull settings prop (get-in plugin-settings path)))
     (doseq [[prop path] string-mappings]
-      (Settings/setStringIfNotEmpty prop (str (get-in plugin-settings path))))
+      (.setStringIfNotEmpty settings prop (str (get-in plugin-settings path))))
     (->
      project
-     (assoc-in [:nvd :data-directory] (Settings/getDataDirectory))
+     (assoc-in [:nvd :data-directory] (.getDataDirectory settings))
      (assoc
-      :engine (Engine.)
+      :engine engine
       :title (str (app-name project) " " (:version project))
       :start-time (System/currentTimeMillis)
-      :db-props (db-props)
       :config-file config-file))))
 
 (defn cleanup [project]
-  (.cleanup ^Engine (:engine project))
-  (Settings/cleanup true)
-  (when (:delete-config? project)
-    (.deleteOnExit (io/file (:config-file project)))))
+  (let [engine ^Engine (:engine project)
+        settings (.getSettings engine)]
+    (.close engine)
+    (.cleanup settings true)
+    (when (:delete-config? project)
+      (.deleteOnExit (io/file (:config-file project))))))
 
 (defmacro with-config
   [[binding config-file] & body]
