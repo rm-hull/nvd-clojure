@@ -38,10 +38,14 @@
 
 (defn- raw-project-attributes []
   (with-open [rdr (PushbackReader. (io/reader "project.clj"))]
-    (->>
-     (read rdr)
-     (drop 3)
-     (apply hash-map))))
+    (let [project-form (->>
+                        (repeatedly #(read rdr))
+                        (filter #(= (first %) 'defproject))
+                        (first))]
+      (->>
+       project-form
+       (drop 3)
+       (apply hash-map)))))
 
 (defn dependency? [elem]
   (and
