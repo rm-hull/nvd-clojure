@@ -1,5 +1,5 @@
 language: clojure
-lein: 2.7.1
+lein: 2.8.1
 install:
   # Get recent node:
   - . $HOME/.nvm/nvm.sh
