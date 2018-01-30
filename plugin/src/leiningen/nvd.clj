@@ -33,8 +33,7 @@
   (or (System/getenv "NVD_VERSION") "RELEASE"))
 
 (defn nvd-profile []
-  {:dependencies [['org.clojure/clojure "1.8.0"]
-                  ['nvd-clojure (get-lib-version)]]})
+  {:dependencies [['nvd-clojure (get-lib-version)]]})
 
 (def temp-file (java.io.File/createTempFile ".lein-nvd_" ".json"))
 
