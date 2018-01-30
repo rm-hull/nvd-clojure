@@ -127,14 +127,15 @@ wiki.
 
 There are some specific settings below which are worthy of a few comments:
 
-* **:fail-threshold** default value 0 - checks the highest CVSS score across all
-  dependencies, and fails if this threshold is breached. As CVSS score ranges from
-  0 .. 10, the default value will cause a build to fail even for the lowest rated
-  vulnerability. Set to 11 if you never want the build to fail.
-* **:data-directory** default value is _[JAR]/data_ - it shouldn't normally be
-  necessary to change the data directory.
-* **:suppression-file** default unset - allows for CVEs to be permanently
-  suppressed. See dependency-check documentation for the XML file-format.
+* `:fail-threshold` default value `0`; checks the highest CVSS score across all dependencies, and fails if this threshold is breached.
+  - As CVSS score ranges from `0..10`, the default value will cause a build to fail even for the lowest rated
+  vulnerability.
+  - Set to `11` if you never want the build to fail.
+* `:data-directory` default value is the data dir of `DependencyCheck`, e.g. `~/.m2/repository/org/owasp/dependency-check-utils/3.1.0/data/`
+  - It shouldn't normally be necessary to change this
+* `:suppression-file` default unset
+  - Allows for CVEs to be permanently suppressed.
+  - See [DependencyCheck documentation](https://jeremylong.github.io/DependencyCheck/) for the XML file-format.
 
 ## Building locally
 
