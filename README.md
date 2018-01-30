@@ -131,7 +131,7 @@ There are some specific settings below which are worthy of a few comments:
   - As CVSS score ranges from `0..10`, the default value will cause a build to fail even for the lowest rated
   vulnerability.
   - Set to `11` if you never want the build to fail.
-* `:data-directory` default value is the data dir of `DependencyCheck`, e.g. `~/.m2/repository/org/owasp/dependency-check-utils/3.1.0/data/`
+* `:data-directory` default value is the data dir of `DependencyCheck`, e.g. `~/.m2/repository/org/owasp/dependency-check-utils/3.1.1/data/`
   - It shouldn't normally be necessary to change this
 * `:suppression-file` default unset
   - Allows for CVEs to be permanently suppressed.
