@@ -33,7 +33,11 @@
   (or (System/getenv "NVD_VERSION") "RELEASE"))
 
 (defn nvd-profile []
-  {:dependencies [['nvd-clojure (get-lib-version)]]})
+  {:dependencies [['nvd-clojure (get-lib-version)]]
+   ;; The odds of a version conflict are fairly high, and it does no
+   ;; good to abort here on a conflict. Users will benefit from
+   ;; pedantic mode when running other tasks, so it's unnecessary here.
+   :pedantic? false})
 
 (def temp-file (java.io.File/createTempFile ".lein-nvd_" ".json"))
 
