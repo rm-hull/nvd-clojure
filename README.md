@@ -19,7 +19,7 @@ dependencies and passes them to a library called [Dependency-Check](https://gith
 
 ### Installation
 
-To install globally, add `[lein-nvd "0.4.4"]` into the `:plugins` vector of
+To install globally, add `[lein-nvd "0.5.0"]` into the `:plugins` vector of
 your `:user` profile in _~/.lein/profiles.clj_, or on a per-project basis, add
 to the profiles section of your _project.clj_.
 
