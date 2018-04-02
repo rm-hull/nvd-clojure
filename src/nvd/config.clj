@@ -86,7 +86,9 @@
 (def default-settings
   {:exit-after-check true
    :delete-config? true
-   :nvd {:analyzer {:assembly-enabled false}}})
+   :nvd {:analyzer {:assembly-enabled false}
+         :cve {:url-2.0-base "https://nvd.nist.gov/feeds/xml/cve/2.0/nvdcve-2.0-%d.xml.gz"
+               :url-2.0-modified "https://nvd.nist.gov/feeds/xml/cve/2.0/nvdcve-2.0-Modified.xml.gz"}}})
 
 (defn- deep-merge [a b]
   (merge-with (fn [x y]
