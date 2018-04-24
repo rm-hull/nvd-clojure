@@ -20,6 +20,6 @@
   :profiles {
     :dev {
       :dependencies [
-        [org.clojure/clojure "1.8.0"]]
+        [org.clojure/clojure "1.9.0"]]
       :plugins [
-        [lein-nvd "0.5.1"]]}})
+        [lein-nvd "0.5.2"]]}})
