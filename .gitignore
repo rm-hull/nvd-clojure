@@ -12,5 +12,6 @@ pom.xml.asc
 .nrepl-port
 test/resources/dc.h2.db
 test/resources/dc.trace.db
+test/resources/jsrepository.json
 .idea
 *.iml
