@@ -6,7 +6,7 @@
     :url "http://opensource.org/licenses/MIT"}
   :dependencies [
     [org.clojure/data.json "0.2.6"]
-    [com.cemerick/pomegranate "0.4.0"]]
+    [com.cemerick/pomegranate "1.1.0"]]
   :scm {:url "git@github.com:rm-hull/lein-nvd.git"}
   :source-paths ["src"]
   :jar-exclusions [#"(?:^|/).git"]
@@ -21,6 +21,6 @@
       :dependencies [
         [org.clojure/clojure "1.9.0"] ]
       :plugins [
-        [lein-codox "0.10.3"]
-        [lein-cloverage "1.0.9"]]}}
+        [lein-codox "0.10.5"]
+        [lein-cloverage "1.0.13"]]}}
   :eval-in-leiningen true)
