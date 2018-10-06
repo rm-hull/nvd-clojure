@@ -1,8 +1,8 @@
 # lein-nvd
 [![Build Status](https://travis-ci.org/rm-hull/lein-nvd.svg?branch=master)](http://travis-ci.org/rm-hull/lein-nvd)
 [![Coverage Status](https://coveralls.io/repos/rm-hull/lein-nvd/badge.svg?branch=master)](https://coveralls.io/r/rm-hull/lein-nvd?branch=master)
-[![Dependencies Status](https://jarkeeper.com/rm-hull/lein-nvd/status.svg)](https://jarkeeper.com/rm-hull/lein-nvd)
-[![Downloads](https://jarkeeper.com/rm-hull/lein-nvd/downloads.svg)](https://jarkeeper.com/rm-hull/lein-nvd)
+[![Dependencies Status](https://versions.deps.co/rm-hull/lein-nvd/status.svg)](https://versions.deps.co/rm-hull/lein-nvd)
+[![Downloads](https://versions.deps.co/rm-hull/lein-nvd/downloads.svg)](https://versions.deps.co/rm-hull/lein-nvd)
 [![Clojars Project](https://img.shields.io/clojars/v/lein-nvd.svg)](https://clojars.org/lein-nvd)
 [![Maintenance](https://img.shields.io/maintenance/yes/2018.svg?maxAge=2592000)]()
 
