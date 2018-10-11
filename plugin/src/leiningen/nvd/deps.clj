@@ -28,7 +28,8 @@
    [clojure.string :as s]
    [clojure.java.io :as io]
    [cemerick.pomegranate.aether :as aether]
-   [leiningen.core.classpath :refer [managed-dependency-hierarchy]]))
+   [leiningen.core.classpath :refer [managed-dependency-hierarchy]]
+   [leiningen.core.project :refer [read-raw]]))
 
 (defn flatten-tree [deps]
   (apply concat
@@ -37,15 +38,7 @@
              (cons dep (lazy-seq (flatten-tree subdeps)))))))
 
 (defn- raw-project-attributes []
-  (with-open [rdr (PushbackReader. (io/reader "project.clj"))]
-    (let [project-form (->>
-                        (repeatedly #(read rdr))
-                        (filter #(= (first %) 'defproject))
-                        (first))]
-      (->>
-       project-form
-       (drop 3)
-       (apply hash-map)))))
+  (read-raw "project.clj"))
 
 (defn dependency? [elem]
   (and
