@@ -7,14 +7,16 @@
     ; No known vulnerabilities, but have dependencies
     [org.clojure/data.json "0.2.6"]
     [korma "0.4.3"]
-    [org.apache.commons/commons-lang3 "3.3"]
 
     ; Sub-dependency has MEDIUM rated-vulnerabilities
     [org.apache.maven.wagon/wagon-http "2.2"]
 
     ; Has HIGH severity vulnerabilities
     [com.fasterxml.jackson.core/jackson-databind "2.4.2"]
-    [com.fasterxml.jackson.core/jackson-annotations "2.4.0"]]
+    [com.fasterxml.jackson.core/jackson-annotations "2.4.0"]
+
+    [com.amazonaws/aws-lambda-java-core "1.2.0"]
+    ]
   :source-paths ["src"]
   :min-lein-version "2.6.1"
   :profiles {
