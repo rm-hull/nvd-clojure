@@ -23,6 +23,6 @@
     :dev {
       :global-vars {*warn-on-reflection* true}
       :plugins [
-        [lein-cljfmt "0.6.1"]
+        [lein-cljfmt "0.6.3"]
         [lein-codox "0.10.5"]
         [lein-cloverage "1.0.13"]]}})
