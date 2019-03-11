@@ -8,7 +8,7 @@
     [org.clojure/clojure "1.10.0"]
     [clansi "1.0.0"]
     [org.clojure/data.json "0.2.6"]
-    [org.slf4j/slf4j-simple "1.7.25"]
+    [org.slf4j/slf4j-simple "1.7.26"]
     [org.owasp/dependency-check-core "4.0.2"]
     [rm-hull/table "0.7.0"]]
   :scm {:url "git@github.com:rm-hull/lein-nvd.git"}
