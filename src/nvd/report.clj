@@ -58,18 +58,21 @@
 (defn- color [severity]
   (get {:none :green :low :cyan :medium :yellow :high :red} severity))
 
-(defn- vuln-status [^Dependency dep]
-  (let [vulns (.getVulnerabilities dep)]
-    (if (empty? vulns)
-      (style "OK" :green :bright)
-      (s/join ", "
-              (for [^Vulnerability v vulns
-                    :let [color (-> (.getCvssScore v) severity color)]]
-                (style (.getName v) color :bright))))))
+(defn- vulnerable? [^Dependency dep]
+  (not-empty (.getVulnerabilities dep)))
 
-(defn- vulnerabilities [^Engine engine]
+(defn- vuln-status [^Dependency dep]
+  (if-not (vulnerable? dep)
+    (style "OK" :green :bright)
+    (s/join ", "
+            (for [^Vulnerability v (.getVulnerabilities dep)
+                  :let [color (-> (.getCvssScore v) severity color)]]
+              (style (.getName v) color :bright)))))
+
+(defn- vulnerabilities [project ^Engine engine]
   (sort-by :dependency
-           (for [^Dependency dep (.getDependencies engine)]
+           (for [^Dependency dep (.getDependencies engine)
+                 :when (or (vulnerable? dep) (:verbose-report project))]
              {:dependency (.getFileName dep) :status (vuln-status dep)})))
 
 (defn- scores [^Engine engine]
@@ -80,7 +83,7 @@
 (defn print-summary [project]
   (let [^Engine engine (:engine project)
         output-dir (get-in project [:nvd :output-dir] default-output-dir)
-        summary (vulnerabilities engine)
+        summary (vulnerabilities project engine)
         scores  (scores engine)
         highest-score (apply max 0 scores)
         color (-> highest-score severity color)

@@ -86,6 +86,7 @@
 (def default-settings
   {:exit-after-check true
    :delete-config? true
+   :verbose-results false
    :nvd {:analyzer {:assembly-enabled false}}})
 
 (defn- deep-merge [a b]
