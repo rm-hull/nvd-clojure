@@ -72,7 +72,7 @@
 (defn- vulnerabilities [project ^Engine engine]
   (sort-by :dependency
            (for [^Dependency dep (.getDependencies engine)
-                 :when (or (vulnerable? dep) (:verbose-report project))]
+                 :when (or (vulnerable? dep) (:verbose-summary project))]
              {:dependency (.getFileName dep) :status (vuln-status dep)})))
 
 (defn- scores [^Engine engine]
@@ -88,7 +88,10 @@
         highest-score (apply max 0 scores)
         color (-> highest-score severity color)
         severity (-> highest-score severity name s/upper-case)]
-    (table summary)
+
+    (when (or (:verbose-summary project) (pos? (count scores)))
+      (table summary))
+
     (println)
     (print (count scores) "vulnerabilities detected. Severity: ")
     (println (style severity color :bright))
