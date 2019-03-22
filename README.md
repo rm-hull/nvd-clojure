@@ -17,6 +17,12 @@ dependencies and passes them to a library called [Dependency-Check](https://gith
 > a given dependency. If found, it will generate a report linking to the
 > associated CVE entries.
 
+**BREAKING CHANGE**: version 1.0 only shows a summary table of packages that
+are demarcated as having a CVSS score greater than zero (i.e any that are
+rated OK, are now not shown by default). Any that are rated low or high severity
+continue to be shown. To revert to pre-1.0 behavior, add `:verbose-summary true`
+to your project [configuration](#configuration-options).
+
 ### Installation
 
 To install globally, add `[lein-nvd "0.6.0"]` into the `:plugins` vector of
@@ -136,6 +142,9 @@ There are some specific settings below which are worthy of a few comments:
 * `:suppression-file` default unset
   - Allows for CVEs to be permanently suppressed.
   - See [DependencyCheck documentation](https://jeremylong.github.io/DependencyCheck/) for the XML file-format.
+* `:verbose-summary` default false
+  - When set to true, the summary table includes a severity determination for all dependencies.
+  - When set to false, the summary table includes only packages that have either low or high severity determination.
 
 ## Building locally
 
