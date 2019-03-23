@@ -25,7 +25,7 @@ to your project [configuration](#configuration-options).
 
 ### Installation
 
-To install globally, add `[lein-nvd "0.6.0"]` into the `:plugins` vector of
+To install globally, add `[lein-nvd "1.0.0"]` into the `:plugins` vector of
 your `:user` profile in _~/.lein/profiles.clj_, or on a per-project basis, add
 to the profiles section of your _project.clj_.
 
@@ -180,7 +180,7 @@ library to do the heavy lifting.
 
 The MIT License (MIT)
 
-Copyright (c) 2016-18 Richard Hull
+Copyright (c) 2016-19 Richard Hull
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
