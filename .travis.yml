@@ -16,5 +16,4 @@ script:
 after_success:
   - curl -F 'json_file=@target/coverage/coveralls.json' 'https://coveralls.io/api/v1/jobs'
 jdk:
-  - oraclejdk8
   - oraclejdk11
