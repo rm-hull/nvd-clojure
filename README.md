@@ -25,7 +25,7 @@ to your project [configuration](#configuration-options).
 
 ### Installation
 
-To install globally, add `[lein-nvd "1.0.0"]` into the `:plugins` vector of
+To install globally, add `[lein-nvd "1.1.0"]` into the `:plugins` vector of
 your `:user` profile in _~/.lein/profiles.clj_, or on a per-project basis, add
 to the profiles section of your _project.clj_.
 
