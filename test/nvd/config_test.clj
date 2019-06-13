@@ -26,7 +26,7 @@
    [clojure.test :refer :all]
    [nvd.config :refer :all]))
 
-(def dependency-check-version "4.0.2")
+(def dependency-check-version "5.0.0")
 
 (deftest check-app-name
   (is (= "unknown" (app-name {:nome "hello-world" :version "0.0.1"})))

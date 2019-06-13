@@ -48,6 +48,9 @@
     (.write rg ^String output-dir ^String output-fmt)
     project))
 
+(defn- score [^Vulnerability vulnerability]
+  (.getScore (.getCvssV2 vulnerability)))
+
 (defn- severity [cvssScore]
   (cond
     (= cvssScore 0) :none
@@ -66,7 +69,7 @@
     (style "OK" :green :bright)
     (s/join ", "
             (for [^Vulnerability v (.getVulnerabilities dep)
-                  :let [color (-> (.getCvssScore v) severity color)]]
+                  :let [color (-> v score severity color)]]
               (style (.getName v) color :bright)))))
 
 (defn- vulnerabilities [project ^Engine engine]
@@ -78,7 +81,7 @@
 (defn- scores [^Engine engine]
   (flatten (for [^Dependency dep (.getDependencies engine)
                  ^Vulnerability vuln (.getVulnerabilities dep)]
-             (.getCvssScore vuln))))
+             (score vuln))))
 
 (defn print-summary [project]
   (let [^Engine engine (:engine project)
