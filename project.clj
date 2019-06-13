@@ -5,11 +5,11 @@
     :name "The MIT License (MIT)"
     :url "http://opensource.org/licenses/MIT"}
   :dependencies [
-    [org.clojure/clojure "1.10.0"]
+    [org.clojure/clojure "1.10.1"]
     [clansi "1.0.0"]
     [org.clojure/data.json "0.2.6"]
     [org.slf4j/slf4j-simple "1.7.26"]
-    [org.owasp/dependency-check-core "4.0.2"]
+    [org.owasp/dependency-check-core "5.0.0"]
     [rm-hull/table "0.7.0"]]
   :scm {:url "git@github.com:rm-hull/lein-nvd.git"}
   :source-paths ["src"]

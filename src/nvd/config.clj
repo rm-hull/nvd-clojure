@@ -32,7 +32,6 @@
 
 (def ^:private string-mappings
   {Settings$KEYS/ANALYZER_NEXUS_URL [:analyzer :nexus-url]
-   Settings$KEYS/ANALYZER_ASSEMBLY_MONO_PATH [:analyzer :path-to-mono]
    Settings$KEYS/SUPPRESSION_FILE [:suppression-file]
    Settings$KEYS/ADDITIONAL_ZIP_EXTENSIONS [:zip-extensions]
    Settings$KEYS/PROXY_SERVER [:proxy :server]
@@ -45,11 +44,7 @@
    Settings$KEYS/DB_DRIVER_PATH [:database :driver-path]
    Settings$KEYS/DB_CONNECTION_STRING [:database :connection-string]
    Settings$KEYS/DB_USER [:database :user]
-   Settings$KEYS/DB_PASSWORD [:database :password]
-   Settings$KEYS/CVE_MODIFIED_12_URL [:cve :url-1.2-modified]
-   Settings$KEYS/CVE_MODIFIED_20_URL [:cve :url-2.0-modified]
-   Settings$KEYS/CVE_SCHEMA_1_2 [:cve :url-1.2-base]
-   Settings$KEYS/CVE_SCHEMA_2_0 [:cve :url-2.0-base]})
+   Settings$KEYS/DB_PASSWORD [:database :password]})
 
 (def ^:private integer-mappings
   {Settings$KEYS/CVE_CHECK_VALID_FOR_HOURS [:cve :valid-for-hours]})
