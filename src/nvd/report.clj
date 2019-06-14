@@ -49,7 +49,12 @@
     project))
 
 (defn- score [^Vulnerability vulnerability]
-  (.getScore (.getCvssV2 vulnerability)))
+  (let [cvss2 (.getCvssV2 vulnerability)
+        cvss3 (.getCvssV3 vulnerability)]
+    (cond
+      cvss2 (.getScore cvss2)
+      cvss3 (.getBaseScore cvss3)
+      :else 1)))
 
 (defn- severity [cvssScore]
   (cond
@@ -68,7 +73,7 @@
   (if-not (vulnerable? dep)
     (style "OK" :green :bright)
     (s/join ", "
-            (for [^Vulnerability v (.getVulnerabilities dep)
+            (for [^Vulnerability v (reverse (sort-by score (.getVulnerabilities dep)))
                   :let [color (-> v score severity color)]]
               (style (.getName v) color :bright)))))
 
