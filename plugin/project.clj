@@ -1,4 +1,4 @@
-(defproject lein-nvd "1.1.0"
+(defproject lein-nvd "1.1.1"
   :description "National Vulnerability Database [https://nvd.nist.gov/] dependency-checker leiningen plugin."
   :url "https://github.com/rm-hull/lein-nvd"
   :license {
