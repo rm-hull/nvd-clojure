@@ -43,6 +43,12 @@ are detected, then the check process will exit abnormally, thereby
 causing any CI build environment to error. (This behaviour can be overriden by
 setting a `:fail-threshold` in the project [configuration](#configuration-options)).
 
+**IMPORTANT NOTE:** By default, the plugin will always use the latest release
+version of nvd. To specify the version of nvd manually, set the `NVD_VERSION`
+environmental variable to desired value, for example:
+
+    NVD_VERSION=1.1.1 lein nvd check
+
 ### Example
 
 There is an [example project](https://github.com/rm-hull/lein-nvd/blob/master/example/project.clj)

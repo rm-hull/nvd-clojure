@@ -65,7 +65,14 @@
                as this is incorporated into the 'check' command.
 
   Any text after the command are treated as arguments and are passed directly
-  directly to the command for further processing."
+  directly to the command for further processing.
+
+  By default, the plugin will always use the latest release version of nvd.
+  To specify the version of nvd manually, set the NVD_VERSION environmental
+  variable to desired value, for example:
+
+     NVD_VERSION=1.1.1 lein nvd check
+"
   [project command & args]
   (let [profile (merge (:nvd (:profiles project)) (nvd-profile))
         project (merge-profiles project [profile])
