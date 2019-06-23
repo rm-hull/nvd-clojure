@@ -151,6 +151,7 @@ There are some specific settings below which are worthy of a few comments:
 * `:verbose-summary` default false
   - When set to true, the summary table includes a severity determination for all dependencies.
   - When set to false, the summary table includes only packages that have either low or high severity determination.
+* `:output-dir` default value `target/nvd/`: the directory to save reports into
 
 ## Building locally
 
