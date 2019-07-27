@@ -1,4 +1,4 @@
-(defproject nvd-clojure "1.1.1"
+(defproject nvd-clojure "1.2.0"
   :description "National Vulnerability Database [https://nvd.nist.gov/] dependency-checker"
   :url "https://github.com/rm-hull/lein-nvd"
   :license {
@@ -26,6 +26,6 @@
       :plugins [
         [lein-cljfmt "0.6.4"]
         [lein-codox "0.10.7"]
-        [lein-cloverage "1.1.1"]]
+        [lein-cloverage "1.2.0"]]
       :dependencies [
         [commons-collections "3.2.1"]]}})
