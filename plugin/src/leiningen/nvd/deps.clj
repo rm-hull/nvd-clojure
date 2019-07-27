@@ -43,7 +43,8 @@
 (defn dependency? [elem]
   (and
    (vector? elem)
-   (#{:dependencies :managed-dependencies} (first elem))))
+   (#{:dependencies :managed-dependencies} (first elem))
+   (seq? (second elem))))
 
 (defn- project-deps []
   (let [deps (atom [])
