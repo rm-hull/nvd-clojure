@@ -94,8 +94,7 @@
 (defn populate-settings! [config-file]
   (let [project (deep-merge default-settings (read-opts config-file))
         plugin-settings (:nvd project)
-        settings (Settings.)
-        engine (Engine. settings)]
+        settings (Settings.)]
     (doseq [[prop path] integer-mappings]
       (.setIntIfNotNull settings prop (get-in plugin-settings path)))
     (doseq [[prop path] boolean-mappings]
@@ -106,7 +105,7 @@
      project
      (assoc-in [:nvd :data-directory] (.getDataDirectory settings))
      (assoc
-      :engine engine
+      :engine (Engine. settings)
       :title (str (app-name project) " " (:version project))
       :start-time (System/currentTimeMillis)
       :config-file config-file))))
