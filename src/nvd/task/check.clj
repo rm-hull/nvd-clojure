@@ -25,9 +25,14 @@
    [clojure.string :as s]
    [clansi :refer [style]]
    [nvd.config :refer [with-config]]
-   [nvd.report :refer [generate-report print-summary fail-build?]])
+   [nvd.report :refer [generate-report print-summary fail-build?]]
+   [trptcolin.versioneer.core :refer [get-version]])
   (:import
    [org.owasp.dependencycheck Engine]))
+
+(defonce version
+  {:nvd-clojure (get-version "rm-hull" "nvd-clojure")
+   :dependency-check (.getImplementationVersion (.getPackage Engine))})
 
 (defn jar? [^String filename]
   (.endsWith filename ".jar"))
@@ -51,6 +56,7 @@
 (defn -main [config-file]
   (with-config [project config-file]
     (println "Checking dependencies for" (style (:title project) :bright :yellow) "...")
+    (println "  using nvd-clojure:" (:nvd-clojure version) "and depdendency-check:" (:dependency-check version))
     (-> project
         scan-and-analyze
         generate-report
