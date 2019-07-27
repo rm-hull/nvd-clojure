@@ -1,4 +1,4 @@
-(defproject lein-nvd "1.1.1"
+(defproject lein-nvd "1.2.0"
   :description "National Vulnerability Database [https://nvd.nist.gov/] dependency-checker leiningen plugin."
   :url "https://github.com/rm-hull/lein-nvd"
   :license {
@@ -21,6 +21,6 @@
       :dependencies [
         [org.clojure/clojure "1.10.1"] ]
       :plugins [
-        [lein-codox "0.10.5"]
-        [lein-cloverage "1.0.13"]]}}
+        [lein-codox "0.10.7"]
+        [lein-cloverage "1.1.1"]]}}
   :eval-in-leiningen true)
