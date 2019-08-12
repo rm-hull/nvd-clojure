@@ -27,7 +27,7 @@
    [leiningen.core.main :as main]
    [leiningen.core.eval :refer [eval-in-project]]
    [leiningen.core.project :as p :refer [merge-profiles]]
-   [leiningen.nvd.deps :refer [get-classpath]]))
+   [leiningen.nvd.deps :refer [get-classpath deps-flat-list-for-project]]))
 
 (defn get-lib-version []
   (or (System/getenv "NVD_VERSION") "RELEASE"))
@@ -79,7 +79,8 @@
         path (.getAbsolutePath temp-file)
         opts    (merge
                  (select-keys project [:name :group :version :nvd])
-                 {:classpath (get-classpath project) :cmd-args args})]
+                 {:classpath (get-classpath project) :cmd-args args
+                  :classpath-deps-with-paths-list (deps-flat-list-for-project project)})]
 
     (spit path (json/write-str opts))
 

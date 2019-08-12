@@ -72,3 +72,49 @@
 
 (defn get-classpath [project]
   (jars (managed-dependency-hierarchy :dependencies :managed-dependencies project)))
+
+
+(defn deps-with-paths-flat-list
+  "Walks the dependency tree data structure (expects format provided by `lein deps :tree-data`)
+  in the depth-first walk manner and builds a flat sequence of dependencies
+  _including the whole path to that dependency_.
+  This is important for *transitive dependencies*.
+  That is if you only have a single top-level depedency A which in turn depends on AA and AB,
+  where AB depends on ABA, then you'll get following as a result:
+  ```
+  [
+   [[A]]
+   [[A] [AA]]
+   [[A] [AB]]
+   [[A] [AB] [ABA]]
+  ]
+  ```
+
+  where each element is a vector of depedencies a full path from a top-level dependency
+  (the first element of the vector) to the \"final\" dependency (the last element of the vector)."
+  [deps-tree tree-root-path]
+  (reduce-kv
+   (fn [deps-list dependency transitive-deps]
+     (apply conj
+            deps-list
+            (conj tree-root-path dependency)
+            (deps-with-paths-flat-list transitive-deps (conj tree-root-path dependency))))
+   []
+   deps-tree))
+
+(defn deps-flat-list
+  "Walks the dependency tree data structure (expects format provided by `lein deps :tree-data`)
+  in the depth-first walk manner and builds a flat sequence of dependencies
+  where each element is a vector representing a single atomic depedency
+  consisting of dependency name as the first element,
+  dependency version as the second element,
+  optional exclusions, etc - the same format as in leiningen."
+  [deps-tree]
+  (let [deps-with-paths (deps-with-paths-flat-list deps-tree [])]
+    (mapv peek deps-with-paths)))
+
+(defn deps-flat-list-for-project [project]
+  (deps-with-paths-flat-list (managed-dependency-hierarchy :dependencies :managed-dependencies project)
+                             []))
+
+#_(deps-flat-list-for-project my-project)

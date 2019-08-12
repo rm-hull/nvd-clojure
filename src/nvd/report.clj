@@ -77,11 +77,47 @@
                   :let [color (-> v score severity color)]]
               (style (.getName v) color :bright)))))
 
+(defn- dependency-name-and-version [dependency]
+  (subvec dependency 0 2))
+
+(defn- dep-path-as-string
+  ([dep-path]
+   (dep-path-as-string
+    dependency-name-and-version
+    dep-path))
+  ([dep-transform-fn dep-path]
+   (cond
+     (nil? dep-path) "<NO PATH FOUND>"
+     (= 1 (count  dep-path)) "<TOP_LEVEL DEPENDENCY>"
+     :else (some->> dep-path
+                    (mapv dep-transform-fn)
+                    (s/join " -> ")))))
+
+(defn- dependency-path
+  [{:keys [classpath-deps-with-paths-list] :as _project}
+   ;; Check https://github.com/jeremylong/DependencyCheck/blob/master/core/src/main/java/org/owasp/dependencycheck/dependency/Dependency.java
+   dependency-name]
+  (let [;; this is needed because dependency name is of format "groupId:artifactId"
+        artifact-dependency-name
+        (-> dependency-name (s/split #":") last)
+
+        matching-deps
+        (filterv
+         (fn match-dependency [path-to-dependency]
+           (let [[dep-name _dep-version :as _dependency] (peek path-to-dependency)]
+             (= artifact-dependency-name dep-name)))
+         classpath-deps-with-paths-list)]
+    (when (= 1 (count  matching-deps))
+      (first matching-deps))))
+
 (defn- vulnerabilities [project ^Engine engine]
   (sort-by :dependency
            (for [^Dependency dep (.getDependencies engine)
                  :when (or (vulnerable? dep) (:verbose-summary project))]
-             {:dependency (.getFileName dep) :status (vuln-status dep)})))
+             (let [dep-path (dependency-path project (.getName dep))]
+               {:dependency (.getFileName dep)
+                :status (vuln-status dep)
+                :dependency-path-from-root (dep-path-as-string dep-path)}))))
 
 (defn- scores [^Engine engine]
   (flatten (for [^Dependency dep (.getDependencies engine)
@@ -98,7 +134,13 @@
         severity (-> highest-score severity name s/upper-case)]
 
     (when (or (:verbose-summary project) (pos? (count scores)))
-      (table summary))
+      (table (map #(dissoc % :dependency-path-from-root)
+                  summary))
+      (println "(Transitive) paths from project's root to vulnerable dependencies:")
+      (println "------------------------------------------------------------------")
+      (doseq [{:keys [dependency dependency-path-from-root]} summary]
+        (println " *" dependency ": " dependency-path-from-root))
+      (println "------------------------------------------------------------------"))
 
     (println)
     (print (count scores) "vulnerabilities detected. Severity: ")
