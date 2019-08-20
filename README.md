@@ -43,12 +43,6 @@ are detected, then the check process will exit abnormally, thereby
 causing any CI build environment to error. (This behaviour can be overriden by
 setting a `:fail-threshold` in the project [configuration](#configuration-options)).
 
-**IMPORTANT NOTE:** By default, the plugin will always use the latest release
-version of nvd. To specify the version of nvd manually, set the `NVD_VERSION`
-environmental variable to desired value, for example:
-
-    NVD_VERSION=1.1.1 lein nvd check
-
 ### Example
 
 There is an [example project](https://github.com/rm-hull/lein-nvd/blob/master/example/project.clj)
@@ -154,10 +148,6 @@ There are some specific settings below which are worthy of a few comments:
 * `:output-dir` default value `target/nvd/`: the directory to save reports into
 
 ## Building locally
-
-The core module is run outside of leiningen (there is a conflict in the version of
-Lucene that is used in the dependency-check libs vs. the version of Lucene that is
-embedded in Leiningen).
 
 Build and install the core module, then do the same for the plugin:
 
