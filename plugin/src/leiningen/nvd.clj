@@ -25,19 +25,10 @@
    [clojure.string :as s]
    [clojure.data.json :as json]
    [leiningen.core.main :as main]
-   [leiningen.core.eval :refer [eval-in-project]]
-   [leiningen.core.project :as p :refer [merge-profiles]]
-   [leiningen.nvd.deps :refer [get-classpath]]))
-
-(defn get-lib-version []
-  (or (System/getenv "NVD_VERSION") "RELEASE"))
-
-(defn nvd-profile []
-  {:dependencies [['nvd-clojure (get-lib-version)]]
-   ;; The odds of a version conflict are fairly high, and it does no
-   ;; good to abort here on a conflict. Users will benefit from
-   ;; pedantic mode when running other tasks, so it's unnecessary here.
-   :pedantic? false})
+   [leiningen.nvd.deps :refer [get-classpath]]
+   [nvd.task.update-database]
+   [nvd.task.purge-database]
+   [nvd.task.check]))
 
 (def temp-file (java.io.File/createTempFile ".lein-nvd_" ".json"))
 
@@ -66,17 +57,9 @@
 
   Any text after the command are treated as arguments and are passed directly
   directly to the command for further processing.
-
-  By default, the plugin will always use the latest release version of nvd.
-  To specify the version of nvd manually, set the NVD_VERSION environmental
-  variable to desired value, for example:
-
-     NVD_VERSION=1.1.1 lein nvd check
 "
   [project command & args]
-  (let [profile (merge (:nvd (:profiles project)) (nvd-profile))
-        project (merge-profiles project [profile])
-        path (.getAbsolutePath temp-file)
+  (let [path (.getAbsolutePath temp-file)
         opts    (merge
                  (select-keys project [:name :group :version :nvd])
                  {:classpath (get-classpath project) :cmd-args args})]
@@ -84,7 +67,7 @@
     (spit path (json/write-str opts))
 
     (case command
-      "check"  (eval-in-project project `(nvd.task.check/-main ~path) '(require 'nvd.core))
-      "purge"  (eval-in-project project `(nvd.task.purge-database/-main ~path) '(require 'nvd.core))
-      "update" (eval-in-project project `(nvd.task.update-database/-main ~path) '(require 'nvd.core))
+      "check"  (nvd.task.check/-main path)
+      "purge"  (nvd.task.purge-database/-main path)
+      "update" (nvd.task.update-database/-main path)
       (main/abort "No such command:" command))))

@@ -6,7 +6,8 @@
     :url "http://opensource.org/licenses/MIT"}
   :dependencies [
     [org.clojure/data.json "0.2.6"]
-    [com.cemerick/pomegranate "1.1.0"]]
+    [com.cemerick/pomegranate "1.1.0"]
+    [nvd-clojure "1.2.0"]]
   :scm {:url "git@github.com:rm-hull/lein-nvd.git"}
   :source-paths ["src"]
   :jar-exclusions [#"(?:^|/).git"]
