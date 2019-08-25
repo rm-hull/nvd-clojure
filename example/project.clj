@@ -25,4 +25,4 @@
       :dependencies [
         [org.clojure/clojure "1.9.0"]]
       :plugins [
-        [lein-nvd "1.2.0"]]}})
+        [lein-nvd "1.3.0"]]}})
