@@ -28,7 +28,8 @@
    [nvd.report :refer [generate-report print-summary fail-build?]]
    [trptcolin.versioneer.core :refer [get-version]])
   (:import
-   [org.owasp.dependencycheck Engine]))
+   [org.owasp.dependencycheck Engine]
+   [org.owasp.dependencycheck.exception ExceptionCollection]))
 
 (defonce version
   {:nvd-clojure (get-version "rm-hull" "nvd-clojure")
@@ -45,7 +46,12 @@
     (doseq [p (:classpath project)]
       (when (jar? p)
         (.scan engine (absolute-path p))))
-    (.analyzeDependencies engine)
+    (try
+      (.analyzeDependencies engine)
+      (catch ExceptionCollection e
+        (let [exception-info (ex-info (str `ExceptionCollection)
+                                      {:exceptions (.getExceptions e)})]
+          (throw exception-info))))
     project))
 
 (defn conditional-exit [project]
