@@ -62,7 +62,7 @@
 (defn -main [config-file]
   (with-config [project config-file]
     (println "Checking dependencies for" (style (:title project) :bright :yellow) "...")
-    (println "  using nvd-clojure:" (:nvd-clojure version) "and depdendency-check:" (:dependency-check version))
+    (println "  using nvd-clojure:" (:nvd-clojure version) "and dependency-check:" (:dependency-check version))
     (-> project
         scan-and-analyze
         generate-report
