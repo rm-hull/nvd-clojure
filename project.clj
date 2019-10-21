@@ -9,7 +9,7 @@
     [clansi "1.0.0"]
     [org.clojure/data.json "0.2.6"]
     [org.slf4j/slf4j-simple "1.7.28"]
-    [org.owasp/dependency-check-core "5.2.1"]
+    [org.owasp/dependency-check-core "5.2.2"]
     [rm-hull/table "0.7.1"]
     [trptcolin/versioneer "0.2.0"]]
   :scm {:url "git@github.com:rm-hull/lein-nvd.git"}
@@ -26,6 +26,6 @@
       :plugins [
         [lein-cljfmt "0.6.4"]
         [lein-codox "0.10.7"]
-        [lein-cloverage "1.1.1"]]
+        [lein-cloverage "1.1.2"]]
       :dependencies [
         [commons-collections "3.2.1"]]}})
