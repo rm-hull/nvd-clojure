@@ -59,13 +59,22 @@
     (System/exit (if (:failed? project) -1 0))
     project))
 
-(defn -main [config-file]
-  (with-config [project config-file]
-    (println "Checking dependencies for" (style (:title project) :bright :yellow) "...")
-    (println "  using nvd-clojure:" (:nvd-clojure version) "and dependency-check:" (:dependency-check version))
-    (-> project
-        scan-and-analyze
-        generate-report
-        print-summary
-        fail-build?
-        conditional-exit)))
+(defn make-classpath []
+  (let [paths (.getURLs (ClassLoader/getSystemClassLoader))]
+    ;;(vec (map #(.getFile %) paths))
+    (apply print-str (map #(str "\"" (.getFile %) "\",") paths))))
+
+(defn -main [& config-file]
+  (if-some [config (first config-file)]
+    (with-config [project config]
+      (println "Checking dependencies for" (style (:title project) :bright :yellow) "...")
+      (println "  using nvd-clojure:" (:nvd-clojure version) "and dependency-check:" (:dependency-check version))
+      (-> project
+          scan-and-analyze
+          generate-report
+          print-summary
+          fail-build?
+          conditional-exit))
+    (let [f (java.io.File/createTempFile ".clj-nvd_" ".json")]
+      (spit f (str "{\"classpath\": [" (make-classpath) "]}"))
+      (-main f))))
