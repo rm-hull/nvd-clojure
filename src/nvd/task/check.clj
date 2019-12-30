@@ -61,7 +61,6 @@
 
 (defn make-classpath []
   (let [paths (.getURLs (ClassLoader/getSystemClassLoader))]
-    ;;(vec (map #(.getFile %) paths))
     (apply print-str (map #(str "\"" (.getFile %) "\",") paths))))
 
 (defn -main [& config-file]
