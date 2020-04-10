@@ -22,53 +22,12 @@
 
 (ns leiningen.nvd.deps
   (:import
-   [java.io File PushbackReader])
+   [java.io File])
   (:require
-   [clojure.walk :refer [prewalk]]
-   [clojure.string :as s]
-   [clojure.java.io :as io]
-   [cemerick.pomegranate.aether :as aether]
-   [leiningen.core.classpath :refer [managed-dependency-hierarchy]]
-   [leiningen.core.project :refer [read-raw]]))
-
-(defn flatten-tree [deps]
-  (apply concat
-         (when deps
-           (for [[dep subdeps] deps]
-             (cons dep (lazy-seq (flatten-tree subdeps)))))))
-
-(defn- raw-project-attributes []
-  (read-raw "project.clj"))
-
-(defn dependency? [elem]
-  (and
-   (vector? elem)
-   (#{:dependencies :managed-dependencies} (first elem))
-   (seq? (second elem))))
-
-(defn- project-deps []
-  (let [deps (atom [])
-        f    (fn [elem]
-               (if (dependency? elem)
-                 (do (swap! deps conj elem) nil)
-                 elem))]
-    (prewalk f (raw-project-attributes))
-    (->>
-     @deps
-     (map (partial apply hash-map))
-     (apply merge-with concat)
-     vals
-     (apply concat))))
-
-(defn- jars [dependency-tree]
-  (->>
-   (project-deps)
-   (select-keys dependency-tree)
-   flatten-tree
-   (map #(vector % nil))
-   (into {})
-   (aether/dependency-files)
-   (map (memfn ^File getAbsolutePath))))
+   [leiningen.core.project :refer [unmerge-profiles]]
+   [leiningen.core.classpath :refer [resolve-managed-dependencies]]))
 
 (defn get-classpath [project]
-  (jars (managed-dependency-hierarchy :dependencies :managed-dependencies project)))
+  (->> (unmerge-profiles project [:base :system :user])
+       (resolve-managed-dependencies :dependencies :managed-dependencies)
+       (map (memfn ^File getAbsolutePath))))
