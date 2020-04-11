@@ -4,7 +4,7 @@
 [![Dependencies Status](https://versions.deps.co/rm-hull/lein-nvd/status.svg)](https://versions.deps.co/rm-hull/lein-nvd)
 [![Downloads](https://versions.deps.co/rm-hull/lein-nvd/downloads.svg)](https://versions.deps.co/rm-hull/lein-nvd)
 [![Clojars Project](https://img.shields.io/clojars/v/lein-nvd.svg)](https://clojars.org/lein-nvd)
-[![Maintenance](https://img.shields.io/maintenance/yes/2019.svg?maxAge=2592000)]()
+[![Maintenance](https://img.shields.io/maintenance/yes/2020.svg?maxAge=2592000)]()
 
 [National Vulnerability Database](https://nvd.nist.gov/) dependency-checker
 plugin for Leiningen. When run in your project, all the JARs on the classpath
