@@ -7,7 +7,7 @@
   :dependencies [
     [org.clojure/clojure "1.10.1"]
     [clansi "1.0.0"]
-    [org.clojure/data.json "0.2.7"]
+    [org.clojure/data.json "1.0.0"]
     [org.slf4j/slf4j-simple "1.7.29"]
     [org.owasp/dependency-check-core "5.2.4"]
     [rm-hull/table "0.7.1"]
@@ -24,7 +24,7 @@
     :dev {
       :global-vars {*warn-on-reflection* true}
       :plugins [
-        [lein-cljfmt "0.6.6"]
+        [lein-cljfmt "0.6.7"]
         [lein-codox "0.10.7"]
         [lein-cloverage "1.1.2"]]
       :dependencies [
