@@ -49,6 +49,9 @@
     (try
       (.analyzeDependencies engine)
       (catch ExceptionCollection e
+        (println "Encountered errors while analyzing:" (.getMessage e))
+        (doseq [exc (.getExceptions e)]
+          (println exc))
         (let [exception-info (ex-info (str `ExceptionCollection)
                                       {:exceptions (.getExceptions e)})]
           (throw exception-info))))
