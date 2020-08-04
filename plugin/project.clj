@@ -1,4 +1,4 @@
-(defproject lein-nvd "1.4.0"
+(defproject lein-nvd "1.4.1"
   :description "National Vulnerability Database [https://nvd.nist.gov/] dependency-checker leiningen plugin."
   :url "https://github.com/rm-hull/lein-nvd"
   :license {
@@ -6,7 +6,7 @@
     :url "http://opensource.org/licenses/MIT"}
   :dependencies [
     [com.cemerick/pomegranate "1.1.0"]
-    [nvd-clojure "1.4.0"]]
+    [nvd-clojure "1.4.1"]]
   :scm {:url "git@github.com:rm-hull/lein-nvd.git"}
   :source-paths ["src"]
   :jar-exclusions [#"(?:^|/).git"]
