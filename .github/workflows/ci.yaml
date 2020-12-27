@@ -1,0 +1,26 @@
+name: Continuous Integration
+on: [push, pull_request]
+jobs:
+  ci:
+    name: Linting and tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '11'
+      - name: Checkout the branch
+        uses: actions/checkout@master
+        with:
+          ref: ${{ github.ref }}
+      - name: eclint
+        uses: snow-actions/eclint@v1.0.1
+        with:
+          args: 'check .* * src/**/*.clj test/**/*.clj'
+      - name: Install leiningen
+        uses: DeLaGuardo/setup-clojure@master
+        with:
+          lein: 2.9.4
+      - run: lein cljfmt check
+      - run: lein with-profile +dev cloverage --coveralls
+      - run: curl -F 'json_file=@target/coverage/coveralls.json' 'https://coveralls.io/api/v1/jobs'
+        if: success()
