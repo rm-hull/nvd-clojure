@@ -25,8 +25,8 @@
     :dev {
       :global-vars {*warn-on-reflection* true}
       :plugins [
-        [lein-cljfmt "0.6.7"]
+        [lein-cljfmt "0.7.0"]
         [lein-codox "0.10.7"]
-        [lein-cloverage "1.1.2"]]
+        [lein-cloverage "1.2.1"]]
       :dependencies [
         [commons-collections "3.2.1"]]}})
