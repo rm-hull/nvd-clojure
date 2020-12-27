@@ -32,7 +32,8 @@ under `:aliases` in _~/.clojure/deps.edn_, or add it to `:aliases` in
 the project local `deps.edn`, to look something like this:
 
 ```clojure
-:aliases {:nvd {:extra-deps {lein-nvd/lein-nvd {:mvn/version "1.4.1"}}}}
+:aliases {:nvd {:extra-deps {lein-nvd/lein-nvd {:mvn/version "1.4.1"}}
+                :main-opts ["-m" "nvd.task.check"]}}
 ```
 
 #### Leiningen
