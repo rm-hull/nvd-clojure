@@ -22,6 +22,7 @@
 
 (ns nvd.task.check
   (:require
+   [clojure.java.classpath :as cp]
    [clojure.string :as s]
    [clansi :refer [style]]
    [nvd.config :refer [with-config]]
@@ -62,9 +63,21 @@
     (System/exit (if (:failed? project) -1 0))
     project))
 
+(defn jvm-version []
+  (as-> (System/getProperty "java.version") $
+    (s/split $ #"\.")
+    (take 2 $)
+    (s/join "." $)
+    (Float/parseFloat $)))
+
 (defn make-classpath []
-  (let [paths (.getURLs (ClassLoader/getSystemClassLoader))]
-    (apply print-str (map #(str "\"" (.getFile %) "\",") paths))))
+  (let [{:keys [classpath fun]} (if (> (jvm-version) 1.8)
+                                  {:classpath (cp/system-classpath)
+                                   :fun (fn [jar] (.getPath jar))}
+                                  {:classpath (.getURLs (ClassLoader/getSystemClassLoader))
+                                   :fun (fn [jar] (.getFile jar))})
+        format-paths (partial map #(format "\"%s\"," (fun %)))]
+    (apply print-str (format-paths classpath))))
 
 (defn -main [& config-file]
   (if-some [config (first config-file)]
