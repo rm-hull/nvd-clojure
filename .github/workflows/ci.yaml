@@ -21,6 +21,10 @@ jobs:
         with:
           lein: 2.9.4
       - run: lein cljfmt check
-      - run: lein with-profile +dev cloverage --coveralls
-      - run: curl -F 'json_file=@target/coverage/coveralls.json' 'https://coveralls.io/api/v1/jobs'
+      - run: lein with-profile +dev cloverage --lcov
+      - name: Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          path-to-lcov: ./target/coverage/lcov.info 
+          github-token: ${{ secrets.GITHUB_TOKEN }}
         if: success()
