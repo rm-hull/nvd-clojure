@@ -25,17 +25,29 @@ to your project [configuration](#configuration-options).
 
 ### Installation
 
+#### Clojure CLI
+
+To install globally, add `lein-nvd/lein-nvd {:mvn/version "1.4.1"}`
+under `:aliases` in _~/.clojure/deps.edn_, or add it to `:aliases` in
+the project local `deps.edn`, to look something like this:
+
+```clojure
+:aliases {:nvd {:extra-deps {lein-nvd/lein-nvd {:mvn/version "1.4.1"}}}}
+```
+
+#### Leiningen
+
 To install globally, add `[lein-nvd "1.4.1"]` into the `:plugins` vector of
 your `:user` profile in _~/.lein/profiles.clj_, or on a per-project basis, add
 to the profiles section of your _project.clj_.
 
 ## Usage
 
-Run `lein nvd check` in your project. The first time the plugin runs, it will
-download (and cache) various databases from https://nvd.nist.gov. Subsequent
-runs will periodically check and update the local database, but the initial run
-could therefore be quite slow - of the order of ten minutes or more, so give it
-time.
+Run `lein nvd check` or `clj -M:nvd` (if you've chosen the alias `:nvd`, like
+above) in your project. The first time the plugin runs,it will download (and
+cache) various databases from https://nvd.nist.gov. Subsequent runs will
+periodically check and update the local database, but the initial run could
+therefore be quite slow - of the order of ten minutes or more, so give it time.
 
 On completion, a summary table is output to the console, and a suite of reports
 will be produced in the project's _./target/nvd/_ directory. If vulnerabilities
@@ -177,7 +189,7 @@ library to do the heavy lifting.
 
 The MIT License (MIT)
 
-Copyright (c) 2016-19 Richard Hull
+Copyright (c) 2016-20 Richard Hull
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
