@@ -1,5 +1,5 @@
 # lein-nvd
-[![Build Status](https://github.com/rm-hull/workflows/Continuous%20Integration/badge.svg)](https://github.com/rm-hull/lein-nvd/actions?query=workflow%3A%22Continuous+Integration%22)
+[![Build Status](https://github.com/rm-hull/lein-nvd/workflows/Continuous%20Integration/badge.svg)](https://github.com/rm-hull/lein-nvd/actions?query=workflow%3A%22Continuous+Integration%22)
 [![Coverage Status](https://coveralls.io/repos/rm-hull/lein-nvd/badge.svg?branch=master)](https://coveralls.io/r/rm-hull/lein-nvd?branch=master)
 [![Dependencies Status](https://versions.deps.co/rm-hull/lein-nvd/status.svg)](https://versions.deps.co/rm-hull/lein-nvd)
 [![Downloads](https://versions.deps.co/rm-hull/lein-nvd/downloads.svg)](https://versions.deps.co/rm-hull/lein-nvd)
