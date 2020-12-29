@@ -47,3 +47,7 @@
     (is (== 7.5 (get-in project [:nvd :highest-score])))
     (is (false? (project :failed?)))))
 
+(deftest classpath-test
+  (let [clojure "clojure-1.10.1.jar"]
+    (is (true? (.contains (check/clojure-cli-classpath) clojure)))
+    (is (true? (.contains (check/make-classpath) clojure)))))
