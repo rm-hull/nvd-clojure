@@ -22,8 +22,11 @@
 
 (ns nvd.task.check
   (:require
+   [clojure.edn :as edn]
    [clojure.java.classpath :as cp]
+   [clojure.java.io :as io]
    [clojure.string :as s]
+   [clojure.tools.deps.alpha :as deps]
    [clansi :refer [style]]
    [nvd.config :refer [with-config]]
    [nvd.report :refer [generate-report print-summary fail-build?]]
@@ -79,6 +82,16 @@
         format-paths (partial map #(format "\"%s\"," (fun %)))]
     (apply print-str (format-paths classpath))))
 
+(defn clojure-cli-classpath
+  "Read deps.edn and derive the classpath from its artifacts."
+  []
+  (apply print-str (map #(format "\"%s\"," %)
+                        (-> (slurp "deps.edn")
+                            edn/read-string
+                            (deps/resolve-deps nil)
+                            (deps/make-classpath nil nil)
+                            (s/split #":")))))
+
 (defn -main [& config-file]
   (if-some [config (first config-file)]
     (with-config [project config]
@@ -90,6 +103,9 @@
           print-summary
           fail-build?
           conditional-exit))
-    (let [f (java.io.File/createTempFile ".clj-nvd_" ".json")]
-      (spit f (str "{\"classpath\": [" (make-classpath) "]}"))
+    (let [f (java.io.File/createTempFile ".clj-nvd_" ".json")
+          classpath (if (.exists (io/file "deps.edn"))
+                      (clojure-cli-classpath)
+                      (make-classpath))]
+      (spit f (format "{\"classpath\": [%s]}" classpath))
       (-main f))))
