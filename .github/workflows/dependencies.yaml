@@ -1,0 +1,61 @@
+name: dependencies
+on:
+  schedule:
+    - cron: "29 7 * * *"
+  workflow_dispatch:
+
+jobs:
+  dependencies:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '11'
+      - name: Install Clojure CLI
+        uses: DeLaGuardo/setup-clojure@master
+        with:
+          cli: '1.10.1.763'
+          lein: 2.9.5
+      - name: check for outdated dependencies
+        id: deps
+        run: |
+          echo 'Scheduled outdated dependency check:' >> outdated.md
+          echo '```clojure' >> outdated.md
+          clojure -M:outdated >> outdated.md
+          echo '```' >> outdated.md
+          cat outdated.md
+          if [ $(grep -c ':mvn/version' outdated.md) -gt 0 ]; then echo ::set-output name=status::failure; else echo ::set-output name=status::success; fi
+      - if: ${{ steps.deps.outputs.status == 'failure' }}
+        name: Badge
+        uses: RubbaBoy/BYOB@v1.2.0
+        with:
+          NAME: dependencies
+          LABEL: 'dependencies'
+          STATUS: "out of date"
+          COLOR: red
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - if: ${{ steps.deps.outputs.status == 'success' }}
+        name: Badge
+        uses: RubbaBoy/BYOB@v1.2.0
+        with:
+          NAME: dependencies
+          LABEL: 'dependencies'
+          STATUS: 'up to date'
+          COLOR: green
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - if: ${{ steps.deps.outputs.status == 'failure' }}
+        name: Update stale dependencies
+        run: |
+          clojure -M:outdated --write
+          lein ancient upgrade
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          commit-message: Updating stale dependencies
+          title: Update stale dependencies
+          body: Updating dependencies to the latest stable versions
+          branch: update-dependencies
+          base: master

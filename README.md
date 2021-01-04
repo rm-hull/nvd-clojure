@@ -1,7 +1,7 @@
 # lein-nvd
 [![Build Status](https://github.com/rm-hull/lein-nvd/workflows/Continuous%20Integration/badge.svg)](https://github.com/rm-hull/lein-nvd/actions?query=workflow%3A%22Continuous+Integration%22)
 [![Coverage Status](https://coveralls.io/repos/rm-hull/lein-nvd/badge.svg?branch=master)](https://coveralls.io/r/rm-hull/lein-nvd?branch=master)
-[![Dependencies Status](https://versions.deps.co/rm-hull/lein-nvd/status.svg)](https://versions.deps.co/rm-hull/lein-nvd)
+[![Dependencies Status](https://byob.yarr.is/dotemacs/actions-play/dependencies)](https://github.com/rm-hull/lein-nvd/actions?query=workflow%3A%22dependencies%22)
 [![Downloads](https://versions.deps.co/rm-hull/lein-nvd/downloads.svg)](https://versions.deps.co/rm-hull/lein-nvd)
 [![Clojars Project](https://img.shields.io/clojars/v/lein-nvd.svg)](https://clojars.org/lein-nvd)
 [![Maintenance](https://img.shields.io/maintenance/yes/2020.svg?maxAge=2592000)]()
