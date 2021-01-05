@@ -28,6 +28,7 @@ jobs:
           echo '```' >> outdated.md
           cat outdated.md
           if [ $(grep -c ':mvn/version' outdated.md) -gt 0 ]; then echo ::set-output name=status::failure; else echo ::set-output name=status::success; fi
+          rm outdated.md
       - if: ${{ steps.deps.outputs.status == 'failure' }}
         name: Badge
         uses: RubbaBoy/BYOB@v1.2.0
@@ -50,7 +51,7 @@ jobs:
         name: Update stale dependencies
         run: |
           clojure -M:outdated --write
-          lein ancient upgrade
+          lein ancient upgrade :no-tests
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
         with:
