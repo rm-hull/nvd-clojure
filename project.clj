@@ -7,8 +7,8 @@
   :dependencies [[org.clojure/clojure "1.10.1"]
                  [clansi "1.0.0"]
                  [org.clojure/data.json "1.0.0"]
-                 [org.slf4j/slf4j-simple "1.7.29"]
-                 [org.owasp/dependency-check-core "5.3.2"]
+                 [org.slf4j/slf4j-simple "1.7.30"]
+                 [org.owasp/dependency-check-core "6.0.5"]
                  [rm-hull/table "0.7.1"]
                  [trptcolin/versioneer "0.2.0"]
                  [org.clojure/java.classpath "1.0.0"]
@@ -30,4 +30,4 @@
         [lein-cloverage "1.2.1"]
         [lein-ancient "0.6.15"]]
       :dependencies [
-        [commons-collections "3.2.1"]]}})
+        [commons-collections "20040616"]]}})

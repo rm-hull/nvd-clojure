@@ -3,8 +3,8 @@
         org.clojure/java.classpath {:mvn/version "1.0.0"}
         clansi/clansi {:mvn/version "1.0.0"}
         org.clojure/data.json {:mvn/version "1.0.0"}
-        org.slf4j/slf4j-simple {:mvn/version "1.7.29"}
-        org.owasp/dependency-check-core {:mvn/version "5.3.2"}
+        org.slf4j/slf4j-simple {:mvn/version "1.7.30"}
+        org.owasp/dependency-check-core {:mvn/version "6.0.5"}
         rm-hull/table {:mvn/version "0.7.1"}
         trptcolin/versioneer {:mvn/version "0.2.0"}
         org.clojure/tools.deps.alpha {:mvn/version "0.9.857"}}
