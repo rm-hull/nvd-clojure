@@ -19,7 +19,7 @@
     :dev {
       :global-vars {*warn-on-reflection* true}
       :dependencies [
-        [org.clojure/clojure "1.10.1"] ]
+        [org.clojure/clojure "1.10.3"] ]
       :plugins [
         [lein-codox "0.10.7"]
         [lein-cloverage "1.1.1"]]}}

@@ -44,10 +44,10 @@
   (update-db/-main "test/resources/self-test.json")
   (let [project (check/-main "test/resources/self-test.json")]
     (is (== 11.0 (get-in project [:nvd :fail-threshold])))
-    (is (== 7.5 (get-in project [:nvd :highest-score])))
+    (is (== 5.0 (get-in project [:nvd :highest-score])))
     (is (false? (project :failed?)))))
 
 (deftest classpath-test
-  (let [clojure "clojure-1.10.1.jar"]
+  (let [clojure "clojure-1.10.3.jar"]
     (is (true? (.contains (check/clojure-cli-classpath) clojure)))
     (is (true? (.contains (check/make-classpath) clojure)))))

@@ -4,7 +4,7 @@
   :license {
     :name "The MIT License (MIT)"
     :url "http://opensource.org/licenses/MIT"}
-  :dependencies [[org.clojure/clojure "1.10.1"]
+  :dependencies [[org.clojure/clojure "1.10.3"]
                  [clansi "1.0.0"]
                  [org.clojure/data.json "2.2.3"]
                  [org.slf4j/slf4j-simple "1.7.30"]
