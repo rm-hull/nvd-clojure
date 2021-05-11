@@ -27,7 +27,7 @@
       :plugins [
         [lein-cljfmt "0.7.0"]
         [lein-codox "0.10.7"]
-        [lein-cloverage "1.2.1"]
-        [lein-ancient "0.6.15"]]
+        [lein-cloverage "1.2.2"]
+        [lein-ancient "0.7.0"]]
       :dependencies [
         [commons-collections "20040616"]]}})
