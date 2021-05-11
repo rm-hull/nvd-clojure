@@ -160,6 +160,28 @@ There are some specific settings below which are worthy of a few comments:
   - When set to false, the summary table includes only packages that have either low or high severity determination.
 * `:output-dir` default value `target/nvd/`: the directory to save reports into
 
+## Avoiding classpath interference
+
+lein-nvd has some Java dependencies, which in turn can have CVEs themselves, or in any case interfere with your project's dependency tree, that would be computed in absence of lein-nvd.
+
+For this reason, you might want to invoke `nvd.task.check`'s main function by passing a classpath string as an argument.
+
+Said classpath string should try reflecting a _production's classpath_ as accurately as possible: it should not include dev/test tooling, plugins (like lein-nvd or any other), etc.
+
+#### Lein example
+
+```bash
+lein run -m nvd.task.check "" "$(lein with-profile -user,-dev classpath)"
+```
+
+#### deps.edn example
+
+```bash
+clojure -m nvd.task.check "" "$(clojure -Spath)"
+```
+
+...in both cases, an empty string is passed as the first argument, for backwards compatibility reasons.
+
 ## Building locally
 
 Build and install the core module, then do the same for the plugin:
@@ -190,7 +212,7 @@ library to do the heavy lifting.
 
 The MIT License (MIT)
 
-Copyright (c) 2016-20 Richard Hull
+Copyright (c) 2016-21 Richard Hull
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
