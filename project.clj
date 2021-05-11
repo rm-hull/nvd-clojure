@@ -4,15 +4,15 @@
   :license {
     :name "The MIT License (MIT)"
     :url "http://opensource.org/licenses/MIT"}
-  :dependencies [[org.clojure/clojure "1.10.1"]
+  :dependencies [[org.clojure/clojure "1.10.3"]
                  [clansi "1.0.0"]
-                 [org.clojure/data.json "1.0.0"]
+                 [org.clojure/data.json "2.2.3"]
                  [org.slf4j/slf4j-simple "1.7.30"]
-                 [org.owasp/dependency-check-core "6.0.5"]
+                 [org.owasp/dependency-check-core "6.1.6"]
                  [rm-hull/table "0.7.1"]
                  [trptcolin/versioneer "0.2.0"]
                  [org.clojure/java.classpath "1.0.0"]
-                 [org.clojure/tools.deps.alpha "0.9.857"]]
+                 [org.clojure/tools.deps.alpha "0.11.910"]]
   :scm {:url "git@github.com:rm-hull/lein-nvd.git"}
   :source-paths ["src"]
   :jar-exclusions [#"(?:^|/).git"]
