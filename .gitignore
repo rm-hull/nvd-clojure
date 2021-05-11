@@ -19,3 +19,5 @@ test/resources/jsrepository.json
 cache/
 oss_cache/
 .cpcache/
+/example/example-lein-output
+/example-lein-output

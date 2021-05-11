@@ -22,6 +22,8 @@ jobs:
           lein: 2.9.4
       - run: lein cljfmt check
       - run: lein with-profile +dev cloverage --lcov
+      - run: shellcheck .github/integration_test.sh
+      - run: .github/integration_test.sh
       - name: Coveralls
         uses: coverallsapp/github-action@master
         with:
