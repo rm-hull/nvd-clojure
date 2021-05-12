@@ -38,6 +38,25 @@ if ! grep --silent "[1-9][0-9] vulnerabilities detected\. Severity: " example-le
   exit 1
 fi
 
+# 3.- Exercise `tools.deps` integration
+
+cd example || exit 1
+
+example_classpath="$(clojure -Spath)"
+
+# cd to the root dir, so that one runs `defproject nvd-clojure` which is the most clean and realistic way to run `main`:
+cd .. || exit 1
+
+if clojure -m nvd.task.check "" "$example_classpath" > example-lein-output; then
+  echo "Should have failed with non-zero code!"
+  exit 1
+fi
+
+if ! grep --silent "[1-9][0-9] vulnerabilities detected\. Severity: " example-lein-output; then
+  echo "Should have found vulnerabilities!"
+  exit 1
+fi
+
 cd "$original" || exit 1
 
 exit 0
