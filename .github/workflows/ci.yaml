@@ -4,10 +4,13 @@ jobs:
   ci:
     name: Linting and tests
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java-version: ["8", "11"]
     steps:
       - uses: actions/setup-java@v1
         with:
-          java-version: '11'
+          java-version: ${{ matrix.java-version }}
       - name: Checkout the branch
         uses: actions/checkout@master
         with:
