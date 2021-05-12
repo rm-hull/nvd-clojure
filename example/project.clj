@@ -4,6 +4,7 @@
     :name "The MIT License (MIT)"
     :url "http://opensource.org/licenses/MIT"}
   :dependencies [
+    [org.clojure/clojure "1.10.2"]
     ; No known vulnerabilities, but have dependencies
     [org.clojure/data.json "0.2.6"]
     [korma "0.4.3"]
@@ -23,6 +24,6 @@
   :profiles {
     :dev {
       :dependencies [
-        [org.clojure/clojure "1.9.0"]]
+        [lein-nvd "1.4.1"]]
       :plugins [
         [lein-nvd "1.4.1"]]}})
