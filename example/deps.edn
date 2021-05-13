@@ -1,0 +1,15 @@
+{:deps      {;;  No known vulnerabilities, but have dependencies
+             org.clojure/data.json                          {:mvn/version "0.2.6"}
+             korma                                          {:mvn/version "0.4.3"}
+             com.amazonaws/aws-lambda-java-core             {:mvn/version "1.2.0"}
+
+             ;; Sub-dependency has MEDIUM rated-vulnerabilities
+             org.apache.maven.wagon/wagon-http              {:mvn/version "2.2"}
+
+             ;; Has HIGH severity vulnerabilities
+             com.fasterxml.jackson.core/jackson-databind    {:mvn/version "2.4.2"}
+             com.fasterxml.jackson.core/jackson-annotations {:mvn/version "2.4.0"}
+
+             org.slf4j/slf4j-api                            {:mvn/version "1.7.25"}}
+ :mvn/repos {"central" {:url "https://repo1.maven.org/maven2/"}
+             "clojars" {:url "https://repo.clojars.org/"}}}

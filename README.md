@@ -182,6 +182,8 @@ clojure -m nvd.task.check "" "$(clojure -Spath)"
 
 ...in both cases, an empty string is passed as the first argument, for backwards compatibility reasons.
 
+For extra isolation, it is recommended that you invoke `nvd.task.check` from _outside_ your project - e.g. from an empty project, a git clone of this very repo, or from $HOME (assuming you have lein-nvd as a dependency in your [user-wide Lein profile](https://github.com/technomancy/leiningen/blob/2586957f9d099ff11d50d312a6daf397c2a06fb1/doc/PROFILES.md)).
+
 ## Building locally
 
 Build and install the core module, then do the same for the plugin:
