@@ -69,7 +69,7 @@
    Settings$KEYS/ANALYZER_NEXUS_USES_PROXY [:analyzer :nexus-uses-proxy]})
 
 (defn app-name [project]
-  (let [name (get project :name "unknown")
+  (let [name (get project :name "stdin")
         group (get project :group name)]
     (if (= group name)
       name
