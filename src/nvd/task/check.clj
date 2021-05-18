@@ -120,10 +120,14 @@
 
       ;; perform some sanity checks for ensuring the calculated classpath has the expected format,
       ;; regardless of whether it came from Lein, deps.edn or stdin:
-      (assert (-> classpath first File. .exists)
-              "The classpath variable should be a vector of simple strings denoting existing files")
-      (assert (-> classpath last File. .exists)
-              "The classpath variable should be a vector of simple strings denoting existing files")
+      (let [f (-> classpath first File.)]
+        (assert (.exists f)
+                (str "The classpath variable should be a vector of simple strings denoting existing files. "
+                     f)))
+      (let [f (-> classpath last File.)]
+        (assert (.exists f)
+                (str "The classpath variable should be a vector of simple strings denoting existing files. "
+                     f)))
 
       (spit f json-str)
       (-main (.getCanonicalPath f)))))

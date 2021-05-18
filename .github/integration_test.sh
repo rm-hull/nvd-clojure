@@ -58,4 +58,20 @@ if ! grep --silent "$SUCCESS_REGEX" example-lein-output; then
   exit 1
 fi
 
+# 4.- Dogfood the `nvd-clojure` project
+
+own_classpath="$(lein with-profile -user,-dev,-test classpath)"
+
+lein with-profile -user,-dev,+ci run -m nvd.task.check "" "$own_classpath"
+
+# 5.- Dogfood the `lein-nvd` project
+
+cd plugin || exit 1
+
+plugin_classpath="$(lein with-profile -user,-dev,-test classpath)"
+
+cd .. || exit 1
+
+lein with-profile -user,-dev,+ci run -m nvd.task.check "" "$plugin_classpath"
+
 exit 0
