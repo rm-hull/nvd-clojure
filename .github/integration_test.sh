@@ -4,8 +4,6 @@ set -Euxo pipefail
 CONFIG_FILE="$PWD/.github/nvd-config.json"
 SUCCESS_REGEX="[1-9][0-9] vulnerabilities detected\. Severity: "
 
-original=$(pwd)
-
 lein with-profile -user,-dev,+ci install
 cd plugin || exit 1
 lein with-profile -user,-dev,+ci install
@@ -59,7 +57,5 @@ if ! grep --silent "$SUCCESS_REGEX" example-lein-output; then
   echo "Should have found vulnerabilities!"
   exit 1
 fi
-
-cd "$original" || exit 1
 
 exit 0
