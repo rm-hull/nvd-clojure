@@ -99,12 +99,17 @@
     (with-config [project config-filename]
       (println "Checking dependencies for" (style (:title project) :bright :yellow) "...")
       (println "  using nvd-clojure:" (:nvd-clojure version) "and dependency-check:" (:dependency-check version))
-      (-> project
-          scan-and-analyze
-          generate-report
-          print-summary
-          fail-build?
-          conditional-exit))
+      (let [project (cond-> project
+                      ;; Support receving a config-filename AND a classpath-string for CLI callers.
+                      ;; This allows to have a non-temporary config file, while still using a dynamically calculated classpath:
+                      (not (s/blank? classpath-string))
+                      (assoc :classpath (s/split classpath-string #":")))]
+        (-> project
+            scan-and-analyze
+            generate-report
+            print-summary
+            fail-build?
+            conditional-exit)))
     (let [passed-classpath-string? (not (s/blank? classpath-string))
           f (java.io.File/createTempFile ".clj-nvd_" ".json")
           classpath (cond

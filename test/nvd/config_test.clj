@@ -29,7 +29,7 @@
 (def dependency-check-version "6.1.6")
 
 (deftest check-app-name
-  (is (= "unknown" (app-name {:nome "hello-world" :version "0.0.1"})))
+  (is (= "stdin" (app-name {:nome "hello-world" :version "0.0.1"})))
   (is (= "hello-world" (app-name {:name "hello-world" :version "0.0.1"})))
   (is (= "hello-world" (app-name {:name "hello-world" :group "hello-world" :version "0.0.1"})))
   (is (= "fred/hello-world" (app-name {:name "hello-world" :group "fred" :version "0.0.1"}))))
