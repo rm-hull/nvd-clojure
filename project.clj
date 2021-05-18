@@ -12,7 +12,7 @@
                  [rm-hull/table "0.7.1"]
                  [trptcolin/versioneer "0.2.0"]
                  [org.clojure/java.classpath "1.0.0"]
-                 [org.clojure/tools.deps.alpha "0.11.910"]]
+                 [org.clojure/tools.deps.alpha "0.11.910" :exclusions [org.slf4j/jcl-over-slf4j]]]
   :scm {:url "git@github.com:rm-hull/lein-nvd.git"}
   :source-paths ["src"]
   :jar-exclusions [#"(?:^|/).git"]
@@ -30,4 +30,5 @@
         [lein-cloverage "1.2.2"]
         [lein-ancient "0.7.0"]]
       :dependencies [
-        [commons-collections "20040616"]]}})
+        [commons-collections "20040616"]]}
+    :ci {:pedantic? :abort}})
