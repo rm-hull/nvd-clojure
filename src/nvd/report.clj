@@ -25,12 +25,12 @@
    [clojure.string :as s]
    [clojure.java.io :as io]
    [clansi :refer [style]]
-   [table.core :refer [table]]
-   [nvd.config :as config])
+   [table.core :refer [table]])
   (:import
    [java.util Arrays]
    [org.owasp.dependencycheck Engine]
    [org.owasp.dependencycheck.dependency Dependency Vulnerability]
+   [org.owasp.dependencycheck.exception ExceptionCollection]
    [org.owasp.dependencycheck.reporting ReportGenerator]))
 
 (def default-output-dir "target/nvd")
@@ -44,7 +44,8 @@
         deps (Arrays/asList (.getDependencies engine))
         analyzers (.getAnalyzers engine)
         settings (.getSettings engine)
-        rg (ReportGenerator. title deps analyzers db-props settings)]
+        exception-collection (ExceptionCollection.)
+        rg (ReportGenerator. title deps analyzers db-props settings exception-collection)]
     (.write rg ^String output-dir ^String output-fmt)
     project))
 

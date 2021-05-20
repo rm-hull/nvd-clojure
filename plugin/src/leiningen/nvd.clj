@@ -28,9 +28,11 @@
    [leiningen.nvd.deps :refer [get-classpath]]
    [nvd.task.update-database]
    [nvd.task.purge-database]
-   [nvd.task.check]))
+   [nvd.task.check])
+  (:import
+   [java.io File]))
 
-(def temp-file (java.io.File/createTempFile ".lein-nvd_" ".json"))
+(def ^File temp-file (File/createTempFile ".lein-nvd_" ".json"))
 
 (defn nvd "
   Scans project dependencies, attempting to detect publicly disclosed

@@ -23,7 +23,7 @@
 (ns nvd.task.check-test
   (:require
    [clojure.java.io :as io]
-   [clojure.test :refer :all]
+   [clojure.test :refer [deftest is]]
    [nvd.task.update-database :as update-db]
    [nvd.task.check :as check])
   (:import

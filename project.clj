@@ -36,7 +36,10 @@
         [lein-cljfmt "0.7.0"]
         [lein-codox "0.10.7"]
         [lein-cloverage "1.2.2"]
-        [lein-ancient "0.7.0"]]
+        [lein-ancient "0.7.0"]
+        [jonase/eastwood "0.4.3"]]
       :dependencies [
+        [clj-kondo "2021.04.23"]
         [commons-collections "20040616"]]}
-    :ci {:pedantic? :abort}})
+    :ci {:pedantic? :abort}
+    :clj-kondo {:dependencies [[clj-kondo "2021.04.23"]]}})

@@ -35,6 +35,7 @@
       :dependencies [
         [org.clojure/clojure "1.10.3"] ]
       :plugins [
+        [jonase/eastwood "0.4.3"]
         [lein-codox "0.10.7"]
         [lein-cloverage "1.1.1"]]}
     :ci {:pedantic? :abort}}

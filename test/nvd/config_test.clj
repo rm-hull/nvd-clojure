@@ -23,8 +23,8 @@
 (ns nvd.config-test
   (:require
    [clojure.java.io :as io]
-   [clojure.test :refer :all]
-   [nvd.config :refer :all]))
+   [clojure.test :refer [deftest is]]
+   [nvd.config :refer [app-name with-config]]))
 
 (def dependency-check-version "6.1.6")
 

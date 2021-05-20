@@ -33,9 +33,11 @@
    [nvd.report :refer [generate-report print-summary fail-build?]]
    [trptcolin.versioneer.core :refer [get-version]])
   (:import
+   [java.net URL]
    [java.io File]
    [org.owasp.dependencycheck Engine]
-   [org.owasp.dependencycheck.exception ExceptionCollection]))
+   [org.owasp.dependencycheck.exception ExceptionCollection]
+   [java.net URLClassLoader]))
 
 (defonce version
   {:nvd-clojure (get-version "rm-hull" "nvd-clojure")
@@ -78,9 +80,10 @@
 (defn make-classpath []
   (let [{:keys [classpath fun]} (if (> (jvm-version) 1.8)
                                   {:classpath (cp/system-classpath)
-                                   :fun (fn [jar] (.getPath jar))}
-                                  {:classpath (.getURLs (ClassLoader/getSystemClassLoader))
-                                   :fun       (fn [jar] (.getFile jar))})]
+                                   :fun       (fn [^File jar] (.getPath jar))}
+                                  {:classpath (-> ^URLClassLoader (ClassLoader/getSystemClassLoader)
+                                                  .getURLs)
+                                   :fun       (fn [^URL jar] (.getFile jar))})]
     (map fun classpath)))
 
 (defn clojure-cli-classpath
@@ -88,9 +91,9 @@
   []
   (-> (slurp "deps.edn")
       edn/read-string
-      (deps/resolve-deps nil)
-      (deps/make-classpath nil nil)
-      (s/split #":")))
+      (deps/calc-basis)
+      (dissoc :paths)
+      :classpath-roots))
 
 (defn -main [& [config-filename classpath-string]]
   ;; specifically handle blank strings (in addition to nil)
@@ -120,11 +123,11 @@
 
       ;; perform some sanity checks for ensuring the calculated classpath has the expected format,
       ;; regardless of whether it came from Lein, deps.edn or stdin:
-      (let [f (-> classpath first File.)]
+      (let [f (-> classpath ^String (first) File.)]
         (assert (.exists f)
                 (str "The classpath variable should be a vector of simple strings denoting existing files. "
                      f)))
-      (let [f (-> classpath last File.)]
+      (let [f (-> classpath ^String (last) File.)]
         (assert (.exists f)
                 (str "The classpath variable should be a vector of simple strings denoting existing files. "
                      f)))
