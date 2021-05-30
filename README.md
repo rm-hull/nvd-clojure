@@ -180,7 +180,7 @@ lein run -m nvd.task.check "" "$(lein with-profile -user,-dev classpath)"
 clojure -m nvd.task.check "" "$(clojure -Spath)"
 ```
 
-...in both cases, an empty string is passed as the first argument, for backwards compatibility reasons. You can also pass a filename instead, denoting a .json file with extra options.
+...in both cases, an empty string is passed as the first argument, for backwards compatibility reasons. You can also pass a filename instead, denoting a .json file with extra options ([example](https://github.com/rm-hull/lein-nvd/blob/2493010bb61ea1cbd84a8f18ead45fe0ea2a874d/.github/nvd-config.json)).
 
 For extra isolation, it is recommended that you invoke `nvd.task.check` from _outside_ your project - e.g. from an empty project, a git clone of this very repo, or from $HOME (assuming you have lein-nvd as a dependency in your [user-wide Lein profile](https://github.com/technomancy/leiningen/blob/2586957f9d099ff11d50d312a6daf397c2a06fb1/doc/PROFILES.md)).
 

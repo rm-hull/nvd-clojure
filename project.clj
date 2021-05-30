@@ -12,7 +12,15 @@
                  [rm-hull/table "0.7.1"]
                  [trptcolin/versioneer "0.2.0"]
                  [org.clojure/java.classpath "1.0.0"]
-                 [org.clojure/tools.deps.alpha "0.11.910"]]
+                 [org.clojure/tools.deps.alpha "0.11.910" :exclusions [org.slf4j/jcl-over-slf4j]]
+                 [org.apache.maven.resolver/maven-resolver-transport-http "1.7.0" #_"Fixes a CVE"]
+                 [org.apache.maven/maven-core "3.8.1" #_"Fixes a CVE"]
+                 [org.eclipse.jetty/jetty-client "9.4.41.v20210516" #_"Fixes a CVE"]
+                 [org.apache.maven.resolver/maven-resolver-spi "1.7.0" #_"Satisfies :pedantic?"]
+                 [org.apache.maven.resolver/maven-resolver-api "1.7.0" #_"Satisfies :pedantic?"]
+                 [org.apache.maven.resolver/maven-resolver-util "1.7.0" #_"Satisfies :pedantic?"]
+                 [org.apache.maven.resolver/maven-resolver-impl "1.6.2" #_"Satisfies :pedantic?"]
+                 [org.apache.maven/maven-resolver-provider "3.8.1"] #_"Satisfies :pedantic?"]
   :scm {:url "git@github.com:rm-hull/lein-nvd.git"}
   :source-paths ["src"]
   :jar-exclusions [#"(?:^|/).git"]
@@ -30,4 +38,5 @@
         [lein-cloverage "1.2.2"]
         [lein-ancient "0.7.0"]]
       :dependencies [
-        [commons-collections "20040616"]]}})
+        [commons-collections "20040616"]]}
+    :ci {:pedantic? :abort}})
