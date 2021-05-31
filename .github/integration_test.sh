@@ -4,9 +4,16 @@ set -Euxo pipefail
 CONFIG_FILE="$PWD/.github/nvd-config.json"
 SUCCESS_REGEX="[1-9][0-9] vulnerabilities detected\. Severity: "
 
-lein with-profile -user,-dev,+ci install
+if ! lein with-profile -user,-dev,+ci install; then
+  exit 1
+fi
+
 cd plugin || exit 1
-lein with-profile -user,-dev,+ci install
+
+if ! lein with-profile -user,-dev,+ci install; then
+  exit 1
+fi
+
 cd .. || exit 1
 cd example || exit 1
 
@@ -62,7 +69,10 @@ fi
 
 own_classpath="$(lein with-profile -user,-dev,-test classpath)"
 
-lein with-profile -user,-dev,+ci run -m nvd.task.check "" "$own_classpath"
+if ! lein with-profile -user,-dev,+ci run -m nvd.task.check "" "$own_classpath"; then
+  echo "nvd-clojure did not pass dogfooding!"
+  exit 1
+fi
 
 # 5.- Dogfood the `lein-nvd` project
 
@@ -72,6 +82,9 @@ plugin_classpath="$(lein with-profile -user,-dev,-test classpath)"
 
 cd .. || exit 1
 
-lein with-profile -user,-dev,+ci run -m nvd.task.check "" "$plugin_classpath"
+if ! lein with-profile -user,-dev,+ci run -m nvd.task.check "" "$plugin_classpath"; then
+  echo "lein-nvd did not pass dogfooding!"
+  exit 1
+fi
 
 exit 0
