@@ -23,7 +23,7 @@
 (ns nvd.task.purge-database-test
   (:require
    [clojure.java.io :as io]
-   [clojure.test :refer :all]
+   [clojure.test :refer [deftest is]]
    [nvd.task.purge-database :as purge]))
 
 (deftest check-purge-db

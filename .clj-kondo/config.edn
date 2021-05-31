@@ -1,0 +1,1 @@
+{:lint-as {nvd.config/with-config clojure.core/let}}

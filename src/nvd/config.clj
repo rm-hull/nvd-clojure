@@ -22,12 +22,10 @@
 
 (ns nvd.config
   (:require
-   [clojure.string :as s]
    [clojure.java.io :as io]
    [clojure.data.json :as json])
   (:import
    [org.owasp.dependencycheck Engine]
-   [org.owasp.dependencycheck.data.nvdcve CveDB DatabaseProperties]
    [org.owasp.dependencycheck.utils Settings Settings$KEYS]))
 
 (def ^:private string-mappings
