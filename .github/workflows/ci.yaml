@@ -1,5 +1,11 @@
 name: Continuous Integration
-on: [push, pull_request]
+on:
+  push:
+  pull_request:
+  schedule:
+    # The cron job aims to exercise dogfooding regularly, as NVD results are always subject to change. 
+    # Run at 08:00 on Mondays:
+    - cron: "0 8 * * 1"
 jobs:
   test_suite:
     name: Linting and tests
