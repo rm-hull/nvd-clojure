@@ -6,20 +6,20 @@
     :url "http://opensource.org/licenses/MIT"}
   :dependencies [[org.clojure/clojure "1.10.3"]
                  [clansi "1.0.0"]
-                 [org.clojure/data.json "2.2.3"]
+                 [org.clojure/data.json "2.3.1"]
                  [org.slf4j/slf4j-simple "1.7.30"]
-                 [org.owasp/dependency-check-core "6.1.6"]
+                 [org.owasp/dependency-check-core "6.2.0"]
                  [rm-hull/table "0.7.1"]
                  [trptcolin/versioneer "0.2.0"]
                  [org.clojure/java.classpath "1.0.0"]
-                 [org.clojure/tools.deps.alpha "0.11.910" :exclusions [org.slf4j/jcl-over-slf4j]]
+                 [org.clojure/tools.deps.alpha "0.11.926" :exclusions [org.slf4j/jcl-over-slf4j]]
                  [org.apache.maven.resolver/maven-resolver-transport-http "1.7.0" #_"Fixes a CVE"]
                  [org.apache.maven/maven-core "3.8.1" #_"Fixes a CVE"]
-                 [org.eclipse.jetty/jetty-client "9.4.41.v20210516" #_"Fixes a CVE"]
+                 [org.eclipse.jetty/jetty-client "11.0.3" #_"Fixes a CVE"]
                  [org.apache.maven.resolver/maven-resolver-spi "1.7.0" #_"Satisfies :pedantic?"]
                  [org.apache.maven.resolver/maven-resolver-api "1.7.0" #_"Satisfies :pedantic?"]
                  [org.apache.maven.resolver/maven-resolver-util "1.7.0" #_"Satisfies :pedantic?"]
-                 [org.apache.maven.resolver/maven-resolver-impl "1.6.2" #_"Satisfies :pedantic?"]
+                 [org.apache.maven.resolver/maven-resolver-impl "1.7.0" #_"Satisfies :pedantic?"]
                  [org.apache.maven/maven-resolver-provider "3.8.1"] #_"Satisfies :pedantic?"]
   :scm {:url "git@github.com:rm-hull/lein-nvd.git"}
   :source-paths ["src"]
@@ -39,7 +39,7 @@
         [lein-ancient "0.7.0"]
         [jonase/eastwood "0.4.3"]]
       :dependencies [
-        [clj-kondo "2021.04.23"]
+        [clj-kondo "2021.06.01"]
         [commons-collections "20040616"]]}
     :ci {:pedantic? :abort}
-    :clj-kondo {:dependencies [[clj-kondo "2021.04.23"]]}})
+    :clj-kondo {:dependencies [[clj-kondo "2021.06.01"]]}})
