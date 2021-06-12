@@ -46,7 +46,7 @@
     (is (== 11.0 (get-in project [:nvd :fail-threshold])))
     ;; FIXME - this test has been flaky for some time. It should only check against 9.0:
     (let [v (get-in project [:nvd :highest-score])]
-      (is (#{0 0.0 9.0} v)
+      (is (#{0.0 5.0 9.0} (double v))
           (pr-str v)))
     (is (false? (project :failed?)))))
 
