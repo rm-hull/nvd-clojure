@@ -4,10 +4,10 @@
         clansi/clansi {:mvn/version "1.0.0"}
         org.clojure/data.json {:mvn/version "2.3.1"}
         org.slf4j/slf4j-simple {:mvn/version "2.0.0-alpha1"}
-        org.owasp/dependency-check-core {:mvn/version "6.2.0"}
+        org.owasp/dependency-check-core {:mvn/version "6.2.2"}
         rm-hull/table {:mvn/version "0.7.1"}
         trptcolin/versioneer {:mvn/version "0.2.0"}
-        org.clojure/tools.deps.alpha {:mvn/version "0.11.922"}}
+        org.clojure/tools.deps.alpha {:mvn/version "0.11.931"}}
  :mvn/repos {"central" {:url "https://repo1.maven.org/maven2/"}
              "clojars" {:url "https://repo.clojars.org/"}}
  :aliases {:test {:extra-paths ["test"]}
