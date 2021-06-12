@@ -8,7 +8,7 @@
                  [clansi "1.0.0"]
                  [org.clojure/data.json "2.3.1"]
                  [org.slf4j/slf4j-simple "2.0.0-alpha1"]
-                 [org.owasp/dependency-check-core "6.2.0"]
+                 [org.owasp/dependency-check-core "6.2.2"]
                  [rm-hull/table "0.7.1"]
                  [trptcolin/versioneer "0.2.0"]
                  [org.clojure/java.classpath "1.0.0"]
