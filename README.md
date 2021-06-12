@@ -27,12 +27,12 @@ to your project [configuration](#configuration-options).
 
 #### Clojure CLI
 
-To install globally, add `lein-nvd/lein-nvd {:mvn/version "1.4.1"}`
+To install globally, add `lein-nvd/lein-nvd {:mvn/version "1.5.0"}`
 under `:aliases` in _~/.clojure/deps.edn_, or add it to `:aliases` in
 the project local `deps.edn`, to look something like this:
 
 ```clojure
-:aliases {:nvd {:extra-deps {lein-nvd/lein-nvd {:mvn/version "1.4.1"}}
+:aliases {:nvd {:extra-deps {lein-nvd/lein-nvd {:mvn/version "1.5.0"}}
                 :main-opts ["-m" "nvd.task.check"]}}
 ```
 

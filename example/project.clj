@@ -24,6 +24,6 @@
   :profiles {
     :dev {
       :dependencies [
-        [lein-nvd "1.4.1"]]
+        [lein-nvd "1.5.0"]]
       :plugins [
-        [lein-nvd "1.4.1"]]}})
+        [lein-nvd "1.5.0"]]}})
