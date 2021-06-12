@@ -29,6 +29,7 @@
     :output-path "doc/api"
     :source-uri "http://github.com/rm-hull/lein-nvd/blob/master/{filepath}#L{line}"  }
   :min-lein-version "2.8.1"
+  :target-path "target/%s"
   :profiles {
     :dev {
       :global-vars {*warn-on-reflection* true}
