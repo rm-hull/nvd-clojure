@@ -22,6 +22,7 @@
   :source-paths ["src"]
   :min-lein-version "2.6.1"
   :profiles {
+    :nvd-throw-on-exit {:nvd {:throw-if-check-unsuccessful? true}}
     :dev {
       :dependencies [
         [lein-nvd "1.5.0"]]

@@ -10,7 +10,9 @@
 [![Maintenance](https://img.shields.io/maintenance/yes/2021.svg?maxAge=2592000)]()
 
 [National Vulnerability Database](https://nvd.nist.gov/) dependency-checker
-plugin for Leiningen. When run in your project, all the JARs on the classpath
+library (and plugin for Leiningen).
+
+When run in your project, all the JARs on the classpath
 will be checked for known security vulnerabilities. `nvd-clojure` extracts project
 dependencies and passes them to a library called [Dependency-Check](https://github.com/jeremylong/DependencyCheck) which does the vulnerability analysis. Quoting the README for that library:
 
@@ -19,12 +21,6 @@ dependencies and passes them to a library called [Dependency-Check](https://gith
 > determining if there is a Common Platform Enumeration (CPE) identifier for
 > a given dependency. If found, it will generate a report linking to the
 > associated CVE entries.
-
-**BREAKING CHANGE**: version 1.0 only shows a summary table of packages that
-are demarcated as having a CVSS score greater than zero (i.e any that are
-rated OK, are now not shown by default). Any that are rated low or high severity
-continue to be shown. To revert to pre-1.0 behavior, add `:verbose-summary true`
-to your project [configuration](#configuration-options).
 
 ### Installation
 
@@ -142,6 +138,10 @@ database again.
 The default settings for `nvd-clojure` are usually sufficient for most projects, but
 can be customized by adding an `:nvd { ... }` section in your _project.clj_.
 
+These options can also be expressed as the keys in a .json config file ([example](https://github.com/rm-hull/nvd-clojure/blob/master/.github/nvd-config.json)).
+The filename denoting that file is the first argument to be passed to nvd-clojure when invoking it as a `main` (`-m`) program.
+The keys must reside inside a `"nvd": {...}` entry, not at the top-level.
+
 There are many dependency-check settings (for example to connect via a proxy, or
 to specify an alternative to the H2 database). The exact settings can be seen
 in the [config.clj](https://github.com/rm-hull/nvd-clojure/blob/master/src/nvd/config.clj) source file and cross-referenced to the dependency-check
@@ -158,10 +158,13 @@ There are some specific settings below which are worthy of a few comments:
 * `:suppression-file` default unset
   - Allows for CVEs to be permanently suppressed.
   - See [DependencyCheck documentation](https://jeremylong.github.io/DependencyCheck/) for the XML file-format.
+  - [See also](https://jeremylong.github.io/DependencyCheck/general/suppression.html)
 * `:verbose-summary` default false
   - When set to true, the summary table includes a severity determination for all dependencies.
   - When set to false, the summary table includes only packages that have either low or high severity determination.
 * `:output-dir` default value `target/nvd/`: the directory to save reports into
+* `:throw-if-check-unsuccessful?` - makes the program exit by throwing an exception instead of by invoking `System/exit`.
+  - This can ease certain usages.
 
 ## Avoiding classpath interference
 

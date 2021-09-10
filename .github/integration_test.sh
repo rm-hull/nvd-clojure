@@ -29,7 +29,29 @@ if ! grep --silent "$SUCCESS_REGEX" example-lein-output; then
   exit 1
 fi
 
-# 2.- Exercise `main` program
+# 2.- Exercise Lein plugin, with :throw-if-check-unsuccessful? option
+
+if lein with-profile -user,+nvd-throw-on-exit nvd check > example-lein-output 2>&1; then
+  echo "Should have failed with non-zero code!"
+  exit 1
+fi
+
+if ! grep --silent "$SUCCESS_REGEX" example-lein-output; then
+  echo "Should have found vulnerabilities!"
+  exit 1
+fi
+
+if ! grep --silent "Error encountered performing task 'nvd'" example-lein-output; then
+  echo "Should have thrown an exception!"
+  exit 1
+fi
+
+if ! grep --silent "clojure.lang.ExceptionInfo: nvd-clojure failed / found vulnerabilities" example-lein-output; then
+  echo "Should have thrown an exception with a specific message!"
+  exit 1
+fi
+
+# 3.- Exercise `main` program
 
 example_classpath="$(lein with-profile -user,-dev,-test classpath)"
 
@@ -46,7 +68,7 @@ if ! grep --silent "$SUCCESS_REGEX" example-lein-output; then
   exit 1
 fi
 
-# 3.- Exercise `tools.deps` integration
+# 4.- Exercise `tools.deps` integration
 
 cd example || exit 1
 
@@ -65,7 +87,7 @@ if ! grep --silent "$SUCCESS_REGEX" example-lein-output; then
   exit 1
 fi
 
-# 4.- Dogfood the `nvd-clojure` project
+# 5.- Dogfood the `nvd-clojure` project
 
 own_classpath="$(lein with-profile -user,-dev,-test classpath)"
 
@@ -74,7 +96,7 @@ if ! lein with-profile -user,-dev,+ci run -m nvd.task.check "" "$own_classpath";
   exit 1
 fi
 
-# 5.- Dogfood the `lein-nvd` project
+# 6.- Dogfood the `lein-nvd` project
 
 cd plugin || exit 1
 
