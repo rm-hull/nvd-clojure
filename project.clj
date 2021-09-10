@@ -1,9 +1,8 @@
 (defproject nvd-clojure "1.5.0"
   :description "National Vulnerability Database [https://nvd.nist.gov/] dependency-checker"
-  :url "https://github.com/rm-hull/lein-nvd"
-  :license {
-    :name "The MIT License (MIT)"
-    :url "http://opensource.org/licenses/MIT"}
+  :url "https://github.com/rm-hull/nvd-clojure"
+  :license {:name "The MIT License (MIT)"
+            :url "http://opensource.org/licenses/MIT"}
   :dependencies [[org.clojure/clojure "1.10.3"]
                  [clansi "1.0.0"]
                  [org.clojure/data.json "2.4.0"]
@@ -28,26 +27,22 @@
                  [org.apache.maven.resolver/maven-resolver-util "1.7.1" #_"Satisfies :pedantic?"]
                  [org.apache.maven.resolver/maven-resolver-impl "1.7.1" #_"Satisfies :pedantic?"]
                  [org.apache.maven/maven-resolver-provider "3.8.2" #_"Satisfies :pedantic?"]]
-  :scm {:url "git@github.com:rm-hull/lein-nvd.git"}
+  :scm {:url "git@github.com:rm-hull/nvd-clojure.git"}
   :source-paths ["src"]
   :jar-exclusions [#"(?:^|/).git"]
   :codox {
-    :source-paths ["src"]
-    :output-path "doc/api"
-    :source-uri "http://github.com/rm-hull/lein-nvd/blob/master/{filepath}#L{line}"  }
+          :source-paths ["src"]
+          :output-path "doc/api"
+          :source-uri "https://github.com/rm-hull/nvd-clojure/blob/master/{filepath}#L{line}"}
   :min-lein-version "2.8.1"
   :target-path "target/%s"
-  :profiles {
-    :dev {
-      :global-vars {*warn-on-reflection* true}
-      :plugins [
-        [lein-cljfmt "0.7.0"]
-        [lein-codox "0.10.7"]
-        [lein-cloverage "1.2.2"]
-        [lein-ancient "0.7.0"]
-        [jonase/eastwood "0.9.9"]]
-      :dependencies [
-        [clj-kondo "2021.08.06"]
-        [commons-collections "20040616"]]}
-    :ci {:pedantic? :abort}
-    :clj-kondo {:dependencies [[clj-kondo "2021.08.06"]]}})
+  :profiles {:dev {:global-vars {*warn-on-reflection* true}
+                   :plugins [[lein-cljfmt "0.7.0"]
+                             [lein-codox "0.10.7"]
+                             [lein-cloverage "1.2.2"]
+                             [lein-ancient "0.7.0"]
+                             [jonase/eastwood "0.9.9"]]
+                   :dependencies [[clj-kondo "2021.08.06"]
+                                  [commons-collections "20040616"]]}
+             :ci {:pedantic? :abort}
+             :clj-kondo {:dependencies [[clj-kondo "2021.08.06"]]}})

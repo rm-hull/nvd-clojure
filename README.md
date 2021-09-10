@@ -1,14 +1,17 @@
-# lein-nvd
-[![Build Status](https://github.com/rm-hull/lein-nvd/workflows/Continuous%20Integration/badge.svg)](https://github.com/rm-hull/lein-nvd/actions?query=workflow%3A%22Continuous+Integration%22)
-[![Coverage Status](https://coveralls.io/repos/rm-hull/lein-nvd/badge.svg?branch=master)](https://coveralls.io/r/rm-hull/lein-nvd?branch=master)
-[![Dependencies Status](https://byob.yarr.is/dotemacs/actions-play/dependencies)](https://github.com/rm-hull/lein-nvd/actions?query=workflow%3A%22dependencies%22)
-[![Downloads](https://versions.deps.co/rm-hull/lein-nvd/downloads.svg)](https://versions.deps.co/rm-hull/lein-nvd)
-[![Clojars Project](https://img.shields.io/clojars/v/lein-nvd.svg)](https://clojars.org/lein-nvd)
+# nvd-clojure
+
+> _Formerly known as_ `lein-nvd`
+
+[![Build Status](https://github.com/rm-hull/nvd-clojure/workflows/Continuous%20Integration/badge.svg)](https://github.com/rm-hull/nvd-clojure/actions?query=workflow%3A%22Continuous+Integration%22)
+[![Coverage Status](https://coveralls.io/repos/rm-hull/nvd-clojure/badge.svg?branch=master)](https://coveralls.io/r/rm-hull/nvd-clojure?branch=master)
+[![Dependencies Status](https://byob.yarr.is/dotemacs/actions-play/dependencies)](https://github.com/rm-hull/nvd-clojure/actions?query=workflow%3A%22dependencies%22)
+[![Downloads](https://versions.deps.co/rm-hull/nvd-clojure/downloads.svg)](https://versions.deps.co/rm-hull/nvd-clojure)
+[![Clojars Project](https://img.shields.io/clojars/v/nvd-clojure.svg)](https://clojars.org/nvd-clojure)
 [![Maintenance](https://img.shields.io/maintenance/yes/2021.svg?maxAge=2592000)]()
 
 [National Vulnerability Database](https://nvd.nist.gov/) dependency-checker
 plugin for Leiningen. When run in your project, all the JARs on the classpath
-will be checked for known security vulnerabilities. `lein-nvd` extracts project
+will be checked for known security vulnerabilities. `nvd-clojure` extracts project
 dependencies and passes them to a library called [Dependency-Check](https://github.com/jeremylong/DependencyCheck) which does the vulnerability analysis. Quoting the README for that library:
 
 > Dependency-Check is a utility that attempts to detect publicly disclosed
@@ -58,7 +61,7 @@ setting a `:fail-threshold` in the project [configuration](#configuration-option
 
 ### Example
 
-There is an [example project](https://github.com/rm-hull/lein-nvd/blob/master/example/project.clj)
+There is an [example project](https://github.com/rm-hull/nvd-clojure/blob/master/example/project.clj)
 which has dependencies with known vulnerabilities
 ([CVE-2016-3720](https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2016-3720),
 [CVE-2015-5262](https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2015-5262),
@@ -72,7 +75,7 @@ This will download the NVD database, and then cross-check the classpath
 dependencies against known vulnerabilities. The following summary report will
 be displayed on the console:
 
-![summary-report](https://raw.githubusercontent.com/rm-hull/lein-nvd/master/example/img/summary-report.png)
+![summary-report](https://raw.githubusercontent.com/rm-hull/nvd-clojure/master/example/img/summary-report.png)
 
 Note that as there were some vulnerabilities detected, the process was aborted,
 with error code -1 hence the reported _subprocess failed_ message.
@@ -81,7 +84,7 @@ More detailed reports (both HTML & XML) are written into the
 _./example/target/nvd/_ directory as follows:
 
 ---
-![detail-report](https://raw.githubusercontent.com/rm-hull/lein-nvd/master/example/img/detail-report.png)
+![detail-report](https://raw.githubusercontent.com/rm-hull/nvd-clojure/master/example/img/detail-report.png)
 
 ## Upgrading dependencies
 
@@ -136,12 +139,12 @@ database again.
 
 ## Configuration options
 
-The default settings for `lein-nvd` are usually sufficient for most projects, but
+The default settings for `nvd-clojure` are usually sufficient for most projects, but
 can be customized by adding an `:nvd { ... }` section in your _project.clj_.
 
 There are many dependency-check settings (for example to connect via a proxy, or
 to specify an alternative to the H2 database). The exact settings can be seen
-in the [config.clj](https://github.com/rm-hull/lein-nvd/blob/master/src/nvd/config.clj) source file and cross-referenced to the dependency-check
+in the [config.clj](https://github.com/rm-hull/nvd-clojure/blob/master/src/nvd/config.clj) source file and cross-referenced to the dependency-check
 wiki.
 
 There are some specific settings below which are worthy of a few comments:
@@ -162,11 +165,11 @@ There are some specific settings below which are worthy of a few comments:
 
 ## Avoiding classpath interference
 
-lein-nvd has some Java dependencies, which in turn can have CVEs themselves, or in any case interfere with your project's dependency tree, that would be computed in absence of lein-nvd.
+nvd-clojure has some Java dependencies, which in turn can have CVEs themselves, or in any case interfere with your project's dependency tree, that would be computed in absence of nvd-clojure.
 
 For this reason, you might want to invoke `nvd.task.check`'s main function by passing a classpath string as an argument.
 
-Said classpath string should try reflecting a _production's classpath_ as accurately as possible: it should not include dev/test tooling, plugins (like lein-nvd or any other), etc.
+Said classpath string should try reflecting a _production's classpath_ as accurately as possible: it should not include dev/test tooling, plugins (like nvd-clojure or any other), etc.
 
 #### Lein example
 
@@ -180,9 +183,9 @@ lein run -m nvd.task.check "" "$(lein with-profile -user,-dev classpath)"
 clojure -m nvd.task.check "" "$(clojure -Spath)"
 ```
 
-...in both cases, an empty string is passed as the first argument, for backwards compatibility reasons. You can also pass a filename instead, denoting a .json file with extra options ([example](https://github.com/rm-hull/lein-nvd/blob/master/.github/nvd-config.json)).
+...in both cases, an empty string is passed as the first argument, for backwards compatibility reasons. You can also pass a filename instead, denoting a .json file with extra options ([example](https://github.com/rm-hull/nvd-clojure/blob/master/.github/nvd-config.json)).
 
-For extra isolation, it is recommended that you invoke `nvd.task.check` from _outside_ your project - e.g. from an empty project, a git clone of this very repo, or from $HOME (assuming you have lein-nvd as a dependency in your [user-wide Lein profile](https://github.com/technomancy/leiningen/blob/2586957f9d099ff11d50d312a6daf397c2a06fb1/doc/PROFILES.md)).
+For extra isolation, it is recommended that you invoke `nvd.task.check` from _outside_ your project - e.g. from an empty project, a git clone of this very repo, or from $HOME (assuming you have nvd-clojure as a dependency in your [user-wide Lein profile](https://github.com/technomancy/leiningen/blob/2586957f9d099ff11d50d312a6daf397c2a06fb1/doc/PROFILES.md)).
 
 ## Building locally
 
@@ -200,7 +203,7 @@ A sample report is available for testing in the _example_ sub-directory.
 
 ## Attribution
 
-`lein-nvd` uses **Jeremy Long**'s [Dependency-Check](https://github.com/jeremylong/DependencyCheck)
+`nvd-clojure` uses **Jeremy Long**'s [Dependency-Check](https://github.com/jeremylong/DependencyCheck)
 library to do the heavy lifting.
 
 ## References

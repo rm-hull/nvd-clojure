@@ -1,6 +1,6 @@
 (defproject lein-nvd "1.5.0"
   :description "National Vulnerability Database [https://nvd.nist.gov/] dependency-checker leiningen plugin."
-  :url "https://github.com/rm-hull/lein-nvd"
+  :url "https://github.com/rm-hull/nvd-clojure"
   :license {:name "The MIT License (MIT)"
             :url "http://opensource.org/licenses/MIT"}
   :dependencies [[clj-commons/pomegranate "1.2.1" :exclusions [org.clojure/clojure
@@ -19,12 +19,12 @@
                                                                org.codehaus.plexus/plexus-utils]]
                  [org.slf4j/jcl-over-slf4j "1.7.30"]
                  [nvd-clojure "1.5.0"]]
-  :scm {:url "git@github.com:rm-hull/lein-nvd.git"}
+  :scm {:url "git@github.com:rm-hull/nvd-clojure.git"}
   :source-paths ["src"]
   :jar-exclusions [#"(?:^|/).git"]
   :codox {:source-paths ["src"]
           :output-path "doc/api"
-          :source-uri "http://github.com/rm-hull/lein-nvd/blob/master/{filepath}#L{line}"}
+          :source-uri "https://github.com/rm-hull/nvd-clojure/blob/master/{filepath}#L{line}"}
   :target-path "target/%s"
   :min-lein-version "2.8.1"
   :profiles {:dev {:global-vars {*warn-on-reflection* true}
