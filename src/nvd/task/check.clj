@@ -65,10 +65,17 @@
           (throw exception-info))))
     project))
 
-(defn conditional-exit [project]
-  (if (:exit-after-check project)
-    (System/exit (if (:failed? project) -1 0))
-    project))
+(defn conditional-exit [{:keys [exit-after-check failed?]
+                         {:keys [throw-if-check-unsuccessful?]} :nvd
+                         :as project}]
+  (cond
+    (and failed? throw-if-check-unsuccessful?)
+    (throw (ex-info "nvd-clojure failed / found vulnerabilities" {}))
+
+    exit-after-check
+    (System/exit (if failed? -1 0))
+
+    :else project))
 
 (defn jvm-version []
   (as-> (System/getProperty "java.version") $
