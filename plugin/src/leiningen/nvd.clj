@@ -32,7 +32,7 @@
   (:import
    [java.io File]))
 
-(def ^File temp-file (File/createTempFile ".lein-nvd_" ".json"))
+(def ^File temp-file (File/createTempFile ".nvd-clojure_" ".json"))
 
 (defn nvd "
   Scans project dependencies, attempting to detect publicly disclosed
@@ -59,7 +59,7 @@
 
   Any text after the command are treated as arguments and are passed directly
   directly to the command for further processing.
-"
+  "
   [project command & args]
   (let [path (.getAbsolutePath temp-file)
         opts    (merge
