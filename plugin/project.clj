@@ -1,4 +1,4 @@
-(defproject lein-nvd "1.5.0"
+(defproject lein-nvd "1.6.0"
   :description "National Vulnerability Database [https://nvd.nist.gov/] dependency-checker leiningen plugin."
   :url "https://github.com/rm-hull/nvd-clojure"
   :license {:name "The MIT License (MIT)"
@@ -18,7 +18,7 @@
                                                                org.slf4j/slf4j-api
                                                                org.codehaus.plexus/plexus-utils]]
                  [org.slf4j/jcl-over-slf4j "1.7.30"]
-                 [nvd-clojure "1.5.0"]]
+                 [nvd-clojure "1.6.0"]]
   :scm {:url "git@github.com:rm-hull/nvd-clojure.git"}
   :source-paths ["src"]
   :jar-exclusions [#"(?:^|/).git"]

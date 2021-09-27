@@ -25,6 +25,6 @@
     :nvd-throw-on-exit {:nvd {:throw-if-check-unsuccessful? true}}
     :dev {
       :dependencies [
-        [lein-nvd "1.5.0"]]
+        [lein-nvd "RELEASE"]]
       :plugins [
-        [lein-nvd "1.5.0"]]}})
+        [lein-nvd "RELEASE"]]}})
