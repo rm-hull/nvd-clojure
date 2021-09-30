@@ -1,3 +1,9 @@
+## Changes from 1.6.0 to 1.7.0
+
+#### New
+
+* Update `dependency-check-core`
+
 ## Changes from 1.5.0 to 1.6.0
 
 #### New
