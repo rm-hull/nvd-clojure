@@ -1,4 +1,4 @@
-(defproject nvd-clojure "1.6.0"
+(defproject nvd-clojure "1.7.0"
   :description "National Vulnerability Database [https://nvd.nist.gov/] dependency-checker"
   :url "https://github.com/rm-hull/nvd-clojure"
   :license {:name "The MIT License (MIT)"
