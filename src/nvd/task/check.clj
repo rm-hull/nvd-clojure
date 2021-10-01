@@ -126,6 +126,14 @@
                       passed-classpath-string?       (s/split classpath-string #":")
                       (.exists (io/file "deps.edn")) (clojure-cli-classpath)
                       :else                          (make-classpath))
+          classpath (into []
+                          (filter (fn [s]
+                                    ;; Only .jar files are relevant.
+                                    ;; source paths such as `src`, while are part of the classpath,
+                                    ;; won't be meaningfully analyzed by dependency-check-core.
+                                    ;; Keeping only .jars facilitates various usage patterns.
+                                    (s/ends-with? s ".jar")))
+                          classpath)
           json-str (json/write-str {"classpath" classpath})]
 
       ;; perform some sanity checks for ensuring the calculated classpath has the expected format,

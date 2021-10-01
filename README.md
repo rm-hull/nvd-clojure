@@ -28,7 +28,19 @@ dependencies and passes them to a library called [Dependency-Check](https://gith
 
 #### Clojure CLI
 
-To install globally, add `nvd-clojure/nvd-clojure {:mvn/version "1.8.0"}`
+To install in a given project, you can add `nvd-clojure/nvd-clojure {:mvn/version "1.8.0"}` to your deps.edn.
+
+If you have CLI version 1.10.3.933 or later, you can also install `nvd-clojure` as a "tool":
+
+```bash
+clojure -Ttools install nvd-clojure/nvd-clojure '{:mvn/version "RELEASE"}' :as nvd
+```
+and then you can run the tool like this:
+
+```bash
+clojure -Tnvd nvd.task/check :classpath '"'$(clojure -Spath -A:any:aliases)'"'
+```
+
 under `:aliases` in _~/.clojure/deps.edn_, or add it to `:aliases` in
 the project local `deps.edn`, to look something like this:
 
