@@ -24,6 +24,8 @@ dependencies and passes them to a library called [Dependency-Check](https://gith
 
 ### Installation
 
+> _Please see also:_ [#avoiding-classpath-interference](Avoiding classpath interference)
+
 #### Clojure CLI
 
 To install globally, add `nvd-clojure/nvd-clojure {:mvn/version "1.7.0"}`
@@ -84,15 +86,15 @@ _./example/target/nvd/_ directory as follows:
 
 ## Upgrading dependencies
 
-You may use the built-in (to Leiningen) dependency-tree reporter to find out what the
+You may use the built-in dependency tree reporters to find out what the
 dependency relationships are:
 
-    $ lein deps :tree
+    $ lein deps :tree # for Leiningen
+    $ clojure -Stree # for deps.edn
 
-Note that this will show the project dependencies, and any plugins/injections
-from your local user profile. `lein nvd` will only run against project dependencies.
+...make sure to use aliases/profiles in such a way that reflects the production classpath.
 
-[lein-ancient](https://github.com/xsc/lein-ancient) will traverse your project
+[antq](https://github.com/liquidz/antq) will traverse your project
 dependencies, and suggest upgraded versions, and can optionally be configured
 to update the project file.
 
