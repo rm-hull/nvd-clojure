@@ -24,7 +24,7 @@ dependencies and passes them to a library called [Dependency-Check](https://gith
 
 ### Installation
 
-> _Please see also:_ [#avoiding-classpath-interference](Avoiding classpath interference)
+> _Please see also:_ [Avoiding classpath interference](#avoiding-classpath-interference)
 
 #### Clojure CLI
 
