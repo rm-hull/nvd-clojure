@@ -11,7 +11,7 @@
                  [rm-hull/table "0.7.1"]
                  [trptcolin/versioneer "0.2.0"]
                  [org.clojure/java.classpath "1.0.0"]
-                 [org.clojure/tools.deps.alpha "0.12.1048" :exclusions [org.slf4j/jcl-over-slf4j]]
+                 [org.clojure/tools.deps.alpha "0.12.1053" :exclusions [org.slf4j/jcl-over-slf4j]]
                  ;; Explicitly depend on a certain Jackson, consistently.
                  ;; Otherwise, when using the Lein plugin, Leiningen's own dependencies can pull a different Jackson version
                  ;; (see https://github.com/jeremylong/DependencyCheck/issues/3441):
@@ -21,7 +21,7 @@
                  [com.fasterxml.jackson.module/jackson-module-afterburner "2.13.0"]
                  [org.apache.maven.resolver/maven-resolver-transport-http "1.7.2" #_"Fixes a CVE"]
                  [org.apache.maven/maven-core "3.8.3" #_"Fixes a CVE"]
-                 [org.eclipse.jetty/jetty-client "11.0.6" #_"Fixes a CVE"]
+                 [org.eclipse.jetty/jetty-client "11.0.7" #_"Fixes a CVE" :exclusions [org.slf4j/slf4j-api]]
                  [org.apache.maven.resolver/maven-resolver-spi "1.7.2" #_"Satisfies :pedantic?"]
                  [org.apache.maven.resolver/maven-resolver-api "1.7.2" #_"Satisfies :pedantic?"]
                  [org.apache.maven.resolver/maven-resolver-util "1.7.2" #_"Satisfies :pedantic?"]
