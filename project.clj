@@ -11,7 +11,7 @@
                  [rm-hull/table "0.7.1"]
                  [trptcolin/versioneer "0.2.0"]
                  [org.clojure/java.classpath "1.0.0"]
-                 [org.clojure/tools.deps.alpha "0.12.1053" :exclusions [org.slf4j/jcl-over-slf4j]]
+                 [org.clojure/tools.deps.alpha "0.12.1058" :exclusions [org.slf4j/jcl-over-slf4j]]
                  ;; Explicitly depend on a certain Jackson, consistently.
                  ;; Otherwise, when using the Lein plugin, Leiningen's own dependencies can pull a different Jackson version
                  ;; (see https://github.com/jeremylong/DependencyCheck/issues/3441):
@@ -43,7 +43,7 @@
                              [lein-cloverage "1.2.2"]
                              [lein-ancient "0.7.0"]
                              [jonase/eastwood "0.9.9"]]
-                   :dependencies [[clj-kondo "2021.09.25"]
+                   :dependencies [[clj-kondo "2021.10.19"]
                                   [commons-collections "20040616"]]}
              :ci {:pedantic? :abort}
-             :clj-kondo {:dependencies [[clj-kondo "2021.09.25"]]}})
+             :clj-kondo {:dependencies [[clj-kondo "2021.10.19"]]}})
