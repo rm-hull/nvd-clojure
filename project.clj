@@ -7,11 +7,11 @@
                  [clansi "1.0.0"]
                  [org.clojure/data.json "2.4.0"]
                  [org.slf4j/slf4j-simple "2.0.0-alpha1"]
-                 [org.owasp/dependency-check-core "6.4.1"]
+                 [org.owasp/dependency-check-core "6.5.0"]
                  [rm-hull/table "0.7.1"]
                  [trptcolin/versioneer "0.2.0"]
                  [org.clojure/java.classpath "1.0.0"]
-                 [org.clojure/tools.deps.alpha "0.12.1067" :exclusions [org.slf4j/jcl-over-slf4j
+                 [org.clojure/tools.deps.alpha "0.12.1071" :exclusions [org.slf4j/jcl-over-slf4j
                                                                         org.eclipse.jetty/jetty-http
                                                                         org.eclipse.jetty/jetty-util]]
                  ;; Explicitly depend on a certain Jackson, consistently.
