@@ -38,7 +38,7 @@ clojure -Ttools install io.github.rm-hull/nvd-clojure '{:git/tag "1.8.0"}' :as n
 and then you can run the tool like this:
 
 ```bash
-clojure -Tnvd nvd.task/check :classpath '"'$(clojure -Spath -A:any:aliases)'"'
+clojure -Tnvd check :classpath '"'$(clojure -Spath -A:any:aliases)'"'
 ```
 
 under `:aliases` in _~/.clojure/deps.edn_, or add it to `:aliases` in
