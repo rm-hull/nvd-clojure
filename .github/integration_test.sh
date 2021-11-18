@@ -17,7 +17,7 @@ if ! lein with-profile -user,-dev,+ci install; then
   exit 1
 fi
 
-if ! clojure -Ttools install nvd-clojure/nvd-clojure '{:mvn/version "RELEASE"}' :as nvd; then
+if ! clojure -Ttools install io.github.rm-hull/nvd-clojure '{:local/root "."}' :as nvd; then
   exit 1
 fi
 

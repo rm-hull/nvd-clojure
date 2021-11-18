@@ -33,7 +33,7 @@ To install in a given project, you can add `nvd-clojure/nvd-clojure {:mvn/versio
 If you have CLI version 1.10.3.933 or later, you can also install `nvd-clojure` as a "tool":
 
 ```bash
-clojure -Ttools install nvd-clojure/nvd-clojure '{:mvn/version "RELEASE"}' :as nvd
+clojure -Ttools install io.github.rm-hull/nvd-clojure '{:git/tag "1.8.0"}' :as nvd
 ```
 and then you can run the tool like this:
 
