@@ -17,7 +17,7 @@ jobs:
       - name: Install Clojure CLI
         uses: DeLaGuardo/setup-clojure@master
         with:
-          cli: '1.10.1.763'
+          cli: '1.10.3.933'
           lein: 2.9.5
       - name: check for outdated dependencies
         id: deps

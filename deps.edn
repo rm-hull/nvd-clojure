@@ -10,6 +10,7 @@
         org.clojure/tools.deps.alpha {:mvn/version "0.12.1071"}}
  :mvn/repos {"central" {:url "https://repo1.maven.org/maven2/"}
              "clojars" {:url "https://repo.clojars.org/"}}
+ :tools/usage {:ns-default nvd.task}
  :aliases {:test {:extra-paths ["test"]}
            :runner {:extra-deps {com.cognitect/test-runner
                                  {:git/url "https://github.com/cognitect-labs/test-runner"
