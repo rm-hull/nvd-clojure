@@ -1,4 +1,4 @@
-(defproject nvd-clojure "1.7.0"
+(defproject nvd-clojure "1.8.0"
   :description "National Vulnerability Database [https://nvd.nist.gov/] dependency-checker"
   :url "https://github.com/rm-hull/nvd-clojure"
   :license {:name "The MIT License (MIT)"
@@ -48,4 +48,8 @@
                    :dependencies [[clj-kondo "2021.10.19"]
                                   [commons-collections "20040616"]]}
              :ci {:pedantic? :abort}
-             :clj-kondo {:dependencies [[clj-kondo "2021.10.19"]]}})
+             :clj-kondo {:dependencies [[clj-kondo "2021.10.19"]]}}
+  :deploy-repositories [["clojars" {:url "https://clojars.org/repo"
+                                    :username :env/clojars_username
+                                    :password :env/clojars_password
+                                    :sign-releases false}]])

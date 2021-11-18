@@ -1,18 +1,24 @@
+## Changes from 1.7.0 to 1.8.0
+
+#### New
+
+* Update `dependency-check-core`.
+
 ## Changes from 1.6.0 to 1.7.0
 
 #### New
 
-* Update `dependency-check-core`
+* Update `dependency-check-core`.
 
 ## Changes from 1.5.0 to 1.6.0
 
 #### New
 
-* Implement `:throw-if-check-unsuccessful?` option
+* Implement `:throw-if-check-unsuccessful?` option.
   * Fixes https://github.com/rm-hull/nvd-clojure/issues/50
-* Upgrade `dependency-check-core` dependency
+* Upgrade `dependency-check-core` dependency.
 
-### Changes from 0.6.0 to 1.0
+## Changes from 0.6.0 to 1.0
 
 #### Breaking
 
