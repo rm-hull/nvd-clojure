@@ -7,12 +7,16 @@
 .lein-failures
 .lein-plugins/
 .lein-repl-history
+.lsp/.cache
 .nrepl-port
+.portal/vs-code.edn
 /checkouts/
 /classes/
 /example-lein-output
 /example/example-lein-output
+/example/target/
 /lib/
+/plugin/target/
 /target/
 /test/resources/odc.update.lock
 cache/
