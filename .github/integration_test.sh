@@ -11,13 +11,13 @@ if ! lein with-profile -user,-dev,+ci install; then
   exit 1
 fi
 
-cd "$PROJECT_DIR/plugin" || exit 1
-
-if ! lein with-profile -user,-dev,+ci install; then
+if ! clojure -Ttools install nvd-clojure/nvd-clojure '{:mvn/version "RELEASE"}' :as nvd; then
   exit 1
 fi
 
-if ! clojure -Ttools install io.github.rm-hull/nvd-clojure '{:local/root "."}' :as nvd; then
+cd "$PROJECT_DIR/plugin" || exit 1
+
+if ! lein with-profile -user,-dev,+ci install; then
   exit 1
 fi
 
@@ -102,7 +102,7 @@ example_classpath="$(clojure -Spath)"
 # cd to $HOME, to demonstrate that the Tool does not depend on a deps.edn file:
 cd || exit 1
 
-if clojure -Tnvd check :classpath '"'"$example_classpath"'"' > example-lein-output; then
+if clojure -Tnvd nvd.task/check :classpath '"'"$example_classpath"'"' > example-lein-output; then
   echo "Should have failed with non-zero code!"
   exit 1
 fi
