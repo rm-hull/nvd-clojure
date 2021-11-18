@@ -1,3 +1,10 @@
+## Changes from 1.8.0 to 1.9.0
+
+#### New
+
+* Offer a new API oriented for Clojure CLI Tools users.
+* Skip analyzing source directories (as opposed to .jar files), which are irrelevant (as analyzing sources is beyond the scope of `dependency-check-core`) and can hinder Clojure CLI usage patterns.
+
 ## Changes from 1.7.0 to 1.8.0
 
 #### New

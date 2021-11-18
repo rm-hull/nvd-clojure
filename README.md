@@ -28,7 +28,7 @@ dependencies and passes them to a library called [Dependency-Check](https://gith
 
 #### Clojure CLI
 
-To install in a given project, you can add `nvd-clojure/nvd-clojure {:mvn/version "1.8.0"}` to your deps.edn.
+To install in a given project, you can add `nvd-clojure/nvd-clojure {:mvn/version "1.9.0"}` to your deps.edn.
 
 If you have CLI version 1.10.3.933 or later, you can also install `nvd-clojure` as a "tool":
 
@@ -45,13 +45,13 @@ under `:aliases` in _~/.clojure/deps.edn_, or add it to `:aliases` in
 the project local `deps.edn`, to look something like this:
 
 ```clojure
-:aliases {:nvd {:extra-deps {nvd-clojure/nvd-clojure {:mvn/version "1.8.0"}}
+:aliases {:nvd {:extra-deps {nvd-clojure/nvd-clojure {:mvn/version "1.9.0"}}
                 :main-opts ["-m" "nvd.task.check"]}}
 ```
 
 #### Leiningen
 
-To install globally, add `[lein-nvd "1.8.0"]` into the `:plugins` vector of
+To install globally, add `[lein-nvd "1.9.0"]` into the `:plugins` vector of
 your `:user` profile in _~/.lein/profiles.clj_, or on a per-project basis, add
 to the profiles section of your _project.clj_.
 
