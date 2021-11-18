@@ -83,7 +83,7 @@ example_classpath="$(clojure -Spath)"
 # cd to the root dir, so that one runs `defproject nvd-clojure` which is the most clean and realistic way to run `main`:
 cd "$PROJECT_DIR" || exit 1
 
-if clojure -m nvd.task.check "$CONFIG_FILE" "$example_classpath" > example-lein-output; then
+if clojure -M -m nvd.task.check "$CONFIG_FILE" "$example_classpath" > example-lein-output; then
   echo "Should have failed with non-zero code!"
   exit 1
 fi
