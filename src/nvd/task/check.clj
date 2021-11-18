@@ -127,12 +127,14 @@
                       (.exists (io/file "deps.edn")) (clojure-cli-classpath)
                       :else                          (make-classpath))
           classpath (into []
-                          (filter (fn [s]
-                                    ;; Only .jar files are relevant.
+                          (remove (fn [^String s]
+                                    ;; Only .jar (and perhaps .zip) files are relevant.
                                     ;; source paths such as `src`, while are part of the classpath,
                                     ;; won't be meaningfully analyzed by dependency-check-core.
                                     ;; Keeping only .jars facilitates various usage patterns.
-                                    (s/ends-with? s ".jar")))
+                                    (let [file (io/file s)]
+                                      (or (.isDirectory f)
+                                          (not (.exists file))))))
                           classpath)
           json-str (json/write-str {"classpath" classpath})]
 
