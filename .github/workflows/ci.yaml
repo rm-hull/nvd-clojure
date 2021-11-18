@@ -3,7 +3,7 @@ on:
   push:
   pull_request:
   schedule:
-    # The cron job aims to exercise dogfooding regularly, as NVD results are always subject to change. 
+    # The cron job aims to exercise dogfooding regularly, as NVD results are always subject to change.
     # Run at 08:00 on Mondays:
     - cron: "0 8 * * 1"
 jobs:
@@ -35,7 +35,7 @@ jobs:
       - name: Coveralls
         uses: coverallsapp/github-action@master
         with:
-          path-to-lcov: ./target/coverage/lcov.info 
+          path-to-lcov: ./target/coverage/lcov.info
           github-token: ${{ secrets.GITHUB_TOKEN }}
         if: success()
   integration:
@@ -56,6 +56,6 @@ jobs:
         uses: DeLaGuardo/setup-clojure@master
         with:
           lein: 2.9.4
-          cli: 1.10.1.693
+          cli: 1.10.3.933
       - run: shellcheck .github/*.sh
       - run: .github/integration_test.sh
