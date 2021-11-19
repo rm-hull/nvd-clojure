@@ -21,9 +21,6 @@ if ! clojure -Ttools install nvd-clojure/nvd-clojure '{:mvn/version "RELEASE"}' 
   exit 1
 fi
 
-# see if we can get a tool list now:
-clojure -Ttools list
-
 cd "$PROJECT_DIR/plugin" || exit 1
 
 if ! lein with-profile -user,-dev,+ci install; then
