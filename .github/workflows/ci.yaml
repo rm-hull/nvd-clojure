@@ -38,6 +38,7 @@ jobs:
           path-to-lcov: ./target/coverage/lcov.info
           github-token: ${{ secrets.GITHUB_TOKEN }}
         if: success()
+        continue-on-error: true
   integration:
     name: Integration test suite
     runs-on: ubuntu-latest
