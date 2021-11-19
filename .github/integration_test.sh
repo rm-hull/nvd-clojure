@@ -11,6 +11,10 @@ if ! lein with-profile -user,-dev,+ci install; then
   exit 1
 fi
 
+# add some debugging to verify CLI state:
+clojure -Sdescribe
+clojure -Ttool list
+
 if ! clojure -Ttools install nvd-clojure/nvd-clojure '{:mvn/version "RELEASE"}' :as nvd; then
   exit 1
 fi
