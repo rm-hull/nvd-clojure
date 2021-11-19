@@ -13,7 +13,10 @@ fi
 
 # add some debugging to verify CLI state:
 clojure -Sdescribe
+echo "Root deps"
 cat /opt/hostedtoolcache/ClojureToolsDeps/1.10.3-1029/x64/lib/clojure/deps.edn
+echo "User deps"
+cat /home/runner/.config/clojure/deps.edn
 clojure -Ttool list
 
 if ! clojure -Ttools install nvd-clojure/nvd-clojure '{:mvn/version "RELEASE"}' :as nvd; then
