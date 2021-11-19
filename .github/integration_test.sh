@@ -11,6 +11,10 @@ if ! lein with-profile -user,-dev,+ci install; then
   exit 1
 fi
 
+# fetch deps to initialize CLI:
+clojure -P
+ls -l /home/runner/.config/clojure/
+ls -l /home/runner/.config/clojure/tools/
 # manually setup tools -- this should be auto-created:
 mkdir /home/runner/.config/clojure/tools
 echo '{:lib io.github.clojure/tools.tools :coord {:git/tag "v0.2.2" :git/sha "e1febed7ddaa5be15721255c13eb68e11bbbb398"}}' > /home/runner/.config/clojure/tools/tools.edn
