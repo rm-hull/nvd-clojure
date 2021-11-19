@@ -14,6 +14,7 @@ fi
 # add some debugging to verify CLI state:
 clojure -Sdescribe
 ls -l /home/runner/.config/clojure/
+ls -l /home/runner/.clojure/
 clojure -Ttool list
 
 if ! clojure -Ttools install nvd-clojure/nvd-clojure '{:mvn/version "RELEASE"}' :as nvd; then
