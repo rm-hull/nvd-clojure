@@ -13,20 +13,22 @@ fi
 
 # fetch deps to initialize CLI:
 clojure -P
+# does this fail?
+clojure -Ttools list
 ls -l /home/runner/.config/clojure/
 ls -l /home/runner/.config/clojure/tools/
 # manually setup tools -- this should be auto-created:
 mkdir /home/runner/.config/clojure/tools
 echo '{:lib io.github.clojure/tools.tools :coord {:git/tag "v0.2.2" :git/sha "e1febed7ddaa5be15721255c13eb68e11bbbb398"}}' > /home/runner/.config/clojure/tools/tools.edn
-# this fails still -- not sure why:
-clojure -Ttool list
+# does this fail?
+clojure -Ttools list
 
 if ! clojure -Ttools install nvd-clojure/nvd-clojure '{:mvn/version "RELEASE"}' :as nvd; then
   exit 1
 fi
 
 # see if we can get a tool list now:
-clojure -Ttool list
+clojure -Ttools list
 
 cd "$PROJECT_DIR/plugin" || exit 1
 
