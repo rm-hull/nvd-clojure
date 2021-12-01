@@ -11,7 +11,7 @@
                  [rm-hull/table "0.7.1"]
                  [trptcolin/versioneer "0.2.0"]
                  [org.clojure/java.classpath "1.0.0"]
-                 [org.clojure/tools.deps.alpha "0.12.1076" :exclusions [org.slf4j/jcl-over-slf4j
+                 [org.clojure/tools.deps.alpha "0.12.1080" :exclusions [org.slf4j/jcl-over-slf4j
                                                                         org.eclipse.jetty/jetty-http
                                                                         org.eclipse.jetty/jetty-util]]
                  ;; Explicitly depend on a certain Jackson, consistently.
@@ -22,13 +22,13 @@
                  [com.fasterxml.jackson.core/jackson-core "2.13.0"]
                  [com.fasterxml.jackson.module/jackson-module-afterburner "2.13.0"]
                  [org.apache.maven.resolver/maven-resolver-transport-http "1.7.2" #_"Fixes a CVE"]
-                 [org.apache.maven/maven-core "3.8.3" #_"Fixes a CVE"]
+                 [org.apache.maven/maven-core "3.8.4" #_"Fixes a CVE"]
                  [org.eclipse.jetty/jetty-client "11.0.7" #_"Fixes a CVE" :exclusions [org.slf4j/slf4j-api]]
                  [org.apache.maven.resolver/maven-resolver-spi "1.7.2" #_"Satisfies :pedantic?"]
                  [org.apache.maven.resolver/maven-resolver-api "1.7.2" #_"Satisfies :pedantic?"]
                  [org.apache.maven.resolver/maven-resolver-util "1.7.2" #_"Satisfies :pedantic?"]
                  [org.apache.maven.resolver/maven-resolver-impl "1.7.2" #_"Satisfies :pedantic?"]
-                 [org.apache.maven/maven-resolver-provider "3.8.3" #_"Satisfies :pedantic?"]
+                 [org.apache.maven/maven-resolver-provider "3.8.4" #_"Satisfies :pedantic?"]
                  [org.codehaus.plexus/plexus-utils "3.4.1" #_"Satisfies :pedantic?"]]
   :scm {:url "git@github.com:rm-hull/nvd-clojure.git"}
   :source-paths ["src"]
