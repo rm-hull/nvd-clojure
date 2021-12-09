@@ -11,7 +11,7 @@
                  [rm-hull/table "0.7.1"]
                  [trptcolin/versioneer "0.2.0"]
                  [org.clojure/java.classpath "1.0.0"]
-                 [org.clojure/tools.deps.alpha "0.12.1080" :exclusions [org.slf4j/jcl-over-slf4j
+                 [org.clojure/tools.deps.alpha "0.12.1090" :exclusions [org.slf4j/jcl-over-slf4j
                                                                         org.eclipse.jetty/jetty-http
                                                                         org.eclipse.jetty/jetty-util]]
                  ;; Explicitly depend on a certain Jackson, consistently.
@@ -45,10 +45,10 @@
                              [lein-cloverage "1.2.2"]
                              [lein-ancient "0.7.0"]
                              [jonase/eastwood "0.9.9"]]
-                   :dependencies [[clj-kondo "2021.10.19"]
+                   :dependencies [[clj-kondo "2021.12.01"]
                                   [commons-collections "20040616"]]}
              :ci {:pedantic? :abort}
-             :clj-kondo {:dependencies [[clj-kondo "2021.10.19"]]}}
+             :clj-kondo {:dependencies [[clj-kondo "2021.12.01"]]}}
   :deploy-repositories [["clojars" {:url "https://clojars.org/repo"
                                     :username :env/clojars_username
                                     :password :env/clojars_password

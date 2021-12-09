@@ -7,7 +7,7 @@
         org.owasp/dependency-check-core {:mvn/version "6.5.0"}
         rm-hull/table {:mvn/version "0.7.1"}
         trptcolin/versioneer {:mvn/version "0.2.0"}
-        org.clojure/tools.deps.alpha {:mvn/version "0.12.1080"}}
+        org.clojure/tools.deps.alpha {:mvn/version "0.12.1090"}}
  :mvn/repos {"central" {:url "https://repo1.maven.org/maven2/"}
              "clojars" {:url "https://repo.clojars.org/"}}
  :tools/usage {:ns-default nvd.task}
