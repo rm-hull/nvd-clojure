@@ -7,7 +7,7 @@
                  [clansi "1.0.0"]
                  [org.clojure/data.json "2.4.0"]
                  [org.slf4j/slf4j-simple "2.0.0-alpha1"]
-                 [org.owasp/dependency-check-core "6.5.0"]
+                 [org.owasp/dependency-check-core "6.5.1"]
                  [rm-hull/table "0.7.1"]
                  [trptcolin/versioneer "0.2.0"]
                  [org.clojure/java.classpath "1.0.0"]
@@ -17,10 +17,10 @@
                  ;; Explicitly depend on a certain Jackson, consistently.
                  ;; Otherwise, when using the Lein plugin, Leiningen's own dependencies can pull a different Jackson version
                  ;; (see https://github.com/jeremylong/DependencyCheck/issues/3441):
-                 [com.fasterxml.jackson.core/jackson-databind "2.13.0"]
-                 [com.fasterxml.jackson.core/jackson-annotations "2.13.0"]
-                 [com.fasterxml.jackson.core/jackson-core "2.13.0"]
-                 [com.fasterxml.jackson.module/jackson-module-afterburner "2.13.0"]
+                 [com.fasterxml.jackson.core/jackson-databind "2.13.1"]
+                 [com.fasterxml.jackson.core/jackson-annotations "2.13.1"]
+                 [com.fasterxml.jackson.core/jackson-core "2.13.1"]
+                 [com.fasterxml.jackson.module/jackson-module-afterburner "2.13.1"]
                  [org.apache.maven.resolver/maven-resolver-transport-http "1.7.2" #_"Fixes a CVE"]
                  [org.apache.maven/maven-core "3.8.4" #_"Fixes a CVE"]
                  [org.eclipse.jetty/jetty-client "11.0.7" #_"Fixes a CVE" :exclusions [org.slf4j/slf4j-api]]
@@ -45,10 +45,10 @@
                              [lein-cloverage "1.2.2"]
                              [lein-ancient "0.7.0"]
                              [jonase/eastwood "0.9.9"]]
-                   :dependencies [[clj-kondo "2021.12.01"]
+                   :dependencies [[clj-kondo "2021.12.16"]
                                   [commons-collections "20040616"]]}
              :ci {:pedantic? :abort}
-             :clj-kondo {:dependencies [[clj-kondo "2021.12.01"]]}}
+             :clj-kondo {:dependencies [[clj-kondo "2021.12.16"]]}}
   :deploy-repositories [["clojars" {:url "https://clojars.org/repo"
                                     :username :env/clojars_username
                                     :password :env/clojars_password
