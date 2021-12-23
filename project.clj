@@ -39,12 +39,13 @@
           :source-uri "https://github.com/rm-hull/nvd-clojure/blob/master/{filepath}#L{line}"}
   :min-lein-version "2.8.1"
   :target-path "target/%s"
-  :profiles {:dev {:global-vars {*warn-on-reflection* true}
-                   :plugins [[lein-cljfmt "0.7.0"]
+  :profiles {:dev {:plugins [[lein-cljfmt "0.7.0"]
                              [lein-codox "0.10.7"]
                              [lein-cloverage "1.2.2"]
                              [lein-ancient "0.7.0"]
-                             [jonase/eastwood "0.9.9"]]
+                             [jonase/eastwood "1.0.0"]]
+                   :eastwood {:add-linters [:boxed-math
+                                            :performance]}
                    :dependencies [[clj-kondo "2021.12.19"]
                                   [commons-collections "20040616"]]}
              :ci {:pedantic? :abort}

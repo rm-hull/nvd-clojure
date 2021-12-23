@@ -82,10 +82,12 @@
     (s/split $ #"\.")
     (take 2 $)
     (s/join "." $)
-    (Float/parseFloat $)))
+    (Double/parseDouble $)))
 
 (defn make-classpath []
-  (let [{:keys [classpath fun]} (if (> (jvm-version) 1.8)
+  (let [{:keys [classpath fun]} (if (-> (jvm-version)
+                                        (double)
+                                        (> 1.8))
                                   {:classpath (cp/system-classpath)
                                    :fun       (fn [^File jar] (.getPath jar))}
                                   {:classpath (-> ^URLClassLoader (ClassLoader/getSystemClassLoader)

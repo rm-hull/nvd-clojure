@@ -57,7 +57,7 @@
       cvss3 (.getBaseScore cvss3)
       :else 1)))
 
-(defn- severity [cvssScore]
+(defn- severity [^long cvssScore]
   (cond
     (= cvssScore 0) :none
     (< cvssScore 4) :low
@@ -111,8 +111,8 @@
 
 (defn fail-build? [project]
   (let [^Engine engine (:engine project)
-        highest-score (apply max 0 (scores engine))
-        fail-threshold (get-in project [:nvd :fail-threshold] 0)]
+        highest-score (long (apply max 0 (scores engine)))
+        fail-threshold (long (get-in project [:nvd :fail-threshold] 0))]
     (->
      project
      (assoc-in [:nvd :highest-score] highest-score)
