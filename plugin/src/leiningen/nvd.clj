@@ -22,54 +22,14 @@
 
 (ns leiningen.nvd
   (:require
-   [clojure.string :as s]
-   [clojure.data.json :as json]
-   [leiningen.core.main :as main]
-   [leiningen.nvd.deps :refer [get-classpath]]
-   [nvd.task.update-database]
-   [nvd.task.purge-database]
-   [nvd.task.check])
-  (:import
-   [java.io File]))
+   [leiningen.core.main :as main]))
 
-(def ^File temp-file (File/createTempFile ".nvd-clojure_" ".json"))
+(defn nvd
+  "nvd-clojure's Lein plugin is now deprecated.
 
-(defn nvd "
-  Scans project dependencies, attempting to detect publicly disclosed
-  vulnerabilities contained within dependent JAR files. It does this by
-  determining if there is a Common Platform Enumeration (CPE) identifier
-  for a given dependency. On completion, a summary table is displayed on
-  the console (showing the status for each dependency), and detailed report
-  linking to the associated CVE entries.
+  Please use a newer API as described in the nvd-clojure's README."
+  [& _]
+  (main/warn "nvd-clojure's Lein plugin is now deprecated.
 
-  This task should be invoked with one of three commands:
-
-      check  - will optionally download the latest database update files,
-               and then run the analyze and report stages. Typically, if
-               the database has been updated recently, then the update
-               stage will be skipped.
-
-      purge  - will remove the local database files. Subsequently running
-               the 'check' command will force downloading the files again,
-               which could take a long time.
-
-      update - will attempt to download the latest database updates, and
-               incorporate them into the local store. Usually not necessary,
-               as this is incorporated into the 'check' command.
-
-  Any text after the command are treated as arguments and are passed directly
-  directly to the command for further processing.
-  "
-  [project command & args]
-  (let [path (.getAbsolutePath temp-file)
-        opts    (merge
-                 (select-keys project [:name :group :version :nvd])
-                 {:classpath (get-classpath project) :cmd-args args})]
-
-    (spit path (json/write-str opts))
-
-    (case command
-      "check"  (nvd.task.check/-main path)
-      "purge"  (nvd.task.purge-database/-main path)
-      "update" (nvd.task.update-database/-main path)
-      (main/abort "No such command:" command))))
+  Please use a newer API as described in the nvd-clojure's README.")
+  (main/exit 1))

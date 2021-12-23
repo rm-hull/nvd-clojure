@@ -9,8 +9,8 @@
 [![Clojars Project](https://img.shields.io/clojars/v/nvd-clojure.svg)](https://clojars.org/nvd-clojure)
 [![Maintenance](https://img.shields.io/maintenance/yes/2021.svg?maxAge=2592000)]()
 
-[National Vulnerability Database](https://nvd.nist.gov/) dependency-checker
-library (and plugin for Leiningen).
+[National Vulnerability Database](https://nvd.nist.gov/) dependency checker
+library.
 
 When run in your project, all the JARs on the classpath
 will be checked for known security vulnerabilities. `nvd-clojure` extracts project
@@ -49,16 +49,9 @@ the project local `deps.edn`, to look something like this:
                 :main-opts ["-m" "nvd.task.check"]}}
 ```
 
-#### Leiningen
-
-To install globally, add `[lein-nvd "1.9.0"]` into the `:plugins` vector of
-your `:user` profile in _~/.lein/profiles.clj_, or on a per-project basis, add
-to the profiles section of your _project.clj_.
-
 ## Usage
 
-Run `lein nvd check` or `clj -M:nvd` (if you've chosen the alias `:nvd`, like
-above) in your project. The first time the plugin runs,it will download (and
+Run the program. The first time it runs, it will download (and
 cache) various databases from https://nvd.nist.gov. Subsequent runs will
 periodically check and update the local database, but the initial run could
 therefore be quite slow - of the order of ten minutes or more, so give it time.
@@ -186,7 +179,7 @@ nvd-clojure has some Java dependencies, which in turn can have CVEs themselves, 
 
 For this reason, you might want to invoke `nvd.task.check`'s main function by passing a classpath string as an argument.
 
-Said classpath string should try reflecting a _production's classpath_ as accurately as possible: it should not include dev/test tooling, plugins (like nvd-clojure or any other), etc.
+Said classpath string should try reflecting a _production's classpath_ as accurately as possible: it should not include dev/test tooling, plugins, etc.
 
 #### Lein example
 
@@ -203,20 +196,6 @@ clojure -m nvd.task.check "" "$(clojure -Spath)"
 ...in both cases, an empty string is passed as the first argument, for backwards compatibility reasons. You can also pass a filename instead, denoting a .json file with extra options ([example](https://github.com/rm-hull/nvd-clojure/blob/master/.github/nvd-config.json)).
 
 For extra isolation, it is recommended that you invoke `nvd.task.check` from _outside_ your project - e.g. from an empty project, a git clone of this very repo, or from $HOME (assuming you have nvd-clojure as a dependency in your [user-wide Lein profile](https://github.com/technomancy/leiningen/blob/2586957f9d099ff11d50d312a6daf397c2a06fb1/doc/PROFILES.md)).
-
-## Building locally
-
-Build and install the core module, then do the same for the plugin:
-
-    $ lein test
-    $ lein install
-    $ cd plugin
-    $ lein test
-    $ lein install
-    $ cd ../example
-    $ lein nvd check
-
-A sample report is available for testing in the _example_ sub-directory.
 
 ## Attribution
 

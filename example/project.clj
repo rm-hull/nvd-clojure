@@ -20,11 +20,4 @@
     [org.slf4j/slf4j-api "1.7.25"]
   ]
   :source-paths ["src"]
-  :min-lein-version "2.6.1"
-  :profiles {
-    :nvd-throw-on-exit {:nvd {:throw-if-check-unsuccessful? true}}
-    :dev {
-      :dependencies [
-        [lein-nvd "RELEASE"]]
-      :plugins [
-        [lein-nvd "RELEASE"]]}})
+  :min-lein-version "2.6.1")
