@@ -18,7 +18,7 @@ fi
 
 cd "$PROJECT_DIR/example" || exit 1
 
-# 3.- Exercise `main` program
+# 1.- Exercise `main` program
 
 example_classpath="$(lein with-profile -user,-dev,-test classpath)"
 
@@ -35,7 +35,7 @@ if ! grep --silent "$SUCCESS_REGEX" example-lein-output; then
   exit 1
 fi
 
-# 4.- Exercise `tools.deps` integration
+# 2.- Exercise `tools.deps` integration
 
 cd "$PROJECT_DIR/example" || exit 1
 
@@ -54,7 +54,7 @@ if ! grep --silent "$SUCCESS_REGEX" example-lein-output; then
   exit 1
 fi
 
-# 5.- Exercise Clojure CLI Tools integration
+# 3.- Exercise Clojure CLI Tools integration
 
 cd "$PROJECT_DIR/example" || exit 1
 
@@ -73,13 +73,13 @@ if ! grep --silent "$SUCCESS_REGEX" example-lein-output; then
   exit 1
 fi
 
-# 6.- Dogfood the `nvd-clojure` project
+# 4.- Dogfood the `nvd-clojure` project
 
 cd "$PROJECT_DIR" || exit 1
 
 own_classpath="$(lein with-profile -user,-dev,-test classpath)"
 
-if ! lein with-profile -user,-dev,+ci run -m nvd.task.check "$DOGFOODING_CONFIG_FILE" "$own_classpath"; then
+if ! lein with-profile -user,-dev,+ci,+skip-self-check run -m nvd.task.check "$DOGFOODING_CONFIG_FILE" "$own_classpath"; then
   echo "nvd-clojure did not pass dogfooding!"
   exit 1
 fi

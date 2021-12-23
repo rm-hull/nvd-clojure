@@ -91,10 +91,10 @@
         fail-build?
         conditional-exit)))
 
-(defn -main [& [config-filename classpath-string]]
+(defn -main [& [config-filename ^String classpath-string]]
   (when (s/blank? classpath-string)
     (throw (ex-info "nvd-clojure requires a classpath value to be explicitly passed as a CLI argument.
-Older usages are deprecated.")))
+Older usages are deprecated." {})))
 
   (let [classpath (s/split classpath-string #":")
         classpath (into []
@@ -107,6 +107,18 @@ Older usages are deprecated.")))
                                     (or (.isDirectory file)
                                         (not (.exists file))))))
                         classpath)]
+
+    (when-not (System/getProperty "nvd-clojure.internal.skip-self-check")
+      (when-let [bad-entry (->> classpath
+                                (some (fn [^String entry]
+                                        (and (-> entry (.endsWith ".jar"))
+                                             (or (-> entry (.contains "dependency-check-core"))
+                                                 (-> entry (.contains "nvd-clojure")))))))]
+        (throw (ex-info "nvd-clojure should not analyse itself. This typically indicates a badly setup integration.
+
+Please refer to the project's README for recommended usages."
+                        {:bad-entry bad-entry
+                         :classpath classpath-string}))))
 
     ;; perform some sanity checks for ensuring the calculated classpath has the expected format:
     (let [f (-> classpath ^String (first) File.)]
