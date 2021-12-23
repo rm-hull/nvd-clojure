@@ -5,6 +5,7 @@ cd "${BASH_SOURCE%/*}/.." || exit 1
 
 PROJECT_DIR="$PWD"
 CONFIG_FILE="$PROJECT_DIR/.github/nvd-config.json"
+DOGFOODING_CONFIG_FILE="$PROJECT_DIR/.github/nvd-dogfooding-config.json"
 SUCCESS_REGEX="[1-9][0-9] vulnerabilities detected\. Severity: "
 
 if ! lein with-profile -user,-dev,+ci install; then
@@ -118,7 +119,7 @@ cd "$PROJECT_DIR" || exit 1
 
 own_classpath="$(lein with-profile -user,-dev,-test classpath)"
 
-if ! lein with-profile -user,-dev,+ci run -m nvd.task.check "" "$own_classpath"; then
+if ! lein with-profile -user,-dev,+ci run -m nvd.task.check "$DOGFOODING_CONFIG_FILE" "$own_classpath"; then
   echo "nvd-clojure did not pass dogfooding!"
   exit 1
 fi
@@ -131,7 +132,7 @@ plugin_classpath="$(lein with-profile -user,-dev,-test classpath)"
 
 cd "$PROJECT_DIR" || exit 1
 
-if ! lein with-profile -user,-dev,+ci run -m nvd.task.check "" "$plugin_classpath"; then
+if ! lein with-profile -user,-dev,+ci run -m nvd.task.check "$DOGFOODING_CONFIG_FILE" "$plugin_classpath"; then
   echo "lein-nvd did not pass dogfooding!"
   exit 1
 fi
