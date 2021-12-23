@@ -27,11 +27,12 @@
           :source-uri "https://github.com/rm-hull/nvd-clojure/blob/master/{filepath}#L{line}"}
   :target-path "target/%s"
   :min-lein-version "2.8.1"
-  :profiles {:dev {:global-vars {*warn-on-reflection* true}
-                   :dependencies [[org.clojure/clojure "1.10.3"]]
-                   :plugins [[jonase/eastwood "0.9.9"]
+  :profiles {:dev {:dependencies [[org.clojure/clojure "1.10.3"]]
+                   :plugins [[jonase/eastwood "1.0.0"]
                              [lein-codox "0.10.7"]
-                             [lein-cloverage "1.1.1"]]}
+                             [lein-cloverage "1.1.1"]]
+                   :eastwood {:add-linters [:boxed-math
+                                            :performance]}}
              :ci {:pedantic? :abort}}
   :eval-in-leiningen true
   :deploy-repositories [["clojars" {:url "https://clojars.org/repo"
