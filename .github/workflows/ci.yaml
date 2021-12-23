@@ -21,10 +21,6 @@ jobs:
         uses: actions/checkout@master
         with:
           ref: ${{ github.ref }}
-      - name: eclint
-        uses: snow-actions/eclint@v1.0.1
-        with:
-          args: 'check .* * src/**/*.clj test/**/*.clj'
       - run: .github/lint.sh
       - name: Install leiningen
         uses: DeLaGuardo/setup-clojure@master
