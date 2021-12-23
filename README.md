@@ -29,7 +29,7 @@ dependencies and passes them to a library called [Dependency-Check](https://gith
 
 <details>
 
-Please create a separate project containing exclusively of `[nvd-clojure/nvd-clojure "1.9.0"]`. Said project can be located inside the targeted repo's Git repository.
+Please create a separate project containing exclusively of `[nvd-clojure/nvd-clojure "2.0.0"]`. Said project can be located inside the targeted repo's Git repository.
 
 Please do not add nvd-clojure as a dependency or plugin in the project.clj of the project to be analysed.
 
@@ -43,7 +43,7 @@ An empty string is passed as the first argument, for backwards compatibility rea
 
 The `classpath` command should reflect a production-like classpath as closely as possible: it should not include dev/test tooling, plugins, etc.
 
-If you are using a multi-modules solution (e.g. `lein-sub`, `lein-monolith`, `trapperkeeper`), you should ensure each module is included in this classpath; else they will not be analysed.
+If you are using a multi-modules solution (e.g. `lein-sub`, `lein-monolith`, `trapperkeeper`), you should ensure that each module is included in this classpath; else they will not be analysed.
 
 </details>
 
@@ -51,7 +51,7 @@ If you are using a multi-modules solution (e.g. `lein-sub`, `lein-monolith`, `tr
 
 <details>
 
-Please create a separate project containing exclusively of `nvd-clojure/nvd-clojure {:mvn/version "1.9.0"}`. Said project can be located inside the targeted repo's Git repository.
+Please create a separate project containing exclusively of `nvd-clojure/nvd-clojure {:mvn/version "2.0.0"}`. Said project can be located inside the targeted repo's Git repository.
 
 Please do not add nvd-clojure as a dependency in the deps.edn of the project to be analysed.
 
@@ -67,7 +67,7 @@ An empty string is passed as the first argument, for backwards compatibility rea
 
 The `-Spath` command should reflect a production-like classpath as closely as possible: it should not include dev/test tooling, etc.
 
-If you are using a multi-modules solution (e.g. [Polylith](https://github.com/polyfy/polylith)), you should ensure each module is included in this classpath; else they will not be analysed.
+If you are using a multi-modules solution (e.g. [Polylith](https://github.com/polyfy/polylith)), you should ensure that each module is included in this classpath; else they will not be analysed.
 
 </details>
 
@@ -91,7 +91,7 @@ You can optionally pass a `:config-filename`, denoting a .json file with extra o
 
 The `-Spath` command should reflect a production-like classpath as closely as possible: it should not include dev/test tooling, etc.
 
-If you are using a multi-modules solution (e.g. [Polylith](https://github.com/polyfy/polylith)), you should ensure each module is included in this classpath; else they will not be analysed.
+If you are using a multi-modules solution (e.g. [Polylith](https://github.com/polyfy/polylith)), you should ensure that each module is included in this classpath; else they will not be analysed.
 
 </details>
 
@@ -184,9 +184,11 @@ There are some specific settings below which are worthy of a few comments:
 
 ## Avoiding classpath interference
 
-nvd-clojure has some Java dependencies, which in turn can have CVEs themselves, or in any case interfere with your project's dependency tree, that would be computed in absence of nvd-clojure.
+nvd-clojure has some Java dependencies, which in turn can have CVEs themselves.
 
-For this reason, it is strongly advised to follow the installation/usage instructions carefully.
+Likewise, a given project's dependencies can overlap and therefore affect nvd-clojure's, leading it to incorrect functionining.
+
+For these reasons, it is strongly advised to follow the installation/usage instructions carefully.
 
 ## Attribution
 
