@@ -6,8 +6,7 @@
         org.slf4j/slf4j-simple {:mvn/version "2.0.0-alpha1"}
         org.owasp/dependency-check-core {:mvn/version "6.5.1"}
         rm-hull/table {:mvn/version "0.7.1"}
-        trptcolin/versioneer {:mvn/version "0.2.0"}
-        org.clojure/tools.deps.alpha {:mvn/version "0.12.1098"}}
+        trptcolin/versioneer {:mvn/version "0.2.0"}}
  :mvn/repos {"central" {:url "https://repo1.maven.org/maven2/"}
              "clojars" {:url "https://repo.clojars.org/"}}
  :tools/usage {:ns-default nvd.task}

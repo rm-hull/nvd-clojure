@@ -10,10 +10,6 @@
                  [org.owasp/dependency-check-core "6.5.1"]
                  [rm-hull/table "0.7.1"]
                  [trptcolin/versioneer "0.2.0"]
-                 [org.clojure/java.classpath "1.0.0"]
-                 [org.clojure/tools.deps.alpha "0.12.1098" :exclusions [org.slf4j/jcl-over-slf4j
-                                                                        org.eclipse.jetty/jetty-http
-                                                                        org.eclipse.jetty/jetty-util]]
                  ;; Explicitly depend on a certain Jackson, consistently.
                  ;; Otherwise, when using the Lein plugin, Leiningen's own dependencies can pull a different Jackson version
                  ;; (see https://github.com/jeremylong/DependencyCheck/issues/3441):

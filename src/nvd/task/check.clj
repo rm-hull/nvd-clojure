@@ -23,30 +23,25 @@
 (ns nvd.task.check
   (:require
    [clojure.data.json :as json]
-   [clojure.edn :as edn]
-   [clojure.java.classpath :as cp]
    [clojure.java.io :as io]
    [clojure.string :as s]
-   [clojure.tools.deps.alpha :as deps]
    [clansi :refer [style]]
    [nvd.config :refer [with-config]]
    [nvd.report :refer [generate-report print-summary fail-build?]]
    [trptcolin.versioneer.core :refer [get-version]])
   (:import
-   [java.net URL]
    [java.io File]
    [org.owasp.dependencycheck Engine]
-   [org.owasp.dependencycheck.exception ExceptionCollection]
-   [java.net URLClassLoader]))
+   [org.owasp.dependencycheck.exception ExceptionCollection]))
 
-(defonce version
-  {:nvd-clojure (get-version "rm-hull" "nvd-clojure")
-   :dependency-check (.getImplementationVersion (.getPackage Engine))})
+(def version
+  (delay {:nvd-clojure (get-version "rm-hull" "nvd-clojure")
+          :dependency-check (.getImplementationVersion (.getPackage Engine))}))
 
 (defn jar? [^String filename]
   (.endsWith filename ".jar"))
 
-(defn ^String absolute-path [file]
+(defn absolute-path ^String [file]
   (s/replace-first file #"^~" (System/getProperty "user.home")))
 
 (defn- scan-and-analyze [project]
@@ -84,72 +79,53 @@
     (s/join "." $)
     (Double/parseDouble $)))
 
-(defn make-classpath []
-  (let [{:keys [classpath fun]} (if (-> (jvm-version)
-                                        (double)
-                                        (> 1.8))
-                                  {:classpath (cp/system-classpath)
-                                   :fun       (fn [^File jar] (.getPath jar))}
-                                  {:classpath (-> ^URLClassLoader (ClassLoader/getSystemClassLoader)
-                                                  .getURLs)
-                                   :fun       (fn [^URL jar] (.getFile jar))})]
-    (map fun classpath)))
-
-(defn clojure-cli-classpath
-  "Read deps.edn and derive the classpath from its artifacts."
-  []
-  (-> (slurp "deps.edn")
-      edn/read-string
-      (deps/calc-basis)
-      (dissoc :paths)
-      :classpath-roots))
+(defn impl [config-filename classpath]
+  (with-config [project config-filename]
+    (println "Checking dependencies for" (style (:title project) :bright :yellow) "...")
+    (println "  using nvd-clojure:" (:nvd-clojure @version) "and dependency-check:" (:dependency-check @version))
+    (-> project
+        (assoc :classpath classpath)
+        scan-and-analyze
+        generate-report
+        print-summary
+        fail-build?
+        conditional-exit)))
 
 (defn -main [& [config-filename classpath-string]]
-  ;; specifically handle blank strings (in addition to nil)
-  ;; so that CLI callers can skip the first argument by simply passing an empty string:
-  (if-not (s/blank? config-filename)
-    (with-config [project config-filename]
-      (println "Checking dependencies for" (style (:title project) :bright :yellow) "...")
-      (println "  using nvd-clojure:" (:nvd-clojure version) "and dependency-check:" (:dependency-check version))
-      (let [project (cond-> project
-                      ;; Support receving a config-filename AND a classpath-string for CLI callers.
-                      ;; This allows to have a non-temporary config file, while still using a dynamically calculated classpath:
-                      (not (s/blank? classpath-string))
-                      (assoc :classpath (s/split classpath-string #":")))]
-        (-> project
-            scan-and-analyze
-            generate-report
-            print-summary
-            fail-build?
-            conditional-exit)))
-    (let [passed-classpath-string? (not (s/blank? classpath-string))
-          f (java.io.File/createTempFile ".clj-nvd_" ".json")
-          classpath (cond
-                      passed-classpath-string?       (s/split classpath-string #":")
-                      (.exists (io/file "deps.edn")) (clojure-cli-classpath)
-                      :else                          (make-classpath))
-          classpath (into []
-                          (remove (fn [^String s]
-                                    ;; Only .jar (and perhaps .zip) files are relevant.
-                                    ;; source paths such as `src`, while are part of the classpath,
-                                    ;; won't be meaningfully analyzed by dependency-check-core.
-                                    ;; Keeping only .jars facilitates various usage patterns.
-                                    (let [file (io/file s)]
-                                      (or (.isDirectory f)
-                                          (not (.exists file))))))
-                          classpath)
-          json-str (json/write-str {"classpath" classpath})]
+  (when (s/blank? classpath-string)
+    (throw (ex-info "nvd-clojure requires a classpath value to be explicitly passed as a CLI argument.
+Older usages are deprecated.")))
 
-      ;; perform some sanity checks for ensuring the calculated classpath has the expected format,
-      ;; regardless of whether it came from Lein, deps.edn or stdin:
-      (let [f (-> classpath ^String (first) File.)]
-        (assert (.exists f)
-                (str "The classpath variable should be a vector of simple strings denoting existing files. "
-                     f)))
-      (let [f (-> classpath ^String (last) File.)]
-        (assert (.exists f)
-                (str "The classpath variable should be a vector of simple strings denoting existing files. "
-                     f)))
+  (let [classpath (s/split classpath-string #":")
+        classpath (into []
+                        (remove (fn [^String s]
+                                  ;; Only .jar (and perhaps .zip) files are relevant.
+                                  ;; source paths such as `src`, while are part of the classpath,
+                                  ;; won't be meaningfully analyzed by dependency-check-core.
+                                  ;; Keeping only .jars facilitates various usage patterns.
+                                  (let [file (io/file s)]
+                                    (or (.isDirectory file)
+                                        (not (.exists file))))))
+                        classpath)]
 
-      (spit f json-str)
-      (-main (.getCanonicalPath f)))))
+    ;; perform some sanity checks for ensuring the calculated classpath has the expected format:
+    (let [f (-> classpath ^String (first) File.)]
+      (when-not (.exists f)
+        (throw (ex-info (str "The classpath variable should be a vector of simple strings denoting existing files: "
+                             (pr-str f))
+                        {}))))
+
+    (let [f (-> classpath ^String (last) File.)]
+      (when-not (.exists f)
+        (throw (ex-info (str "The classpath variable should be a vector of simple strings denoting existing files: "
+                             (pr-str f))
+                        {}))))
+
+    ;; specifically handle blank strings (in addition to nil)
+    ;; so that CLI callers can skip the first argument by simply passing an empty string:
+    (let [config-filename (if-not (s/blank? config-filename)
+                            config-filename
+                            (let [f (java.io.File/createTempFile ".clj-nvd_" ".json")]
+                              (spit f (json/write-str {"classpath" classpath}))
+                              (.getCanonicalPath f)))]
+      (impl config-filename classpath))))
