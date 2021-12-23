@@ -1,3 +1,10 @@
+## Changes from 1.9.0 to 2.0.0
+
+* [#113](https://github.com/rm-hull/nvd-clojure/issues/113): Remove all unsafe APIs.
+  * Please refer to the README for the recommended installation/usage patterns. 
+* [#117](https://github.com/rm-hull/nvd-clojure/issues/117): Detect when `nvd-clojure` is being used in a likely-incorrect way, and fail the program when that happens.
+* Remove deprecated tasks, related to DB management.
+
 ## Changes from 1.8.0 to 1.9.0
 
 #### New

@@ -1,4 +1,4 @@
-(defproject lein-nvd "1.9.0"
+(defproject lein-nvd "2.0.0"
   :description "National Vulnerability Database [https://nvd.nist.gov/] dependency-checker leiningen plugin."
   :url "https://github.com/rm-hull/nvd-clojure"
   :license {:name "The MIT License (MIT)"
