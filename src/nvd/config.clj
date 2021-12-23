@@ -49,7 +49,7 @@
 
 (def ^:private boolean-mappings
   {Settings$KEYS/AUTO_UPDATE [:auto-update]
-;  Settings$KEYS/ANALYZER_EXPERIMENTAL_ENABLED [:analyzer :experimental-enabled]
+                                        ;  Settings$KEYS/ANALYZER_EXPERIMENTAL_ENABLED [:analyzer :experimental-enabled]
    Settings$KEYS/ANALYZER_JAR_ENABLED [:analyzer :jar-enabled]
    Settings$KEYS/ANALYZER_PYTHON_DISTRIBUTION_ENABLED [:analyzer :python-distribution-enabled]
    Settings$KEYS/ANALYZER_PYTHON_PACKAGE_ENABLED [:analyzer :python-package-enabled]
@@ -91,14 +91,14 @@
 
 (defn populate-settings! [config-file]
   (let [project (deep-merge default-settings (read-opts config-file))
-        plugin-settings (:nvd project)
+        nvd-settings (:nvd project)
         settings (Settings.)]
     (doseq [[prop path] integer-mappings]
-      (.setIntIfNotNull settings prop (get-in plugin-settings path)))
+      (.setIntIfNotNull settings prop (get-in nvd-settings path)))
     (doseq [[prop path] boolean-mappings]
-      (.setBooleanIfNotNull settings prop (get-in plugin-settings path)))
+      (.setBooleanIfNotNull settings prop (get-in nvd-settings path)))
     (doseq [[prop path] string-mappings]
-      (.setStringIfNotEmpty settings prop (str (get-in plugin-settings path))))
+      (.setStringIfNotEmpty settings prop (str (get-in nvd-settings path))))
     (->
      project
      (assoc-in [:nvd :data-directory] (.getDataDirectory settings))
