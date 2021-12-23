@@ -29,7 +29,7 @@ dependencies and passes them to a library called [Dependency-Check](https://gith
 
 <details>
 
-Please create a separate project containing exclusively of `[nvd-clojure/nvd-clojure "2.0.0"]`. Said project can be located inside the targeted repo's Git repository.
+Please create a separate project consisting exclusively of `[nvd-clojure/nvd-clojure "2.0.0"]`. Said project can be located inside the targeted repo's Git repository.
 
 Please do not add nvd-clojure as a dependency or plugin in the project.clj of the project to be analysed.
 
@@ -51,7 +51,7 @@ If you are using a multi-modules solution (e.g. `lein-sub`, `lein-monolith`, `tr
 
 <details>
 
-Please create a separate project containing exclusively of `nvd-clojure/nvd-clojure {:mvn/version "2.0.0"}`. Said project can be located inside the targeted repo's Git repository.
+Please create a separate project consisting exclusively of `nvd-clojure/nvd-clojure {:mvn/version "2.0.0"}`. Said project can be located inside the targeted repo's Git repository.
 
 Please do not add nvd-clojure as a dependency in the deps.edn of the project to be analysed.
 
@@ -60,7 +60,7 @@ Please do not add nvd-clojure as a dependency in the deps.edn of the project to 
 Then you can run, within this helper project:
 
 ```
-clojure -Dclojure.main.report=stderr -m nvd.task.check "" "$(cd <YOUR_PROJECT>; clojure -Spath -A:any:aliases)"
+clojure -J-Dclojure.main.report=stderr -m nvd.task.check "" "$(cd <YOUR_PROJECT>; clojure -Spath -A:any:aliases)"
 ```
 
 An empty string is passed as the first argument, for backwards compatibility reasons. You can also pass a filename instead, denoting a .json file with extra options ([example](https://github.com/rm-hull/nvd-clojure/blob/master/.github/nvd-config.json)).
@@ -186,7 +186,7 @@ There are some specific settings below which are worthy of a few comments:
 
 nvd-clojure has some Java dependencies, which in turn can have CVEs themselves.
 
-Likewise, a given project's dependencies can overlap and therefore affect nvd-clojure's, leading it to incorrect functionining.
+Likewise, a given project's dependencies can overlap and therefore affect nvd-clojure's, leading it to incorrect functioning.
 
 For these reasons, it is strongly advised to follow the installation/usage instructions carefully.
 
