@@ -3,7 +3,6 @@
 > _Formerly known as_ `lein-nvd`
 
 [![Build Status](https://github.com/rm-hull/nvd-clojure/workflows/Continuous%20Integration/badge.svg)](https://github.com/rm-hull/nvd-clojure/actions?query=workflow%3A%22Continuous+Integration%22)
-[![Coverage Status](https://coveralls.io/repos/rm-hull/nvd-clojure/badge.svg?branch=master)](https://coveralls.io/r/rm-hull/nvd-clojure?branch=master)
 [![Dependencies Status](https://byob.yarr.is/dotemacs/actions-play/dependencies)](https://github.com/rm-hull/nvd-clojure/actions?query=workflow%3A%22dependencies%22)
 [![Downloads](https://versions.deps.co/rm-hull/nvd-clojure/downloads.svg)](https://versions.deps.co/rm-hull/nvd-clojure)
 [![Clojars Project](https://img.shields.io/clojars/v/nvd-clojure.svg)](https://clojars.org/nvd-clojure)
@@ -22,42 +21,89 @@ dependencies and passes them to a library called [Dependency-Check](https://gith
 > a given dependency. If found, it will generate a report linking to the
 > associated CVE entries.
 
-### Installation
+### Installation and basic usage
 
 > _Please see also:_ [Avoiding classpath interference](#avoiding-classpath-interference)
 
+#### Leiningen
+
+<details>
+
+Please create a separate project containing exclusively of `[nvd-clojure/nvd-clojure "1.9.0"]`. Said project can be located inside the targeted repo's Git repository.
+
+Please do not add nvd-clojure as a dependency or plugin in the project.clj of the project to be analysed.
+
+Then you can run, within this helper project:
+
+```
+lein with-profile -user run -m nvd.task.check "" "$(cd <YOUR_PROJECT>; lein with-profile -user,-dev classpath)"
+```
+
+An empty string is passed as the first argument, for backwards compatibility reasons. You can also pass a filename instead, denoting a .json file with extra options ([example](https://github.com/rm-hull/nvd-clojure/blob/master/.github/nvd-config.json)).
+
+The `classpath` command should reflect a production-like classpath as closely as possible: it should not include dev/test tooling, plugins, etc.
+
+If you are using a multi-modules solution (e.g. `lein-sub`, `lein-monolith`, `trapperkeeper`), you should ensure each module is included in this classpath; else they will not be analysed.
+
+</details>
+
 #### Clojure CLI
 
-To install in a given project, you can add `nvd-clojure/nvd-clojure {:mvn/version "1.9.0"}` to your deps.edn.
+<details>
+
+Please create a separate project containing exclusively of `nvd-clojure/nvd-clojure {:mvn/version "1.9.0"}`. Said project can be located inside the targeted repo's Git repository.
+
+Please do not add nvd-clojure as a dependency in the deps.edn of the project to be analysed.
+
+> You can accomplish something similar with user-level aliases, or with the `:replace-deps` option.
+
+Then you can run, within this helper project:
+
+```
+clojure -Dclojure.main.report=stderr -m nvd.task.check "" "$(cd <YOUR_PROJECT>; clojure -Spath -A:any:aliases)"
+```
+
+An empty string is passed as the first argument, for backwards compatibility reasons. You can also pass a filename instead, denoting a .json file with extra options ([example](https://github.com/rm-hull/nvd-clojure/blob/master/.github/nvd-config.json)).
+
+The `-Spath` command should reflect a production-like classpath as closely as possible: it should not include dev/test tooling, etc.
+
+If you are using a multi-modules solution (e.g. [Polylith](https://github.com/polyfy/polylith)), you should ensure each module is included in this classpath; else they will not be analysed.
+
+</details>
+
+#### Clojure CLI Tool
+
+<details>
 
 If you have CLI version 1.10.3.933 or later, you can also install `nvd-clojure` as a "tool":
 
 ```bash
 clojure -Ttools install nvd-clojure/nvd-clojure '{:mvn/version "RELEASE"}' :as nvd
 ```
-and then you can run the tool like this:
+
+Then you can run:
 
 ```bash
 clojure -J-Dclojure.main.report=stderr -Tnvd nvd.task/check :classpath '"'"$(clojure -Spath -A:any:aliases)"'"'
 ```
 
-under `:aliases` in _~/.clojure/deps.edn_, or add it to `:aliases` in
-the project local `deps.edn`, to look something like this:
+You can optionally pass a `:config-filename`, denoting a .json file with extra options ([example](https://github.com/rm-hull/nvd-clojure/blob/master/.github/nvd-config.json)).
 
-```clojure
-:aliases {:nvd {:extra-deps {nvd-clojure/nvd-clojure {:mvn/version "1.9.0"}}
-                :main-opts ["-m" "nvd.task.check"]}}
-```
+The `-Spath` command should reflect a production-like classpath as closely as possible: it should not include dev/test tooling, etc.
 
-## Usage
+If you are using a multi-modules solution (e.g. [Polylith](https://github.com/polyfy/polylith)), you should ensure each module is included in this classpath; else they will not be analysed.
 
-Run the program. The first time it runs, it will download (and
+</details>
+
+## Usage overview
+
+Run the program as indicated in the previous section. The first time it runs, it will download (and
 cache) various databases from https://nvd.nist.gov. Subsequent runs will
 periodically check and update the local database, but the initial run could
 therefore be quite slow - of the order of ten minutes or more, so give it time.
 
 On completion, a summary table is output to the console, and a suite of reports
-will be produced in the project's _./target/nvd/_ directory. If vulnerabilities
+will be produced in the project's `./target/nvd/` directory. If vulnerabilities
 are detected, then the check process will exit abnormally, thereby
 causing any CI build environment to error. (This behaviour can be overriden by
 setting a `:fail-threshold` in the project [configuration](#configuration-options)).
@@ -140,25 +186,7 @@ There are some specific settings below which are worthy of a few comments:
 
 nvd-clojure has some Java dependencies, which in turn can have CVEs themselves, or in any case interfere with your project's dependency tree, that would be computed in absence of nvd-clojure.
 
-For this reason, you might want to invoke `nvd.task.check`'s main function by passing a classpath string as an argument.
-
-Said classpath string should try reflecting a _production's classpath_ as accurately as possible: it should not include dev/test tooling, plugins, etc.
-
-#### Lein example
-
-```bash
-lein run -m nvd.task.check "" "$(lein with-profile -user,-dev classpath)"
-```
-
-#### deps.edn example
-
-```bash
-clojure -m nvd.task.check "" "$(clojure -Spath)"
-```
-
-...in both cases, an empty string is passed as the first argument, for backwards compatibility reasons. You can also pass a filename instead, denoting a .json file with extra options ([example](https://github.com/rm-hull/nvd-clojure/blob/master/.github/nvd-config.json)).
-
-For extra isolation, it is recommended that you invoke `nvd.task.check` from _outside_ your project - e.g. from an empty project, a git clone of this very repo, or from $HOME (assuming you have nvd-clojure as a dependency in your [user-wide Lein profile](https://github.com/technomancy/leiningen/blob/2586957f9d099ff11d50d312a6daf397c2a06fb1/doc/PROFILES.md)).
+For this reason, it is strongly advised to follow the installation/usage instructions carefully.
 
 ## Attribution
 
