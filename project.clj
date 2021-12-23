@@ -45,7 +45,9 @@
                    :dependencies [[clj-kondo "2021.12.19"]
                                   [commons-collections "20040616"]]}
              :ci {:pedantic? :abort}
-             :clj-kondo {:dependencies [[clj-kondo "2021.12.19"]]}}
+             :clj-kondo {:dependencies [[clj-kondo "2021.12.19"]]}
+             :skip-self-check {:jvm-opts ["-Dnvd-clojure.internal.skip-self-check=true"
+                                          "-Dclojure.main.report=stderr"]}}
   :deploy-repositories [["clojars" {:url "https://clojars.org/repo"
                                     :username :env/clojars_username
                                     :password :env/clojars_password
