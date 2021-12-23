@@ -38,7 +38,7 @@ clojure -Ttools install nvd-clojure/nvd-clojure '{:mvn/version "RELEASE"}' :as n
 and then you can run the tool like this:
 
 ```bash
-clojure -Tnvd nvd.task/check :classpath '"'"$(clojure -Spath -A:any:aliases)"'"'
+clojure -J-Dclojure.main.report=stderr -Tnvd nvd.task/check :classpath '"'"$(clojure -Spath -A:any:aliases)"'"'
 ```
 
 under `:aliases` in _~/.clojure/deps.edn_, or add it to `:aliases` in

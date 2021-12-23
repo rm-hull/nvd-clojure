@@ -63,7 +63,7 @@ example_classpath="$(clojure -Spath)"
 # cd to $HOME, to demonstrate that the Tool does not depend on a deps.edn file:
 cd || exit 1
 
-if clojure -Tnvd nvd.task/check :classpath '"'"$example_classpath"'"' > example-lein-output; then
+if clojure -J-Dclojure.main.report=stderr -Tnvd nvd.task/check :classpath '"'"$example_classpath"'"' > example-lein-output; then
   echo "Should have failed with non-zero code!"
   exit 1
 fi
