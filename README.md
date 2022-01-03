@@ -60,7 +60,7 @@ Please do not add nvd-clojure as a dependency in the deps.edn of the project to 
 Then you can run, within this helper project:
 
 ```
-clojure -J-Dclojure.main.report=stderr -m nvd.task.check "" "$(cd <YOUR_PROJECT>; clojure -Spath -A:any:aliases)"
+clojure -J-Dclojure.main.report=stderr -M -m nvd.task.check "" "$(cd <YOUR_PROJECT>; clojure -Spath -A:any:aliases)"
 ```
 
 An empty string is passed as the first argument, for backwards compatibility reasons. You can also pass a filename instead, denoting a .json file with extra options ([example](https://github.com/rm-hull/nvd-clojure/blob/master/.github/nvd-config.json)).
