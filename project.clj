@@ -7,7 +7,7 @@
                  [clansi "1.0.0"]
                  [org.clojure/data.json "2.4.0"]
                  [org.slf4j/slf4j-simple "2.0.0-alpha1"]
-                 [org.owasp/dependency-check-core "6.5.1"]
+                 [org.owasp/dependency-check-core "6.5.2"]
                  [rm-hull/table "0.7.1"]
                  [trptcolin/versioneer "0.2.0"]
                  ;; Explicitly depend on a certain Jackson, consistently.
