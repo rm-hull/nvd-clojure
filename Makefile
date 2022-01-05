@@ -8,7 +8,6 @@
 # Semicolons are used so that `cd` works.
 deploy: check-env
 	lein clean; lein with-profile -user,-dev,+ci deploy clojars
-	cd plugin; lein clean; lein with-profile -user,-dev,+ci deploy clojars
 	git tag -a "$$GIT_TAG" -m "$$GIT_TAG"
 	git push
 	git push --tags
