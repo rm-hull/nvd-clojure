@@ -29,7 +29,7 @@ dependencies and passes them to a library called [Dependency-Check](https://gith
 
 <details>
 
-Please create a separate project consisting exclusively of `[nvd-clojure/nvd-clojure "2.0.0"]`. Said project can be located inside the targeted repo's Git repository.
+Please create a separate project consisting exclusively of `[nvd-clojure/nvd-clojure "2.1.0"]`. Said project can be located inside the targeted repo's Git repository.
 
 Please do not add nvd-clojure as a dependency or plugin in the project.clj of the project to be analysed.
 
@@ -43,7 +43,7 @@ An empty string is passed as the first argument, for backwards compatibility rea
 
 The `classpath` command should reflect a production-like classpath as closely as possible: it should not include dev/test tooling, plugins, etc.
 
-If you are using a multi-modules solution (e.g. `lein-sub`, `lein-monolith`, `trapperkeeper`), you should ensure that each module is included in this classpath; else they will not be analysed.
+If you are using a multi-modules solution (e.g. `lein-monolith`), you should ensure that each module is included in this classpath; else they will not be analysed.
 
 </details>
 
@@ -51,11 +51,11 @@ If you are using a multi-modules solution (e.g. `lein-sub`, `lein-monolith`, `tr
 
 <details>
 
-Please create a separate project consisting exclusively of `nvd-clojure/nvd-clojure {:mvn/version "2.0.0"}`. Said project can be located inside the targeted repo's Git repository.
+Please create a separate project consisting exclusively of `nvd-clojure/nvd-clojure {:mvn/version "2.1.0"}`. Said project can be located inside the targeted repo's Git repository.
 
 Please do not add nvd-clojure as a dependency in the deps.edn of the project to be analysed.
 
-> You can accomplish something similar with user-level aliases, or with the `:replace-deps` option.
+> You can accomplish something similar with user-level aliases, or with the `:replace-deps` option, at your own risk.
 
 Then you can run, within this helper project:
 
@@ -118,7 +118,7 @@ which has dependencies with known vulnerabilities
 This can be demonstrated by running the following:
 
     $ cd example
-    $ lein nvd check
+    $ clojure -J-Dclojure.main.report=stderr -Tnvd nvd.task/check :classpath '"'"$(lein with-profile -user classpath)"'"'
 
 This will download the NVD database, and then cross-check the classpath
 dependencies against known vulnerabilities. The following summary report will
@@ -200,13 +200,13 @@ library to do the heavy lifting.
 * https://nvd.nist.gov/
 * https://www.owasp.org/index.php/OWASP_Dependency_Check
 * https://github.com/jeremylong/DependencyCheck
-* https://github.com/xsc/lein-ancient
+* https://github.com/liquidz/antq
 
 ## License
 
 The MIT License (MIT)
 
-Copyright (c) 2016-21 Richard Hull
+Copyright (c) 2016-22 Richard Hull
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in

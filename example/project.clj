@@ -2,7 +2,7 @@
   :description "Example project with dependencies that have known vulnerabilities"
   :license {:name "The MIT License (MIT)"
             :url "http://opensource.org/licenses/MIT"}
-  :dependencies [[org.clojure/clojure "1.10.2"]
+  :dependencies [[org.clojure/clojure "1.10.3"]
                  ;; No known vulnerabilities, but have dependencies
                  [org.clojure/data.json "0.2.6"]
                  [korma "0.4.3"]

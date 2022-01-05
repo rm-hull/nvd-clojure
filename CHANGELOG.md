@@ -1,3 +1,7 @@
+## Changes from 2.0.0 to 2.1.0
+
+* Update `dependency-check-core`.
+
 ## Changes from 1.9.0 to 2.0.0
 
 * [#113](https://github.com/rm-hull/nvd-clojure/issues/113): Remove all unsafe APIs.
