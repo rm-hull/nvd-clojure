@@ -117,8 +117,7 @@ which has dependencies with known vulnerabilities
 [CVE-2014-3577](https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2014-3577)).
 This can be demonstrated by running the following:
 
-    $ cd example
-    $ clojure -J-Dclojure.main.report=stderr -Tnvd nvd.task/check :classpath '"'"$(lein with-profile -user classpath)"'"'
+    $ clojure -J-Dclojure.main.report=stderr -Tnvd nvd.task/check :classpath '"'"$(cd example; lein with-profile -user classpath)"'"'
 
 This will download the NVD database, and then cross-check the classpath
 dependencies against known vulnerabilities. The following summary report will
