@@ -55,8 +55,7 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
         with:
-          commit-message: Updating stale dependencies
+          commit-message: Update stale dependencies
           title: Update stale dependencies
-          body: Updating dependencies to the latest stable versions
           branch: update-dependencies
           base: master

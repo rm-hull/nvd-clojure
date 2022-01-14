@@ -1,13 +1,13 @@
 (defproject nvd-clojure "2.1.0"
-  :description "National Vulnerability Database [https://nvd.nist.gov/] dependency-checker"
+  :description "National Vulnerability Database dependency checker"
   :url "https://github.com/rm-hull/nvd-clojure"
   :license {:name "The MIT License (MIT)"
-            :url "http://opensource.org/licenses/MIT"}
-  :dependencies [[org.clojure/clojure "1.10.3"]
+            :url "https://opensource.org/licenses/MIT"}
+  :dependencies [[org.clojure/clojure "1.10.3" :scope "provided"]
                  [clansi "1.0.0"]
                  [org.clojure/data.json "2.4.0"]
                  [org.slf4j/slf4j-simple "2.0.0-alpha1"]
-                 [org.owasp/dependency-check-core "6.5.2"]
+                 [org.owasp/dependency-check-core "6.5.3"]
                  [rm-hull/table "0.7.1"]
                  [trptcolin/versioneer "0.2.0"]
                  ;; Explicitly depend on a certain Jackson, consistently.
@@ -42,10 +42,10 @@
                              [jonase/eastwood "1.0.0"]]
                    :eastwood {:add-linters [:boxed-math
                                             :performance]}
-                   :dependencies [[clj-kondo "2021.12.19"]
+                   :dependencies [[clj-kondo "2022.01.13"]
                                   [commons-collections "20040616"]]}
              :ci {:pedantic? :abort}
-             :clj-kondo {:dependencies [[clj-kondo "2021.12.19"]]}
+             :clj-kondo {:dependencies [[clj-kondo "2022.01.13"]]}
              :skip-self-check {:jvm-opts ["-Dnvd-clojure.internal.skip-self-check=true"
                                           "-Dclojure.main.report=stderr"]}}
   :deploy-repositories [["clojars" {:url "https://clojars.org/repo"
