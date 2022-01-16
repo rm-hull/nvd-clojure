@@ -1,3 +1,7 @@
+## Changes from 2.1.0 to 2.2.0
+
+* Update `dependency-check-core`.
+
 ## Changes from 2.0.0 to 2.1.0
 
 * Update `dependency-check-core`.
