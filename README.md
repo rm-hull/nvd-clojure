@@ -34,8 +34,7 @@ Please create a separate project consisting of `[nvd-clojure/nvd-clojure "2.2.0"
 ```
 (defproject nvd-helper "local"
   :description "nvd-clojure helper project"
-  :dependencies [[nvd-clojure "2.2.0"]
-                 [org.clojure/clojure "1.10.3"]])
+  :dependencies [[nvd-clojure "2.2.0"]])
 ```
 
 Please do not add nvd-clojure as a dependency or plugin in the project.clj of the project to be analysed.
