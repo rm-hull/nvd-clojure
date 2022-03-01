@@ -23,10 +23,11 @@
 (ns nvd.config-test
   (:require
    [clojure.java.io :as io]
+   [clojure.string :as string]
    [clojure.test :refer [deftest is]]
    [nvd.config :refer [app-name with-config]]))
 
-(def dependency-check-version "6.5.3")
+(def dependency-check-version "7.0.1")
 
 (deftest check-app-name
   (is (= "stdin" (app-name {:nome "hello-world" :version "0.0.1"})))
@@ -36,12 +37,17 @@
 
 (deftest check-with-config
   (with-config [project "test/resources/opts.json"]
-    (let [path (-> project (get-in [:nvd :data-directory]) io/file .getAbsolutePath)]
-      (is (-> path
-              (.endsWith (str "/.m2/repository/org/owasp/dependency-check-utils/"
-                              dependency-check-version
-                              "/data")))
-          path))
+    (let [path (-> project (get-in [:nvd :data-directory]) io/file .getAbsolutePath)
+          suffix (->> (string/split dependency-check-version #"\.")
+                      (take 2)
+                      (string/join "."))
+          expected (str "/.m2/repository/org/owasp/dependency-check-utils/"
+                        dependency-check-version
+                        "/data/"
+                        suffix)]
+      (is (.endsWith path expected)
+          (pr-str {:expected expected
+                   :actual path})))
     (is (= (get-in project [:nvd :suppression-file]) "suppress.xml"))
     (is (false? (get-in project [:nvd :analyzer :assembly-enabled])))
     (is (true? (get-in project [:nvd :analyzer :cmake-enabled])))
