@@ -1,7 +1,9 @@
 (defproject example-with-known-vulnerabilities "1.4.17"
   :description "Example project with dependencies that have known vulnerabilities"
   :license {:name "The MIT License (MIT)"
-            :url "http://opensource.org/licenses/MIT"}
+            :url "https://opensource.org/licenses/MIT"}
+  :jvm-opts ["-Dclojure.main.report=stderr"
+             "-XX:-OmitStackTraceInFastThrow"]
   :dependencies [[org.clojure/clojure "1.10.3"]
                  ;; No known vulnerabilities, but have dependencies
                  [org.clojure/data.json "0.2.6"]
