@@ -8,8 +8,3 @@ classpath="$(lein with-profile -user,+test classpath)"
 lein with-profile -user,+test,+clj-kondo run -m clj-kondo.main --lint "$classpath" --dependencies --parallel --copy-configs
 lein with-profile -user,+test,+clj-kondo run -m clj-kondo.main --lint src test
 lein eastwood
-
-# 2.- lint lein-nvd:
-
-cd plugin || exit 1
-lein eastwood

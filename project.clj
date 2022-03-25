@@ -11,8 +11,7 @@
                  [rm-hull/table "0.7.1"]
                  [trptcolin/versioneer "0.2.0"]
                  ;; Explicitly depend on a certain Jackson, consistently.
-                 ;; Otherwise, when using the Lein plugin, Leiningen's own dependencies can pull a different Jackson version
-                 ;; (see https://github.com/jeremylong/DependencyCheck/issues/3441):
+                 ;; (See also: https://github.com/jeremylong/DependencyCheck/issues/3441)
                  [com.fasterxml.jackson.core/jackson-databind "2.13.2"]
                  [com.fasterxml.jackson.core/jackson-annotations "2.13.2"]
                  [com.fasterxml.jackson.core/jackson-core "2.13.2"]
