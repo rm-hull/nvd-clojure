@@ -2,11 +2,8 @@
 
 > _Formerly known as_ `lein-nvd`
 
-[![Build Status](https://github.com/rm-hull/nvd-clojure/workflows/Continuous%20Integration/badge.svg)](https://github.com/rm-hull/nvd-clojure/actions?query=workflow%3A%22Continuous+Integration%22)
-[![Dependencies Status](https://byob.yarr.is/dotemacs/actions-play/dependencies)](https://github.com/rm-hull/nvd-clojure/actions?query=workflow%3A%22dependencies%22)
 [![Downloads](https://versions.deps.co/rm-hull/nvd-clojure/downloads.svg)](https://versions.deps.co/rm-hull/nvd-clojure)
 [![Clojars Project](https://img.shields.io/clojars/v/nvd-clojure.svg)](https://clojars.org/nvd-clojure)
-[![Maintenance](https://img.shields.io/maintenance/yes/2021.svg?maxAge=2592000)]()
 
 [National Vulnerability Database](https://nvd.nist.gov/) dependency checker
 library.

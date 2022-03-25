@@ -3,6 +3,7 @@ set -Euxo pipefail
 
 cd "${BASH_SOURCE%/*}/.." || exit 1
 
+export LEIN_JVM_OPTS="-Dclojure.main.report=stderr"
 PROJECT_DIR="$PWD"
 CONFIG_FILE="$PROJECT_DIR/.github/nvd-config.json"
 DOGFOODING_CONFIG_FILE="$PROJECT_DIR/.github/nvd-dogfooding-config.json"
