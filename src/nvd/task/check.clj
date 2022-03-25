@@ -81,7 +81,11 @@
 
 (defn impl [config-filename classpath]
   (with-config [project config-filename]
-    (println "Checking dependencies for" (style (:title project) :bright :yellow) "...")
+    (println "Checking dependencies for" (-> project
+                                             :title
+                                             (s/trim)
+                                             (str "...")
+                                             (style :bright :yellow)))
     (println "  using nvd-clojure:" (:nvd-clojure @version) "and dependency-check:" (:dependency-check @version))
     (-> project
         (assoc :classpath classpath)
