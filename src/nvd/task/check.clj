@@ -35,7 +35,7 @@
    [org.owasp.dependencycheck.exception ExceptionCollection]))
 
 (def version
-  (delay {:nvd-clojure (get-version "rm-hull" "nvd-clojure")
+  (delay {:nvd-clojure (get-version "nvd-clojure" "nvd-clojure")
           :dependency-check (.getImplementationVersion (.getPackage Engine))}))
 
 (defn jar? [^String filename]
