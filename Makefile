@@ -12,6 +12,10 @@ deploy: check-env
 	git push
 	git push --tags
 
+install:
+	lein with-profile -user,-dev,+ci install
+	clojure -Ttools install nvd-clojure/nvd-clojure '{:mvn/version "RELEASE"}' :as nvd
+
 check-env:
 ifndef CLOJARS_USERNAME
 	$(error CLOJARS_USERNAME is undefined)
