@@ -105,6 +105,9 @@
     (print (count scores) "vulnerabilities detected. Severity: ")
     (println (style severity color :bright))
     (println "Detailed reports saved in:" (style (.getAbsolutePath (io/file output-dir)) :bright))
+    (let [file (io/file output-dir "dependency-check-report.html")]
+      (when (-> file .exists)
+        (println "HTML report :" (style (.getAbsolutePath file) :bright))))
     (println)
     (println (style "   *** THIS REPORT IS WITHOUT WARRANTY ***" :magenta :bright))
     project))
