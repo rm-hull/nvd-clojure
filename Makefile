@@ -2,7 +2,7 @@
 
 # Example usage:
 # copy a temporary Clojars token to your clipboard
-# GIT_TAG=v2.3.0 CLOJARS_USERNAME=$USER CLOJARS_PASSWORD=$(pbpaste) make deploy
+# GIT_TAG=v2.4.0 CLOJARS_USERNAME=$USER CLOJARS_PASSWORD=$(pbpaste) make deploy
 # (recommended) delete said token.
 
 deploy: check-env
