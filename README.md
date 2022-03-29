@@ -26,12 +26,12 @@ dependencies and passes them to a library called [Dependency-Check](https://gith
 
 <details>
 
-Please create a separate project consisting of `[nvd-clojure/nvd-clojure "2.3.0"]`. Said project can be located inside the targeted repo's Git repository.
+Please create a separate project consisting of `[nvd-clojure/nvd-clojure "2.4.0"]`. Said project can be located inside the targeted repo's Git repository.
 
 ```
 (defproject nvd-helper "local"
   :description "nvd-clojure helper project"
-  :dependencies [[nvd-clojure "2.3.0"]])
+  :dependencies [[nvd-clojure "2.4.0"]])
 ```
 
 Please do not add nvd-clojure as a dependency or plugin in the project.clj of the project to be analysed.
@@ -54,7 +54,7 @@ If you are using a multi-modules solution (e.g. `lein-monolith`), you should ens
 
 <details>
 
-Please create a separate project consisting exclusively of `nvd-clojure/nvd-clojure {:mvn/version "2.3.0"}`. Said project can be located inside the targeted repo's Git repository.
+Please create a separate project consisting exclusively of `nvd-clojure/nvd-clojure {:mvn/version "2.4.0"}`. Said project can be located inside the targeted repo's Git repository.
 
 Please do not add nvd-clojure as a dependency in the deps.edn of the project to be analysed.
 
