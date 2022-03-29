@@ -7,12 +7,12 @@
                  [clansi "1.0.0"]
                  [org.clojure/data.json "2.4.0"]
                  [org.slf4j/slf4j-simple "2.0.0-alpha1"]
-                 [org.owasp/dependency-check-core "7.0.1"]
+                 [org.owasp/dependency-check-core "7.0.2"]
                  [rm-hull/table "0.7.1"]
                  [trptcolin/versioneer "0.2.0"]
                  ;; Explicitly depend on a certain Jackson, consistently.
                  ;; (See also: https://github.com/jeremylong/DependencyCheck/issues/3441)
-                 [com.fasterxml.jackson.core/jackson-databind "2.13.2"]
+                 [com.fasterxml.jackson.core/jackson-databind "2.13.2.2"]
                  [com.fasterxml.jackson.core/jackson-annotations "2.13.2"]
                  [com.fasterxml.jackson.core/jackson-core "2.13.2"]
                  [com.fasterxml.jackson.module/jackson-module-afterburner "2.13.2"]
