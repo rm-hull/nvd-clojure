@@ -7,7 +7,7 @@
                  [clansi "1.0.0"]
                  [org.clojure/data.json "2.4.0"]
                  [org.slf4j/slf4j-simple "2.0.0-alpha1"]
-                 [org.owasp/dependency-check-core "7.0.2"]
+                 [org.owasp/dependency-check-core "7.0.4"]
                  [rm-hull/table "0.7.1"]
                  [trptcolin/versioneer "0.2.0"]
                  ;; Explicitly depend on a certain Jackson, consistently.
@@ -18,7 +18,7 @@
                  [com.fasterxml.jackson.module/jackson-module-afterburner "2.13.2"]
                  [org.apache.maven.resolver/maven-resolver-transport-http "1.7.3" #_"Fixes a CVE"]
                  [org.apache.maven/maven-core "3.8.5" #_"Fixes a CVE"]
-                 [org.eclipse.jetty/jetty-client "11.0.8" #_"Fixes a CVE" :exclusions [org.slf4j/slf4j-api]]
+                 [org.eclipse.jetty/jetty-client "11.0.9" #_"Fixes a CVE" :exclusions [org.slf4j/slf4j-api]]
                  [org.apache.maven.resolver/maven-resolver-spi "1.7.3" #_"Satisfies :pedantic?"]
                  [org.apache.maven.resolver/maven-resolver-api "1.7.3" #_"Satisfies :pedantic?"]
                  [org.apache.maven.resolver/maven-resolver-util "1.7.3" #_"Satisfies :pedantic?"]
