@@ -1,9 +1,12 @@
+## Changes from 2.4.0 to 2.5.0
+
+* Update `dependency-check-core`.
+
 ## Changes from 2.3.0 to 2.4.0
 
 * [#123](https://github.com/rm-hull/nvd-clojure/issues/123): Explicitly only analyze dependencies/artifacts that are relevant to JVM projects.
   * i.e. the internal analyzers that are specialized in other ecosystems e.g. .NET, Ruby, Node.js, etc will not be run at all, improving performance and accuracy.
   * The nvd-clojure implementation never allowed non-jar files to be analyzed, so in practice no behavior has possibly been changed.  
-  * ([Read more](https://github.com/rm-hull/nvd-clojure/tree/v2.4.0#configuration-options))
 * Update `dependency-check-core`.
 * Misc cosmetic improvements for what is printed during execution.
 
