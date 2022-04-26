@@ -27,7 +27,7 @@
    [clojure.test :refer [deftest is]]
    [nvd.config :refer [app-name with-config]]))
 
-(def dependency-check-version "7.0.4")
+(def dependency-check-version "7.1.0")
 
 (deftest check-app-name
   (is (= "stdin" (app-name {:nome "hello-world" :version "0.0.1"})))
@@ -38,15 +38,25 @@
 (deftest check-with-config
   (with-config [project "test/resources/opts.json"]
     (let [path (-> project (get-in [:nvd :data-directory]) io/file .getAbsolutePath)
-          suffix (->> (string/split dependency-check-version #"\.")
-                      (take 2)
-                      (string/join "."))
-          expected (str "/.m2/repository/org/owasp/dependency-check-utils/"
-                        dependency-check-version
-                        "/data/"
-                        suffix)]
-      (is (.endsWith path expected)
-          (pr-str {:expected expected
+          suffix-1 (-> dependency-check-version
+                       (string/split #"\.")
+                       first
+                       (str ".0"))
+          suffix-2 (->> (string/split dependency-check-version #"\.")
+                        (take 2)
+                        (string/join "."))
+          expected-1 (str "/.m2/repository/org/owasp/dependency-check-utils/"
+                          dependency-check-version
+                          "/data/"
+                          suffix-1)
+          expected-2 (str "/.m2/repository/org/owasp/dependency-check-utils/"
+                          dependency-check-version
+                          "/data/"
+                          suffix-2)]
+      (is (or (.endsWith path expected-1)
+              (.endsWith path expected-2))
+          (pr-str {:expected-1 expected-1
+                   :expected-2 expected-2
                    :actual path})))
     (is (= (get-in project [:nvd :suppression-file]) "suppress.xml"))
     (is (false? (get-in project [:nvd :analyzer :assembly-enabled])))
