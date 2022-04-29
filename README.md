@@ -156,11 +156,10 @@ to update the project file.
 ## Configuration options
 
 The default settings for `nvd-clojure` are usually sufficient for most projects, but
-can be customized by adding an `:nvd { ... }` section in your _project.clj_.
+can be customized with  a .json config file ([example](https://github.com/rm-hull/nvd-clojure/blob/master/.github/nvd-config.json)).
 
-These options can also be expressed as the keys in a .json config file ([example](https://github.com/rm-hull/nvd-clojure/blob/master/.github/nvd-config.json)).
 The filename denoting that file is the first argument to be passed to nvd-clojure when invoking it as a `main` (`-m`) program.
-The keys must reside inside a `"nvd": {...}` entry, not at the top-level.
+The keys must reside inside a `"nvd": {...}` entry, not at the top-level. A top-level `"delete-config?": false` entry is expected for the time being ([example](https://github.com/rm-hull/nvd-clojure/blob/59dd3f33cf87b1527fdc06f78eb97d9fad990ff0/.github/nvd-config.json)), for backwards compatibility reasons.
 
 There are many dependency-check settings (for example to connect via a proxy, or
 to specify an alternative to the H2 database). The exact settings can be seen
@@ -169,21 +168,21 @@ wiki.
 
 There are some specific settings below which are worthy of a few comments:
 
-* `:fail-threshold` default value `0`; checks the highest CVSS score across all dependencies, and fails if this threshold is breached.
+* `"fail-threshold"` default value `0`; checks the highest CVSS score across all dependencies, and fails if this threshold is breached.
   - As CVSS score ranges from `0..10`, the default value will cause a build to fail even for the lowest rated
   vulnerability.
   - Set to `11` if you never want the build to fail.
-* `:data-directory` default value is the data dir of `DependencyCheck`, e.g. `~/.m2/repository/org/owasp/dependency-check-utils/3.2.1/data/`
+* `"data-directory"` default value is the data dir of `DependencyCheck`, e.g. `~/.m2/repository/org/owasp/dependency-check-utils/3.2.1/data/`
   - It shouldn't normally be necessary to change this
-* `:suppression-file` default unset
+* `"suppression-file"` default unset
   - Allows for CVEs to be permanently suppressed.
   - See [DependencyCheck documentation](https://jeremylong.github.io/DependencyCheck/) for the XML file-format.
   - [See also](https://jeremylong.github.io/DependencyCheck/general/suppression.html)
-* `:verbose-summary` default false
+* `"verbose-summary"` default false
   - When set to true, the summary table includes a severity determination for all dependencies.
   - When set to false, the summary table includes only packages that have either low or high severity determination.
-* `:output-dir` default value `target/nvd/`: the directory to save reports into
-* `:throw-if-check-unsuccessful?` - makes the program exit by throwing an exception instead of by invoking `System/exit`.
+* `"output-dir"` default value `target/nvd/`: the directory to save reports into
+* `"throw-if-check-unsuccessful"` - makes the program exit by throwing an exception instead of by invoking `System/exit`.
   - This can ease certain usages.
 
 ## Avoiding classpath interference
