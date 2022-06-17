@@ -5,4 +5,8 @@
     <filePath regex="true">.*\bh2-1\.4\.199\.jar</filePath>
     <cve>CVE-2021-23463</cve>
   </suppress>
+  <suppress>
+    <filePath regex="true">.*\bh2-2\.1\.210\.jar</filePath>
+    <cve>CVE-2018-14335</cve>
+  </suppress>
 </suppressions>
