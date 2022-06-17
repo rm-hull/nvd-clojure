@@ -1,9 +1,8 @@
 .PHONY: check-env
 
 # Example usage:
-# copy a temporary Clojars token to your clipboard
-# GIT_TAG=v2.5.0 CLOJARS_USERNAME=$USER CLOJARS_PASSWORD=$(pbpaste) make deploy
-# (recommended) delete said token.
+# copy a one-off Clojars token to your clipboard
+# GIT_TAG=v2.7.0 CLOJARS_USERNAME=$USER CLOJARS_PASSWORD=$(pbpaste) make deploy
 
 deploy: check-env
 	lein clean
