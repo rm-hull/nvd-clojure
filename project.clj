@@ -25,6 +25,7 @@
                  [org.apache.maven.resolver/maven-resolver-impl "1.8.1" #_"Satisfies :pedantic?"]
                  [org.apache.maven/maven-resolver-provider "3.8.6" #_"Satisfies :pedantic?"]
                  [org.codehaus.plexus/plexus-utils "3.4.2" #_"Satisfies :pedantic?"]]
+  :managed-dependencies [[com.google.code.gson/gson "2.8.9"]]
   :scm {:url "git@github.com:rm-hull/nvd-clojure.git"}
   :source-paths ["src"]
   :jar-exclusions [#"(?:^|/).git"]
