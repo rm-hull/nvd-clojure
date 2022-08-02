@@ -18,7 +18,7 @@
                  [com.fasterxml.jackson.module/jackson-module-afterburner "2.13.3"]
                  [org.apache.maven.resolver/maven-resolver-transport-http "1.8.1" #_"Fixes a CVE"]
                  [org.apache.maven/maven-core "3.8.6" #_"Fixes a CVE"]
-                 [org.eclipse.jetty/jetty-client "11.0.9" #_"Fixes a CVE" :exclusions [org.slf4j/slf4j-api]]
+                 [org.eclipse.jetty/jetty-client "11.0.11" #_"Fixes a CVE" :exclusions [org.slf4j/slf4j-api]]
                  [org.apache.maven.resolver/maven-resolver-spi "1.8.1" #_"Satisfies :pedantic?"]
                  [org.apache.maven.resolver/maven-resolver-api "1.8.1" #_"Satisfies :pedantic?"]
                  [org.apache.maven.resolver/maven-resolver-util "1.8.1" #_"Satisfies :pedantic?"]
