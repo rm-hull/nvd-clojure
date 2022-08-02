@@ -89,10 +89,14 @@ clojure -Ttools install nvd-clojure/nvd-clojure '{:mvn/version "RELEASE"}' :as n
 Then you can run:
 
 ```bash
-clojure -J-Dclojure.main.report=stderr -Tnvd nvd.task/check :classpath '"'"$(clojure -Spath -A:any:aliases)"'"'
+clojure -J-Dclojure.main.report=stderr -Tnvd nvd.task/check :classpath \""$(clojure -Spath -A:any:aliases)\""
 ```
 
-You can optionally pass a `:config-filename`, denoting a .json file with extra options ([example](https://github.com/rm-hull/nvd-clojure/blob/master/.github/nvd-config.json)).
+You can optionally pass a `:config-filename`, denoting a .json file with extra options ([example](https://github.com/rm-hull/nvd-clojure/blob/master/.github/nvd-config.json), [doc](#configuration)).
+
+```bash
+clojure -J-Dclojure.main.report=stderr -Tnvd nvd.task/check :classpath \""$(clojure -Spath -A:any:aliases)\"" :config-filename \""nvd-config.json\""
+```
 
 The `-Spath` command should reflect a production-like classpath as closely as possible: it should not include dev/test tooling, etc.
 
@@ -123,7 +127,7 @@ which has dependencies with known vulnerabilities
 This can be demonstrated by running the following:
 
 ```bash
-clojure -J-Dclojure.main.report=stderr -Tnvd nvd.task/check :classpath '"'"$(cd example; lein with-profile -user classpath)"'"'
+clojure -J-Dclojure.main.report=stderr -Tnvd nvd.task/check :classpath \""$(cd example; lein with-profile -user classpath)\""
 ```
 
 This will download the NVD database, and then cross-check the classpath
@@ -155,12 +159,22 @@ dependency relationships are:
 dependencies, and suggest upgraded versions, and can optionally be configured
 to update the project file.
 
-## Configuration options
+## Configuration
 
 The default settings for `nvd-clojure` are usually sufficient for most projects, but
-can be customized with  a .json config file ([example](https://github.com/rm-hull/nvd-clojure/blob/master/.github/nvd-config.json)).
-
+can be customized with a .json config file ([example](https://github.com/rm-hull/nvd-clojure/blob/master/.github/nvd-config.json)).
 The filename denoting that file is the first argument to be passed to nvd-clojure when invoking it as a `main` (`-m`) program.
+
+When invoking it via Clojure Tools, it must be passed as a `:config-filename` option, e.g.
+
+```bash
+clojure -Tnvd nvd.task/check :classpath \""$(clojure -Spath)\"" :config-filename \""nvd-config.json\""
+```
+
+Note the escaped double quotes around the filename, to ensure that Clojure reads the command line argument as a string, not a symbol.
+
+## Configuration options
+
 The keys must reside inside a `"nvd": {...}` entry, not at the top-level. A top-level `"delete-config?": false` entry is expected for the time being ([example](https://github.com/rm-hull/nvd-clojure/blob/59dd3f33cf87b1527fdc06f78eb97d9fad990ff0/.github/nvd-config.json)), for backwards compatibility reasons.
 
 There are many dependency-check settings (for example to connect via a proxy, or
@@ -186,6 +200,18 @@ There are some specific settings below which are worthy of a few comments:
 * `"output-dir"` default value `target/nvd/`: the directory to save reports into
 * `"throw-if-check-unsuccessful"` - makes the program exit by throwing an exception instead of by invoking `System/exit`.
   - This can ease certain usages.
+
+## Logging
+
+You can override the default logging behaviour by providing a `simplelogger.properties` file on the nvd-clojure classpath. 
+Note that this is not the classpath of your project. See `resources/simplelogger.properties` for the default
+config.
+
+You can also set logging properties directly through Java system properties (the `-D` flags), for example:
+
+```
+clojure -J-Dclojure.main.report=stderr -J-Dorg.slf4j.simpleLogger.log.org.apache.commons=error -Tnvd nvd.task/check # ...
+```
 
 ## Avoiding classpath interference
 
