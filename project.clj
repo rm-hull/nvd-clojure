@@ -6,8 +6,8 @@
   :dependencies [[org.clojure/clojure "1.11.0"]
                  [clansi "1.0.0"]
                  [org.clojure/data.json "2.4.0"]
-                 [org.slf4j/slf4j-simple "2.0.0-alpha1"]
-                 [org.owasp/dependency-check-core "7.1.1"]
+                 [org.slf4j/slf4j-simple "2.0.0"]
+                 [org.owasp/dependency-check-core "7.1.2"]
                  [rm-hull/table "0.7.1"]
                  [trptcolin/versioneer "0.2.0"]
                  ;; Explicitly depend on a certain Jackson, consistently.
@@ -16,16 +16,16 @@
                  [com.fasterxml.jackson.core/jackson-annotations "2.13.3"]
                  [com.fasterxml.jackson.core/jackson-core "2.13.3"]
                  [com.fasterxml.jackson.module/jackson-module-afterburner "2.13.3"]
-                 [org.apache.maven.resolver/maven-resolver-transport-http "1.8.1" #_"Fixes a CVE"]
+                 [org.apache.maven.resolver/maven-resolver-transport-http "1.8.2" #_"Fixes a CVE"]
                  [org.apache.maven/maven-core "3.8.6" #_"Fixes a CVE"]
                  [org.eclipse.jetty/jetty-client "11.0.11" #_"Fixes a CVE" :exclusions [org.slf4j/slf4j-api]]
-                 [org.apache.maven.resolver/maven-resolver-spi "1.8.1" #_"Satisfies :pedantic?"]
-                 [org.apache.maven.resolver/maven-resolver-api "1.8.1" #_"Satisfies :pedantic?"]
-                 [org.apache.maven.resolver/maven-resolver-util "1.8.1" #_"Satisfies :pedantic?"]
-                 [org.apache.maven.resolver/maven-resolver-impl "1.8.1" #_"Satisfies :pedantic?"]
+                 [org.apache.maven.resolver/maven-resolver-spi "1.8.2" #_"Satisfies :pedantic?"]
+                 [org.apache.maven.resolver/maven-resolver-api "1.8.2" #_"Satisfies :pedantic?"]
+                 [org.apache.maven.resolver/maven-resolver-util "1.8.2" #_"Satisfies :pedantic?"]
+                 [org.apache.maven.resolver/maven-resolver-impl "1.8.2" #_"Satisfies :pedantic?"]
                  [org.apache.maven/maven-resolver-provider "3.8.6" #_"Satisfies :pedantic?"]
                  [org.codehaus.plexus/plexus-utils "3.4.2" #_"Satisfies :pedantic?"]]
-  :managed-dependencies [[com.google.code.gson/gson "2.8.9"]]
+  :managed-dependencies [[com.google.code.gson/gson "2.9.1"]]
   :scm {:url "git@github.com:rm-hull/nvd-clojure.git"}
   :source-paths ["src"]
   :jar-exclusions [#"(?:^|/).git"]
@@ -39,13 +39,13 @@
                              [lein-codox "0.10.7"]
                              [lein-cloverage "1.2.3"]
                              [lein-ancient "0.7.0"]
-                             [jonase/eastwood "1.2.3"]]
+                             [jonase/eastwood "1.2.4"]]
                    :eastwood {:add-linters [:boxed-math
                                             :performance]}
-                   :dependencies [[clj-kondo "2022.05.31"]
+                   :dependencies [[clj-kondo "2022.08.03"]
                                   [commons-collections "20040616"]]}
              :ci {:pedantic? :abort}
-             :clj-kondo {:dependencies [[clj-kondo "2022.05.31"]]}
+             :clj-kondo {:dependencies [[clj-kondo "2022.08.03"]]}
              :skip-self-check {:jvm-opts ["-Dnvd-clojure.internal.skip-self-check=true"
                                           "-Dclojure.main.report=stderr"]}}
   :deploy-repositories [["clojars" {:url "https://clojars.org/repo"
