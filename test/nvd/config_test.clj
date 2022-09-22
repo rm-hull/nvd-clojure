@@ -27,7 +27,7 @@
    [clojure.test :refer [deftest is]]
    [nvd.config :refer [app-name with-config]]))
 
-(def dependency-check-version "7.1.2")
+(def dependency-check-version "7.2.1")
 
 (deftest check-app-name
   (is (= "stdin" (app-name {:nome "hello-world" :version "0.0.1"})))
