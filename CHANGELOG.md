@@ -1,3 +1,7 @@
+## Changes from 2.8.0 to 2.9.0
+
+* Update `dependency-check-core`.
+
 ## Changes from 2.7.0 to 2.8.0
 
 * Update `dependency-check-core`.
