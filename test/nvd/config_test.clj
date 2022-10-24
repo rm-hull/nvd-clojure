@@ -22,12 +22,16 @@
 
 (ns nvd.config-test
   (:require
+   [clojure.edn :as edn]
    [clojure.java.io :as io]
    [clojure.string :as string]
    [clojure.test :refer [deftest is]]
    [nvd.config :refer [app-name with-config]]))
 
-(def dependency-check-version "7.2.1")
+(def dependency-check-version
+  (let [v (-> "project.clj" io/file slurp edn/read-string (nth 2))]
+    (assert (double? v))
+    (str v)))
 
 (deftest check-app-name
   (is (= "stdin" (app-name {:nome "hello-world" :version "0.0.1"})))
