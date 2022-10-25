@@ -1,4 +1,4 @@
-(defproject nvd-clojure "2.9.0"
+(defproject nvd-clojure "2.10.0"
   :description "National Vulnerability Database dependency checker"
   :url "https://github.com/rm-hull/nvd-clojure"
   :license {:name "The MIT License (MIT)"
@@ -17,6 +17,7 @@
                  [com.fasterxml.jackson.core/jackson-core "2.13.4"]
                  [com.fasterxml.jackson.module/jackson-module-afterburner "2.13.4"]
                  [org.apache.maven.resolver/maven-resolver-transport-http "1.8.2" #_"Fixes a CVE"]
+                 [org.yaml/snakeyaml "1.33" #_"Fixes a CVE"]
                  [org.apache.maven/maven-core "3.8.6" #_"Fixes a CVE"]
                  [org.eclipse.jetty/jetty-client "12.0.0.alpha2" #_"Fixes a CVE" :exclusions [org.slf4j/slf4j-api]]
                  [org.apache.maven.resolver/maven-resolver-spi "1.8.2" #_"Satisfies :pedantic?"]
