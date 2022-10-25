@@ -9,4 +9,8 @@
     <filePath regex="true">.*\bh2-2\.1\.210\.jar</filePath>
     <cve>CVE-2018-14335</cve>
   </suppress>
+  <suppress>
+    <filePath regex="true">.*\bsnakeyaml-1\.33\.jar</filePath>
+    <cve>CVE-2022-38752</cve>
+  </suppress>
 </suppressions>
