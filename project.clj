@@ -1,4 +1,4 @@
-(defproject nvd-clojure "2.11.0"
+(defproject nvd-clojure "2.12.0"
   :description "National Vulnerability Database dependency checker"
   :url "https://github.com/rm-hull/nvd-clojure"
   :license {:name "The MIT License (MIT)"
@@ -7,15 +7,9 @@
                  [clansi "1.0.0"]
                  [org.clojure/data.json "2.4.0"]
                  [org.slf4j/slf4j-simple "2.0.3"]
-                 [org.owasp/dependency-check-core "7.3.1"]
+                 [org.owasp/dependency-check-core "7.4.4"]
                  [rm-hull/table "0.7.1"]
                  [trptcolin/versioneer "0.2.0"]
-                 ;; Explicitly depend on a certain Jackson, consistently.
-                 ;; (See also: https://github.com/jeremylong/DependencyCheck/issues/3441)
-                 [com.fasterxml.jackson.core/jackson-databind "2.14.0"]
-                 [com.fasterxml.jackson.core/jackson-annotations "2.14.0"]
-                 [com.fasterxml.jackson.core/jackson-core "2.14.0"]
-                 [com.fasterxml.jackson.module/jackson-module-afterburner "2.14.0"]
                  [org.apache.maven.resolver/maven-resolver-transport-http "1.9.0" #_"Fixes a CVE"]
                  [org.yaml/snakeyaml "1.33" #_"Fixes a CVE"]
                  [org.apache.maven/maven-core "3.8.6" #_"Fixes a CVE"]
