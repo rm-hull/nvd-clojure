@@ -1,3 +1,8 @@
+## Changes from 2.11.0 to 2.12.0
+
+* Update `dependency-check-core`.
+  * Fixes [#154](https://github.com/rm-hull/nvd-clojure/issues/154)
+
 ## Changes from 2.10.0 to 2.11.0
 
 * Update `dependency-check-core`.
