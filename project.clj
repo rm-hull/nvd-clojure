@@ -1,4 +1,4 @@
-(defproject nvd-clojure "2.11.0"
+(defproject nvd-clojure "2.12.0"
   :description "National Vulnerability Database dependency checker"
   :url "https://github.com/rm-hull/nvd-clojure"
   :license {:name "The MIT License (MIT)"
@@ -36,6 +36,7 @@
           :source-uri "https://github.com/rm-hull/nvd-clojure/blob/master/{filepath}#L{line}"}
   :min-lein-version "2.8.1"
   :target-path "target/%s"
+  :jvm-opts ["-Dclojure.main.report=stderr"]
   :profiles {:dev {:plugins [[lein-cljfmt "0.7.0"]
                              [lein-codox "0.10.7"]
                              [lein-cloverage "1.2.3"]
@@ -47,8 +48,7 @@
                                   [commons-collections "20040616"]]}
              :ci {:pedantic? :abort}
              :clj-kondo {:dependencies [[clj-kondo "2022.12.10"]]}
-             :skip-self-check {:jvm-opts ["-Dnvd-clojure.internal.skip-self-check=true"
-                                          "-Dclojure.main.report=stderr"]}}
+             :skip-self-check {:jvm-opts ["-Dnvd-clojure.internal.skip-self-check=true"]}}
   :deploy-repositories [["clojars" {:url "https://clojars.org/repo"
                                     :username :env/clojars_username
                                     :password :env/clojars_password
