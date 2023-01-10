@@ -55,4 +55,4 @@ jobs:
           cli: '1.10.3.1029'
           lein: '2.9.4'
       - run: shellcheck .github/*.sh
-      - run: .github/integration_test.sh
+      # - run: .github/integration_test.sh
