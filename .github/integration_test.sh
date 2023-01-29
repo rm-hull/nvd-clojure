@@ -7,6 +7,7 @@ export LEIN_JVM_OPTS="-Dclojure.main.report=stderr"
 PROJECT_DIR="$PWD"
 CONFIG_FILE="$PROJECT_DIR/.github/nvd-config.json"
 DOGFOODING_CONFIG_FILE="$PROJECT_DIR/.github/nvd-dogfooding-config.json"
+TOOLS_CONFIG_FILE="$PROJECT_DIR/.github/nvd-tool-config.json"
 SUCCESS_REGEX="[1-9][0-9] vulnerabilities detected\. Severity: "
 
 if ! lein with-profile -user,-dev,+ci install; then
@@ -32,7 +33,7 @@ if lein with-profile -user,-dev,+ci run -m nvd.task.check "$CONFIG_FILE" "$examp
 fi
 
 if ! grep --silent "$SUCCESS_REGEX" example-lein-output; then
-  echo "Should have found vulnerabilities!"
+  echo "Should have found vulnerabilities! (Step 1)"
   exit 1
 fi
 
@@ -51,7 +52,7 @@ if clojure -J-Dclojure.main.report=stderr -M -m nvd.task.check "$CONFIG_FILE" "$
 fi
 
 if ! grep --silent "$SUCCESS_REGEX" example-lein-output; then
-  echo "Should have found vulnerabilities!"
+  echo "Should have found vulnerabilities! (Step 2)"
   exit 1
 fi
 
@@ -64,13 +65,13 @@ example_classpath="$(clojure -Spath)"
 # cd to $HOME, to demonstrate that the Tool does not depend on a deps.edn file:
 cd || exit 1
 
-if clojure -J-Dclojure.main.report=stderr -Tnvd nvd.task/check :classpath \""$example_classpath\"" > example-lein-output; then
+if clojure -J-Dclojure.main.report=stderr -Tnvd nvd.task/check :classpath \""$example_classpath\"" :config-filename \""$TOOLS_CONFIG_FILE\"" > example-lein-output; then
   echo "Should have failed with non-zero code!"
   exit 1
 fi
 
 if ! grep --silent "$SUCCESS_REGEX" example-lein-output; then
-  echo "Should have found vulnerabilities!"
+  echo "Should have found vulnerabilities! (Step 3)"
   exit 1
 fi
 
