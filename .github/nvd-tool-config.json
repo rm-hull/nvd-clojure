@@ -1,0 +1,2 @@
+{"delete-config?": false,
+ "nvd": {"analyzer": {"ossindex-warn-only-on-remote-errors": true}}}

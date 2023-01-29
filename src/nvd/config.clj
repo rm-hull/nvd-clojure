@@ -48,41 +48,42 @@
   {Settings$KEYS/CVE_CHECK_VALID_FOR_HOURS [:cve :valid-for-hours]})
 
 (def ^:private boolean-mappings
-  {Settings$KEYS/ANALYZER_ARCHIVE_ENABLED                [:analyzer :archive-enabled]
-   Settings$KEYS/ANALYZER_ARTIFACTORY_ENABLED            [:analyzer :artifactory-enabled]
-   Settings$KEYS/ANALYZER_ASSEMBLY_ENABLED               [:analyzer :assembly-enabled]
-   Settings$KEYS/ANALYZER_AUTOCONF_ENABLED               [:analyzer :autoconf-enabled]
-   Settings$KEYS/ANALYZER_BUNDLE_AUDIT_ENABLED           [:analyzer :bundle-audit-enabled]
-   Settings$KEYS/ANALYZER_CENTRAL_ENABLED                [:analyzer :central-enabled]
-   Settings$KEYS/ANALYZER_CMAKE_ENABLED                  [:analyzer :cmake-enabled]
-   Settings$KEYS/ANALYZER_COCOAPODS_ENABLED              [:analyzer :cocoapods-enabled]
-   Settings$KEYS/ANALYZER_COMPOSER_LOCK_ENABLED          [:analyzer :composer-lock-enabled]
-   Settings$KEYS/ANALYZER_CPANFILE_ENABLED               [:analyzer :cpanfile-enabled]
-   Settings$KEYS/ANALYZER_EXPERIMENTAL_ENABLED           [:analyzer :experimental-enabled]
-   Settings$KEYS/ANALYZER_GOLANG_DEP_ENABLED             [:analyzer :golang-dep-enabled]
-   Settings$KEYS/ANALYZER_GOLANG_MOD_ENABLED             [:analyzer :golang-mod-enabled]
-   Settings$KEYS/ANALYZER_JAR_ENABLED                    [:analyzer :jar-enabled]
-   Settings$KEYS/ANALYZER_MIX_AUDIT_ENABLED              [:analyzer :mix-audit-enabled]
-   Settings$KEYS/ANALYZER_MSBUILD_PROJECT_ENABLED        [:analyzer :msbuild-project-enabled]
-   Settings$KEYS/ANALYZER_NEXUS_ENABLED                  [:analyzer :nexus-enabled]
-   Settings$KEYS/ANALYZER_NEXUS_USES_PROXY               [:analyzer :nexus-uses-proxy]
-   Settings$KEYS/ANALYZER_NODE_AUDIT_ENABLED             [:analyzer :node-audit-enabled]
-   Settings$KEYS/ANALYZER_NODE_PACKAGE_ENABLED           [:analyzer :node-package-enabled]
-   Settings$KEYS/ANALYZER_NPM_CPE_ENABLED                [:analyzer :npm-cpe-enabled]
-   Settings$KEYS/ANALYZER_NUGETCONF_ENABLED              [:analyzer :nugetconf-enabled]
-   Settings$KEYS/ANALYZER_NUSPEC_ENABLED                 [:analyzer :nuspec-enabled]
-   Settings$KEYS/ANALYZER_OPENSSL_ENABLED                [:analyzer :openssl-enabled]
-   Settings$KEYS/ANALYZER_PIPFILE_ENABLED                [:analyzer :pipfile-enabled]
-   Settings$KEYS/ANALYZER_PIP_ENABLED                    [:analyzer :pip-enabled]
-   Settings$KEYS/ANALYZER_PNPM_AUDIT_ENABLED             [:analyzer :pnpm-package-enabled]
-   Settings$KEYS/ANALYZER_PYTHON_DISTRIBUTION_ENABLED    [:analyzer :python-distribution-enabled]
-   Settings$KEYS/ANALYZER_PYTHON_PACKAGE_ENABLED         [:analyzer :python-package-enabled]
-   Settings$KEYS/ANALYZER_RETIREJS_ENABLED               [:analyzer :retirejs-enabled]
-   Settings$KEYS/ANALYZER_RUBY_GEMSPEC_ENABLED           [:analyzer :ruby-gemspec-enabled]
-   Settings$KEYS/ANALYZER_SWIFT_PACKAGE_MANAGER_ENABLED  [:analyzer :swift-package-manager-enabled]
-   Settings$KEYS/ANALYZER_SWIFT_PACKAGE_RESOLVED_ENABLED [:analyzer :swift-package-resolved-enabled]
-   Settings$KEYS/ANALYZER_YARN_AUDIT_ENABLED             [:analyzer :yarn-audit-enabled]
-   Settings$KEYS/AUTO_UPDATE                             [:auto-update]})
+  {Settings$KEYS/ANALYZER_ARCHIVE_ENABLED                     [:analyzer :archive-enabled]
+   Settings$KEYS/ANALYZER_ARTIFACTORY_ENABLED                 [:analyzer :artifactory-enabled]
+   Settings$KEYS/ANALYZER_ASSEMBLY_ENABLED                    [:analyzer :assembly-enabled]
+   Settings$KEYS/ANALYZER_AUTOCONF_ENABLED                    [:analyzer :autoconf-enabled]
+   Settings$KEYS/ANALYZER_BUNDLE_AUDIT_ENABLED                [:analyzer :bundle-audit-enabled]
+   Settings$KEYS/ANALYZER_CENTRAL_ENABLED                     [:analyzer :central-enabled]
+   Settings$KEYS/ANALYZER_CMAKE_ENABLED                       [:analyzer :cmake-enabled]
+   Settings$KEYS/ANALYZER_COCOAPODS_ENABLED                   [:analyzer :cocoapods-enabled]
+   Settings$KEYS/ANALYZER_COMPOSER_LOCK_ENABLED               [:analyzer :composer-lock-enabled]
+   Settings$KEYS/ANALYZER_CPANFILE_ENABLED                    [:analyzer :cpanfile-enabled]
+   Settings$KEYS/ANALYZER_EXPERIMENTAL_ENABLED                [:analyzer :experimental-enabled]
+   Settings$KEYS/ANALYZER_GOLANG_DEP_ENABLED                  [:analyzer :golang-dep-enabled]
+   Settings$KEYS/ANALYZER_GOLANG_MOD_ENABLED                  [:analyzer :golang-mod-enabled]
+   Settings$KEYS/ANALYZER_JAR_ENABLED                         [:analyzer :jar-enabled]
+   Settings$KEYS/ANALYZER_MIX_AUDIT_ENABLED                   [:analyzer :mix-audit-enabled]
+   Settings$KEYS/ANALYZER_MSBUILD_PROJECT_ENABLED             [:analyzer :msbuild-project-enabled]
+   Settings$KEYS/ANALYZER_NEXUS_ENABLED                       [:analyzer :nexus-enabled]
+   Settings$KEYS/ANALYZER_NEXUS_USES_PROXY                    [:analyzer :nexus-uses-proxy]
+   Settings$KEYS/ANALYZER_NODE_AUDIT_ENABLED                  [:analyzer :node-audit-enabled]
+   Settings$KEYS/ANALYZER_NODE_PACKAGE_ENABLED                [:analyzer :node-package-enabled]
+   Settings$KEYS/ANALYZER_NPM_CPE_ENABLED                     [:analyzer :npm-cpe-enabled]
+   Settings$KEYS/ANALYZER_NUGETCONF_ENABLED                   [:analyzer :nugetconf-enabled]
+   Settings$KEYS/ANALYZER_NUSPEC_ENABLED                      [:analyzer :nuspec-enabled]
+   Settings$KEYS/ANALYZER_OPENSSL_ENABLED                     [:analyzer :openssl-enabled]
+   Settings$KEYS/ANALYZER_OSSINDEX_WARN_ONLY_ON_REMOTE_ERRORS [:analyzer :ossindex-warn-only-on-remote-errors]
+   Settings$KEYS/ANALYZER_PIPFILE_ENABLED                     [:analyzer :pipfile-enabled]
+   Settings$KEYS/ANALYZER_PIP_ENABLED                         [:analyzer :pip-enabled]
+   Settings$KEYS/ANALYZER_PNPM_AUDIT_ENABLED                  [:analyzer :pnpm-package-enabled]
+   Settings$KEYS/ANALYZER_PYTHON_DISTRIBUTION_ENABLED         [:analyzer :python-distribution-enabled]
+   Settings$KEYS/ANALYZER_PYTHON_PACKAGE_ENABLED              [:analyzer :python-package-enabled]
+   Settings$KEYS/ANALYZER_RETIREJS_ENABLED                    [:analyzer :retirejs-enabled]
+   Settings$KEYS/ANALYZER_RUBY_GEMSPEC_ENABLED                [:analyzer :ruby-gemspec-enabled]
+   Settings$KEYS/ANALYZER_SWIFT_PACKAGE_MANAGER_ENABLED       [:analyzer :swift-package-manager-enabled]
+   Settings$KEYS/ANALYZER_SWIFT_PACKAGE_RESOLVED_ENABLED      [:analyzer :swift-package-resolved-enabled]
+   Settings$KEYS/ANALYZER_YARN_AUDIT_ENABLED                  [:analyzer :yarn-audit-enabled]
+   Settings$KEYS/AUTO_UPDATE                                  [:auto-update]})
 
 (defn app-name [project]
   (let [name (get project :name "stdin")
@@ -98,38 +99,39 @@
   {:exit-after-check true
    :delete-config?   true
    :verbose-summary  false
-   :nvd              {:analyzer {:assembly-enabled               false
-                                 :archive-enabled                true
-                                 :autoconf-enabled               false
-                                 :bundle-audit-enabled           false
-                                 :central-enabled                true
-                                 :cmake-enabled                  false
-                                 :cocoapods-enabled              false
-                                 :composer-lock-enabled          false
-                                 :cpanfile-enabled               false
-                                 :experimental-enabled           false
-                                 :golang-dep-enabled             false
-                                 :golang-mod-enabled             false
-                                 :jar-enabled                    true
-                                 :mix-audit-enabled              false
-                                 :msbuild-project-enabled        false
-                                 :nexus-enabled                  true
-                                 :node-audit-enabled             false
-                                 :node-package-enabled           false
-                                 :npm-cpe-enabled                false
-                                 :nugetconf-enabled              false
-                                 :nuspec-enabled                 false
-                                 :openssl-enabled                false
-                                 :pip-enabled                    false
-                                 :pipfile-enabled                false
-                                 :pnpm-package-enabled           false
-                                 :python-distribution-enabled    false
-                                 :python-package-enabled         false
-                                 :retirejs-enabled               false
-                                 :ruby-gemspec-enabled           false
-                                 :swift-package-manager-enabled  false
-                                 :swift-package-resolved-enabled false
-                                 :yarn-audit-enabled             false}}})
+   :nvd              {:analyzer {:assembly-enabled                    false
+                                 :archive-enabled                     true
+                                 :autoconf-enabled                    false
+                                 :bundle-audit-enabled                false
+                                 :central-enabled                     true
+                                 :cmake-enabled                       false
+                                 :cocoapods-enabled                   false
+                                 :composer-lock-enabled               false
+                                 :cpanfile-enabled                    false
+                                 :experimental-enabled                false
+                                 :golang-dep-enabled                  false
+                                 :golang-mod-enabled                  false
+                                 :jar-enabled                         true
+                                 :mix-audit-enabled                   false
+                                 :msbuild-project-enabled             false
+                                 :nexus-enabled                       true
+                                 :node-audit-enabled                  false
+                                 :node-package-enabled                false
+                                 :npm-cpe-enabled                     false
+                                 :nugetconf-enabled                   false
+                                 :nuspec-enabled                      false
+                                 :openssl-enabled                     false
+                                 :ossindex-warn-only-on-remote-errors false
+                                 :pip-enabled                         false
+                                 :pipfile-enabled                     false
+                                 :pnpm-package-enabled                false
+                                 :python-distribution-enabled         false
+                                 :python-package-enabled              false
+                                 :retirejs-enabled                    false
+                                 :ruby-gemspec-enabled                false
+                                 :swift-package-manager-enabled       false
+                                 :swift-package-resolved-enabled      false
+                                 :yarn-audit-enabled                  false}}})
 
 (defn- deep-merge [a b]
   (merge-with (fn [x y]

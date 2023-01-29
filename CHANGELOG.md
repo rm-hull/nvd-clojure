@@ -1,3 +1,10 @@
+## Changes from 2.12.0 to 2.13.0
+
+* Update `dependency-check-core`.
+* Introduce new `[:analyzer :ossindex-warn-only-on-remote-errors]` configuration option.
+  * You can set this option to `true` in order to not hard-fail if [OSS Index](https://ossindex.sonatype.org/) fails with HTTP 500 errors.
+    * This is at the risk of false negatives; but currently, while OSS Index keeps facing issues, might be the only feasible choice.
+
 ## Changes from 2.11.0 to 2.12.0
 
 * Update `dependency-check-core`.
