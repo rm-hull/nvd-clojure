@@ -1,32 +1,14 @@
-;; The MIT License (MIT)
-;;
-;; Copyright (c) 2016- Richard Hull
-;;
-;; Permission is hereby granted, free of charge, to any person obtaining a copy
-;; of this software and associated documentation files (the "Software"), to deal
-;; in the Software without restriction, including without limitation the rights
-;; to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-;; copies of the Software, and to permit persons to whom the Software is
-;; furnished to do so, subject to the following conditions:
-;;
-;; The above copyright notice and this permission notice shall be included in all
-;; copies or substantial portions of the Software.
-;;
-;; THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-;; IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-;; FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-;; AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-;; LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-;; OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-;; SOFTWARE.
-
 (ns nvd.config
   (:require
+   [clojure.data.json :as json]
+   [clojure.edn :as edn]
    [clojure.java.io :as io]
-   [clojure.data.json :as json])
+   [clojure.string :as string]
+   [nvd.log :as log])
   (:import
-   [org.owasp.dependencycheck Engine]
-   [org.owasp.dependencycheck.utils Settings Settings$KEYS]))
+   (java.io File)
+   (org.owasp.dependencycheck Engine)
+   (org.owasp.dependencycheck.utils Settings Settings$KEYS)))
 
 (def ^:private string-mappings
   {Settings$KEYS/ANALYZER_NEXUS_URL        [:analyzer :nexus-url]
@@ -92,9 +74,6 @@
       name
       (str group "/" name))))
 
-(defn- read-opts [config-file]
-  (json/read-str (slurp config-file) :key-fn keyword))
-
 (def default-settings
   {:exit-after-check true
    :delete-config?   true
@@ -140,11 +119,41 @@
                       :else y))
               a b))
 
-(defn populate-settings! [config-file]
-  (let [config (read-opts config-file)
+(defn- parse-json-file [config-filename]
+  (json/read-str (slurp config-filename) :key-fn keyword))
+
+(def default-edn-config-filename "nvd-clojure.edn")
+
+(def default-config-content (delay (slurp (io/resource "nvd_clojure/default_config_content.edn"))))
+
+;; interesting integration test: specifying "" as the config file won't override a custom file
+(defn maybe-create-edn-file! [config-filename]
+  (when (and (= config-filename
+                default-edn-config-filename)
+             (let [^File file (io/file config-filename)]
+               (or (not (-> file .exists))
+                   (-> file slurp string/blank?))))
+    (spit config-filename @default-config-content)))
+
+(defn- parse-edn-file [config-filename]
+  {:nvd            (edn/read-string (slurp config-filename))
+   ;; This key was introduced for dealing for config expressed as .json files (which wasn't always a feature) without deleting them.
+   ;; It remains as a concept (although hidden from .edn users) so that .json usage can keep working:
+   :delete-config? false})
+
+(defn populate-settings! [config-filename]
+  (let [config (case (-> config-filename (string/split #"\.") last)
+                 "json" (parse-json-file config-filename)
+                 "edn"  (-> config-filename
+                            (doto maybe-create-edn-file!)
+                            parse-edn-file)
+                 (throw (ex-info "Only .edn and .json config file extensions are supported.
+You can pass an empty string for an .edn file to be automatically created."
+                                 {:config-filename config-filename})))
         project (deep-merge default-settings config)
         nvd-settings (:nvd project)
         settings (Settings.)]
+    (.info log/logger (str "User-provided config: " (pr-str config)))
     (doseq [[prop path] integer-mappings]
       (.setIntIfNotNull settings prop (get-in nvd-settings path)))
     (doseq [[prop path] boolean-mappings]
@@ -156,7 +165,7 @@
         (assoc :engine      (Engine. settings)
                :title       (str (app-name project) " " (:version project))
                :start-time  (System/currentTimeMillis)
-               :config-file config-file))))
+               :config-file config-filename))))
 
 (defn cleanup [project]
   (let [engine ^Engine (:engine project)
@@ -167,6 +176,7 @@
       (.deleteOnExit (io/file (:config-file project))))))
 
 (defmacro with-config
+  {:style/indent 1}
   [[binding config-file] & body]
   (cond
     (symbol? binding)

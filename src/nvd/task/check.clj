@@ -1,38 +1,15 @@
-;; The MIT License (MIT)
-;;
-;; Copyright (c) 2016- Richard Hull
-;;
-;; Permission is hereby granted, free of charge, to any person obtaining a copy
-;; of this software and associated documentation files (the "Software"), to deal
-;; in the Software without restriction, including without limitation the rights
-;; to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-;; copies of the Software, and to permit persons to whom the Software is
-;; furnished to do so, subject to the following conditions:
-;;
-;; The above copyright notice and this permission notice shall be included in all
-;; copies or substantial portions of the Software.
-;;
-;; THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-;; IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-;; FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-;; AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-;; LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-;; OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-;; SOFTWARE.
-
 (ns nvd.task.check
   (:require
-   [clojure.data.json :as json]
+   [clansi :refer [style]]
    [clojure.java.io :as io]
    [clojure.string :as s]
-   [clansi :refer [style]]
-   [nvd.config :refer [with-config]]
-   [nvd.report :refer [generate-report print-summary fail-build?]]
+   [nvd.config :refer [default-edn-config-filename with-config]]
+   [nvd.report :refer [fail-build? generate-report print-summary]]
    [trptcolin.versioneer.core :refer [get-version]])
   (:import
-   [java.io File]
-   [org.owasp.dependencycheck Engine]
-   [org.owasp.dependencycheck.exception ExceptionCollection]))
+   (java.io File)
+   (org.owasp.dependencycheck Engine)
+   (org.owasp.dependencycheck.exception ExceptionCollection)))
 
 (def version
   (delay {:nvd-clojure (get-version "nvd-clojure" "nvd-clojure")
@@ -116,8 +93,9 @@ Older usages are deprecated." {})))
       (when-let [bad-entry (->> classpath
                                 (some (fn [^String entry]
                                         (and (-> entry (.endsWith ".jar"))
-                                             (or (-> entry (.contains "dependency-check-core"))
-                                                 (-> entry (.contains "nvd-clojure")))))))]
+                                             (when (or (-> entry (.contains "dependency-check-core"))
+                                                       (-> entry (.contains "nvd-clojure")))
+                                               entry)))))]
         (throw (ex-info "nvd-clojure should not analyse itself. This typically indicates a badly setup integration.
 
 Please refer to the project's README for recommended usages."
@@ -141,7 +119,5 @@ Please refer to the project's README for recommended usages."
     ;; so that CLI callers can skip the first argument by simply passing an empty string:
     (let [config-filename (if-not (s/blank? config-filename)
                             config-filename
-                            (let [f (java.io.File/createTempFile ".clj-nvd_" ".json")]
-                              (spit f (json/write-str {"classpath" classpath}))
-                              (.getCanonicalPath f)))]
+                            default-edn-config-filename)]
       (impl config-filename classpath))))
