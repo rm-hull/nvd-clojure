@@ -23,8 +23,9 @@
 (ns nvd.config-test
   (:require
    [clojure.java.io :as io]
+   [clojure.java.shell :refer [sh]]
    [clojure.string :as string]
-   [clojure.test :refer [deftest is testing]]
+   [clojure.test :refer [are deftest is testing]]
    [nvd.config :as sut])
   (:import
    (java.util UUID)))
@@ -47,40 +48,44 @@
   (is (= "fred/hello-world" (sut/app-name {:name "hello-world" :group "fred" :version "0.0.1"}))))
 
 (deftest check-with-config
-  (sut/with-config [project "test/resources/opts.json"]
-    (let [path (-> project (get-in [:nvd :data-directory]) io/file .getAbsolutePath)
-          suffix-1 (-> dependency-check-version
-                       (string/split #"\.")
-                       first
-                       (str ".0"))
-          suffix-2 (->> (string/split dependency-check-version #"\.")
-                        (take 2)
-                        (string/join "."))
-          expected-1 (str "/.m2/repository/org/owasp/dependency-check-utils/"
-                          dependency-check-version
-                          "/data/"
-                          suffix-1)
-          expected-2 (str "/.m2/repository/org/owasp/dependency-check-utils/"
-                          dependency-check-version
-                          "/data/"
-                          suffix-2)]
-      (is (or (.endsWith path expected-1)
-              (.endsWith path expected-2)
-              (.endsWith path "7.0")) ;; In recent releases, there's e.g. .../org/owasp/dependency-check-utils/8.0.2/data/7.0 which breaks the traditional match between versions
-          (pr-str {:expected-1 expected-1
-                   :expected-2 expected-2
-                   :actual path})))
-    (is (= (get-in project [:nvd :suppression-file]) "suppress.xml"))
-    (is (false? (get-in project [:nvd :analyzer :assembly-enabled])))
-    (is (true? (get-in project [:nvd :analyzer :cmake-enabled])))
-    (is (not (nil? (get-in project [:engine]))))
-    (is (= (get project :title) "barry-fungus/test-project 1.0.3-SNAPSHOT"))
-    (is (= (get project :config-file) "test/resources/opts.json"))
-    (is (= (get project :cmd-args) "12 -t hello"))
-    (is (= (get project :classpath) ["file1.jar", "file2.jar"]))))
+  (let [expected-suppression-filename "suppress.xml"]
+    (try
+      (sut/with-config [project "test/resources/opts.json"]
+        (let [path (-> project (get-in [:nvd :data-directory]) io/file .getAbsolutePath)
+              suffix-1 (-> dependency-check-version
+                           (string/split #"\.")
+                           first
+                           (str ".0"))
+              suffix-2 (->> (string/split dependency-check-version #"\.")
+                            (take 2)
+                            (string/join "."))
+              expected-1 (str "/.m2/repository/org/owasp/dependency-check-utils/"
+                              dependency-check-version
+                              "/data/"
+                              suffix-1)
+              expected-2 (str "/.m2/repository/org/owasp/dependency-check-utils/"
+                              dependency-check-version
+                              "/data/"
+                              suffix-2)]
+          (is (or (.endsWith path expected-1)
+                  (.endsWith path expected-2)
+                  (.endsWith path "7.0")) ;; In recent releases, there's e.g. .../org/owasp/dependency-check-utils/8.0.2/data/7.0 which breaks the traditional match between versions
+              (pr-str {:expected-1 expected-1
+                       :expected-2 expected-2
+                       :actual path})))
+        (is (= (get-in project [:nvd :suppression-file]) expected-suppression-filename))
+        (is (false? (get-in project [:nvd :analyzer :assembly-enabled])))
+        (is (true? (get-in project [:nvd :analyzer :cmake-enabled])))
+        (is (not (nil? (get-in project [:engine]))))
+        (is (= (get project :title) "barry-fungus/test-project 1.0.3-SNAPSHOT"))
+        (is (= (get project :config-file) "test/resources/opts.json"))
+        (is (= (get project :cmd-args) "12 -t hello"))
+        (is (= (get project :classpath) ["file1.jar", "file2.jar"])))
+      (finally
+        (-> expected-suppression-filename io/file .delete)))))
 
 (deftest maybe-create-edn-file!
-  (assert (not (-> sut/default-edn-config-filename io/file .exists)))
+  (-> sut/default-edn-config-filename io/file .delete)
 
   (try
     (testing "Does not overwrite a config file with a name different from the default filename"
@@ -109,4 +114,46 @@
              (slurp sut/default-edn-config-filename))))
 
     (finally
-      (-> sut/default-edn-config-filename io/file .delete))))
+      (-> sut/default-edn-config-filename io/file .delete)
+      ;; restore the file, which is version-controlled and necessary for .github/integration_test.sh to succeed:
+      (sh "git" "checkout" sut/default-edn-config-filename))))
+
+(deftest maybe-create-suppression-file!
+  (let [distinct-content                (-> (UUID/randomUUID) str)
+        existing-file                   (-> (UUID/randomUUID) (str ".xml") (doto (spit distinct-content)))
+        non-existing-file               (-> (UUID/randomUUID) (str ".xml"))
+        existing-folder                 (-> (UUID/randomUUID) str)
+        non-existing-folder             (-> (UUID/randomUUID) str)
+        _                               (-> existing-folder io/file .mkdirs)
+        existing-file-within-folder     (-> (str (io/file existing-folder
+                                                          (-> (UUID/randomUUID) (str ".xml"))))
+                                            (doto (spit distinct-content)))
+        non-existing-file-within-folder (str (io/file non-existing-folder
+                                                      (-> (UUID/randomUUID) (str ".xml"))))]
+
+    (assert (not (-> non-existing-file io/file .exists)))
+    (assert (not (-> non-existing-folder io/file .exists)))
+    (assert (not (-> non-existing-file-within-folder io/file .exists)))
+
+    (try
+      (testing "Creates files and intermediate directories only when appropiate"
+        (are [input expected] (testing input
+                                (sut/maybe-create-suppression-file! {:suppression-file input})
+                                (is (= expected
+                                       (slurp input)))
+                                true)
+          existing-file                   distinct-content
+          existing-file-within-folder     distinct-content
+          non-existing-file               @sut/default-suppression-content
+          non-existing-file-within-folder @sut/default-suppression-content))
+
+      (is (-> non-existing-file-within-folder io/file .exists)
+          "An intermediate folder can get created")
+
+      (finally
+        (-> existing-file io/file .delete)
+        (-> existing-file-within-folder io/file .delete)
+        (-> non-existing-file io/file .delete)
+        (-> non-existing-file-within-folder io/file .delete)
+        (-> existing-folder io/file .delete)
+        (-> non-existing-folder io/file .delete)))))

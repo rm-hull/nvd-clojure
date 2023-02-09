@@ -148,6 +148,8 @@
 
 (def default-config-content (delay (slurp (io/resource "nvd_clojure/default_config_content.edn"))))
 
+(def default-suppression-content (delay (slurp (io/resource "nvd_clojure/default_suppression_content.xml"))))
+
 (defn maybe-create-edn-file! [config-filename]
   (when (and (= config-filename
                 default-edn-config-filename)
@@ -162,6 +164,12 @@
    ;; It remains as a concept (although hidden from .edn users) so that .json usage can keep working:
    :delete-config? false})
 
+(defn maybe-create-suppression-file! [{suppression-filename :suppression-file}]
+  (when-let [file (some-> suppression-filename io/file)]
+    (when-not (-> file .exists)
+      (some-> file .getParentFile .mkdirs)
+      (spit suppression-filename @default-suppression-content))))
+
 (defn populate-settings! [config-filename]
   (let [config (case (-> config-filename (string/split #"\.") last)
                  "json" (parse-json-file config-filename)
@@ -174,13 +182,20 @@ You can pass an empty string for an .edn file to be automatically created."
         project (deep-merge default-settings config)
         nvd-settings (:nvd project)
         settings (Settings.)]
+
     (.info log/logger (str "User-provided config: " (pr-str config)))
+
+    (maybe-create-suppression-file! nvd-settings)
+
     (doseq [[prop path] integer-mappings]
       (.setIntIfNotNull settings prop (get-in nvd-settings path)))
+
     (doseq [[prop path] boolean-mappings]
       (.setBooleanIfNotNull settings prop (get-in nvd-settings path)))
+
     (doseq [[prop path] string-mappings]
       (.setStringIfNotEmpty settings prop (str (get-in nvd-settings path))))
+
     (-> project
         (assoc-in [:nvd :data-directory] (.getDataDirectory settings))
         (assoc :engine      (Engine. settings)
