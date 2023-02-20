@@ -116,8 +116,9 @@ Older usages are deprecated." {})))
       (when-let [bad-entry (->> classpath
                                 (some (fn [^String entry]
                                         (and (-> entry (.endsWith ".jar"))
-                                             (or (-> entry (.contains "dependency-check-core"))
-                                                 (-> entry (.contains "nvd-clojure")))))))]
+                                             (when (or (-> entry (.contains "dependency-check-core"))
+                                                       (-> entry (.contains "nvd-clojure")))
+                                               entry)))))]
         (throw (ex-info "nvd-clojure should not analyse itself. This typically indicates a badly setup integration.
 
 Please refer to the project's README for recommended usages."
