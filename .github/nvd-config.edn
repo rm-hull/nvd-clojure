@@ -1,0 +1,2 @@
+{:suppression-file ".github/example_nvd_suppressions.xml"
+ :analyzer {:ossindex-warn-only-on-remote-errors true}}

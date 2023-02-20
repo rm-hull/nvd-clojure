@@ -1,3 +1,10 @@
+## Changes from 2.13.0 to 3.0.0
+
+* Introduce .edn configuration format.
+  * .json files will remain working as-is indefinitely.
+  * If you wish to migrate to the .edn format, doing so is easy - please see [FAQ]().
+  * If you specify the blank string as the config file to be used, a sample .edn file with comments will be generated.
+
 ## Changes from 2.12.0 to 2.13.0
 
 * Update `dependency-check-core`.
