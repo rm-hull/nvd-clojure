@@ -1,0 +1,1 @@
+{:analyzer {:ossindex-warn-only-on-remote-errors true}}

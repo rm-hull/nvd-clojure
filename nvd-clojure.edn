@@ -1,0 +1,4 @@
+{ ;; This file is part of the integration test suite.
+ :suppression-file ".github/example_nvd_suppressions.xml"
+ :analyzer {:ossindex-warn-only-on-remote-errors true}
+ :a-custom-change 42}

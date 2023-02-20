@@ -22,17 +22,16 @@
 
 (ns nvd.task.check
   (:require
-   [clojure.data.json :as json]
+   [clansi :refer [style]]
    [clojure.java.io :as io]
    [clojure.string :as s]
-   [clansi :refer [style]]
-   [nvd.config :refer [with-config]]
-   [nvd.report :refer [generate-report print-summary fail-build?]]
+   [nvd.config :refer [default-edn-config-filename with-config]]
+   [nvd.report :refer [fail-build? generate-report print-summary]]
    [trptcolin.versioneer.core :refer [get-version]])
   (:import
-   [java.io File]
-   [org.owasp.dependencycheck Engine]
-   [org.owasp.dependencycheck.exception ExceptionCollection]))
+   (java.io File)
+   (org.owasp.dependencycheck Engine)
+   (org.owasp.dependencycheck.exception ExceptionCollection)))
 
 (def version
   (delay {:nvd-clojure (get-version "nvd-clojure" "nvd-clojure")
@@ -140,9 +139,7 @@ Please refer to the project's README for recommended usages."
 
     ;; specifically handle blank strings (in addition to nil)
     ;; so that CLI callers can skip the first argument by simply passing an empty string:
-    (let [config-filename (if-not (s/blank? config-filename)
-                            config-filename
-                            (let [f (java.io.File/createTempFile ".clj-nvd_" ".json")]
-                              (spit f (json/write-str {"classpath" classpath}))
-                              (.getCanonicalPath f)))]
+    (let [config-filename (if (s/blank? config-filename)
+                            default-edn-config-filename
+                            config-filename)]
       (impl config-filename classpath))))
