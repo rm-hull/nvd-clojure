@@ -1,3 +1,8 @@
+## Changes from 3.0.0 to 3.0.1
+
+* Parse classpaths in a cross-platform manner.
+  * Closes [#158](https://github.com/rm-hull/nvd-clojure/issues/158)
+
 ## Changes from 2.13.0 to 3.0.0
 
 * Introduce .edn configuration format.

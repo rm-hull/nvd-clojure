@@ -94,12 +94,15 @@
         fail-build?
         conditional-exit)))
 
+(def classpath-separator-re
+  (re-pattern (str File/pathSeparatorChar)))
+
 (defn -main [& [config-filename ^String classpath-string]]
   (when (s/blank? classpath-string)
     (throw (ex-info "nvd-clojure requires a classpath value to be explicitly passed as a CLI argument.
 Older usages are deprecated." {})))
 
-  (let [classpath (s/split classpath-string #":")
+  (let [classpath (s/split classpath-string classpath-separator-re)
         classpath (into []
                         (remove (fn [^String s]
                                   ;; Only .jar (and perhaps .zip) files are relevant.
