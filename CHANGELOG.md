@@ -7,7 +7,7 @@
 
 * Introduce .edn configuration format.
   * .json files will remain working as-is indefinitely.
-  * If you wish to migrate to the .edn format, doing so is easy - please see [FAQ](https://github.com/rm-hull/nvd-clojure/blob/v3.0.0/FAQ.md).
+  * If you wish to migrate to the .edn format, doing so is easy - please see [FAQ](https://github.com/rm-hull/nvd-clojure/blob/v3.0.1/FAQ.md).
   * If you specify the blank string as the config file to be used, a useful, sample .edn file will be generated.
 * Automatically create a .xml suppression file when a `:suppression-file` is specified and no such file exists
   * In practice, this means that on the first run, if you specify the blank string as the config file to be used, two files will be created for you:

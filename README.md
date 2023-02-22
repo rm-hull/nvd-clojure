@@ -24,12 +24,12 @@ will be checked for known security vulnerabilities. `nvd-clojure` passes them to
 
 <details>
 
-Please create a separate project consisting of `[nvd-clojure/nvd-clojure "3.0.0"]`. Said project can be located inside the targeted repo's Git repository.
+Please create a separate project consisting of `[nvd-clojure/nvd-clojure "3.0.1"]`. Said project can be located inside the targeted repo's Git repository.
 
 ```clj
 (defproject nvd-helper "local"
   :description "nvd-clojure helper project"
-  :dependencies [[nvd-clojure "3.0.0"]
+  :dependencies [[nvd-clojure "3.0.1"]
                  [org.clojure/clojure "1.11.1"]]
   :jvm-opts ["-Dclojure.main.report=stderr"])
 ```
@@ -42,7 +42,7 @@ Then you can run, within this helper project:
 lein with-profile -user run -m nvd.task.check "nvd-clojure.edn" "$(cd <YOUR_PROJECT>; lein with-profile -user,-dev classpath)"
 ```
 
-The first argument denotes a .edn file with extra options ([example](https://github.com/rm-hull/nvd-clojure/blob/master/.github/nvd-config.edn), [doc](#configuration)). You can pass an empty string `""` to mean "please use the default filename" (which is `nvd-clojure.edn`). If this file didn't exist, it will be automatically created for you, with some useful contents and comments.
+The first argument denotes a .edn file with extra options ([example](https://github.com/rm-hull/nvd-clojure/blob/master/.github/nvd-config.edn), [doc](#configuration-options)). You can pass an empty string `""` to mean "please use the default filename" (which is `nvd-clojure.edn`). If this file didn't exist, it will be automatically created for you, with some useful contents and comments.
 
 The `classpath` Leiningen command should reflect a production-like classpath as closely as possible: it should not include dev/test tooling, plugins, etc.
 
@@ -54,7 +54,7 @@ If you are using a multi-modules solution (e.g. `lein-monolith`), you should ens
 
 <details>
 
-Please create a separate project consisting exclusively of `nvd-clojure/nvd-clojure {:mvn/version "3.0.0"}`. Said project can be located inside the targeted repo's Git repository.
+Please create a separate project consisting exclusively of `nvd-clojure/nvd-clojure {:mvn/version "3.0.1"}`. Said project can be located inside the targeted repo's Git repository.
 
 Please do not add nvd-clojure as a dependency in the deps.edn of the project to be analysed.
 
@@ -66,7 +66,7 @@ Then you can run, within this helper project:
 clojure -J-Dclojure.main.report=stderr -M -m nvd.task.check "nvd-clojure.edn" "$(cd <YOUR_PROJECT>; clojure -Spath -A:any:aliases)"
 ```
 
-The first argument denotes a .edn file with extra options ([example](https://github.com/rm-hull/nvd-clojure/blob/master/.github/nvd-config.edn), [doc](#configuration)). You can pass an empty string `""` to mean "please use the default filename" (which is `nvd-clojure.edn`). If this file didn't exist, it will be automatically created for you, with some useful contents and comments.
+The first argument denotes a .edn file with extra options ([example](https://github.com/rm-hull/nvd-clojure/blob/master/.github/nvd-config.edn), [doc](#configuration-options)). You can pass an empty string `""` to mean "please use the default filename" (which is `nvd-clojure.edn`). If this file didn't exist, it will be automatically created for you, with some useful contents and comments.
 
 The `-Spath` command should reflect a production-like classpath as closely as possible: it should not include dev/test tooling, etc.
 
@@ -90,7 +90,7 @@ Then you can run:
 clojure -J-Dclojure.main.report=stderr -Tnvd nvd.task/check :classpath \""$(clojure -Spath -A:any:aliases)\"" :config-filename \""nvd-config.edn\""
 ```
 
-The `:config-filename` argument denotes an .edn file with extra options ([example](https://github.com/rm-hull/nvd-clojure/blob/master/.github/nvd-config.edn), [doc](#configuration)).
+The `:config-filename` argument denotes an .edn file with extra options ([example](https://github.com/rm-hull/nvd-clojure/blob/master/.github/nvd-config.edn), [doc](#configuration-options)).
 If this file didn't exist, it will be automatically created for you, with some useful contents and comments.
 
 The `-Spath` command should reflect a production-like classpath as closely as possible: it should not include dev/test tooling, etc.
@@ -155,7 +155,7 @@ dependency relationships are:
 dependencies, and suggest upgraded versions, and can optionally be configured
 to update the project file.
 
-(Note that that is only one of the multiple ways of remediating a given vulnerability, please see [FAQ](https://github.com/rm-hull/nvd-clojure/blob/v3.0.0/FAQ.md))
+(Note that that is only one of the multiple ways of remediating a given vulnerability, please see [FAQ](https://github.com/rm-hull/nvd-clojure/blob/v3.0.1/FAQ.md))
 
 ## Configuration
 
@@ -209,7 +209,7 @@ You can also set logging properties directly through Java system properties (the
 clojure -J-Dclojure.main.report=stderr -J-Dorg.slf4j.simpleLogger.log.org.apache.commons=error -Tnvd nvd.task/check # ...
 ```
 
-## [FAQ](https://github.com/rm-hull/nvd-clojure/blob/v3.0.0/FAQ.md)
+## [FAQ](https://github.com/rm-hull/nvd-clojure/blob/v3.0.1/FAQ.md)
 
 ## Avoiding classpath interference
 

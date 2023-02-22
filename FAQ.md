@@ -70,14 +70,14 @@ CVEs can be remediated in a variety of ways:
 * Replacing a dependency for another one
   * e.g. change the choice of JSON parser
 * Upgrading a managed dependency
-* Declaring transitive dependency, setting it to a newer version
+* Declaring a transitive dependency, setting it to a newer version
 * Upgrading a transitive dependency
 * Removing a direct dependency
 * Adding `:exclusions` such that a transitive dependency will be removed
 * Adding an entry to `nvd-suppressions.xml`
   * Fine-grained (exact)
   * Coarse-grained (wildcard)
-  * Temporal (with an expiration date)
+  * Temporary (with an expiration date)
 
 Devising a sensible remediation for a specific scenario will depend on your project and its needs. Completing one of the choices outlined above might need application-level code changes.
 
