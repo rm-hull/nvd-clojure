@@ -1,4 +1,4 @@
-(defproject nvd-clojure "3.0.1"
+(defproject nvd-clojure "3.1.0"
   :description "National Vulnerability Database dependency checker"
   :url "https://github.com/rm-hull/nvd-clojure"
   :license {:name "The MIT License (MIT)"
@@ -7,7 +7,7 @@
                  [clansi "1.0.0"]
                  [org.clojure/data.json "2.4.0"]
                  [org.slf4j/slf4j-simple "2.0.6"]
-                 [org.owasp/dependency-check-core "8.1.0"]
+                 [org.owasp/dependency-check-core "8.1.2"]
                  [rm-hull/table "0.7.1"]
                  [trptcolin/versioneer "0.2.0"]
                  ;; Explicitly depend on a certain Jackson, consistently.
@@ -16,16 +16,16 @@
                  [com.fasterxml.jackson.core/jackson-annotations "2.14.2"]
                  [com.fasterxml.jackson.core/jackson-core "2.14.2"]
                  [com.fasterxml.jackson.module/jackson-module-afterburner "2.14.2"]
-                 [org.apache.maven.resolver/maven-resolver-transport-http "1.9.4" #_"Fixes a CVE"]
-                 [org.yaml/snakeyaml "1.33" #_"Fixes a CVE"]
+                 [org.apache.maven.resolver/maven-resolver-transport-http "1.9.6" #_"Fixes a CVE"]
+                 [org.yaml/snakeyaml "2.0" #_"Fixes a CVE"]
                  [org.apache.maven/maven-core "3.9.0" #_"Fixes a CVE"]
-                 [org.eclipse.jetty/jetty-client "12.0.0.alpha3" #_"Fixes a CVE" :exclusions [org.slf4j/slf4j-api]]
-                 [org.apache.maven.resolver/maven-resolver-spi "1.9.4" #_"Satisfies :pedantic?"]
-                 [org.apache.maven.resolver/maven-resolver-api "1.9.4" #_"Satisfies :pedantic?"]
-                 [org.apache.maven.resolver/maven-resolver-util "1.9.4" #_"Satisfies :pedantic?"]
-                 [org.apache.maven.resolver/maven-resolver-impl "1.9.4" #_"Satisfies :pedantic?"]
+                 [org.eclipse.jetty/jetty-client "12.0.0.beta0" #_"Fixes a CVE" :exclusions [org.slf4j/slf4j-api]]
+                 [org.apache.maven.resolver/maven-resolver-spi "1.9.6" #_"Satisfies :pedantic?"]
+                 [org.apache.maven.resolver/maven-resolver-api "1.9.6" #_"Satisfies :pedantic?"]
+                 [org.apache.maven.resolver/maven-resolver-util "1.9.6" #_"Satisfies :pedantic?"]
+                 [org.apache.maven.resolver/maven-resolver-impl "1.9.6" #_"Satisfies :pedantic?"]
                  [org.apache.maven/maven-resolver-provider "3.9.0" #_"Satisfies :pedantic?"]
-                 [org.codehaus.plexus/plexus-utils "3.5.0" #_"Satisfies :pedantic?"]]
+                 [org.codehaus.plexus/plexus-utils "3.5.1" #_"Satisfies :pedantic?"]]
   :managed-dependencies [[com.google.code.gson/gson "2.10.1"]]
   :scm {:url "git@github.com:rm-hull/nvd-clojure.git"}
   :source-paths ["src"]
