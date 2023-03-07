@@ -6,7 +6,7 @@
     <cve>CVE-2021-23463</cve>
   </suppress>
   <suppress>
-    <filePath regex="true">.*\bh2-2\.1\.210\.jar</filePath>
+    <filePath regex="true">.*\bh2-2\.1\.214\.jar</filePath>
     <cve>CVE-2018-14335</cve>
   </suppress>
   <suppress>
@@ -20,5 +20,9 @@
   <suppress>
     <filePath regex="true">.*\bsnakeyaml-1\.33\.jar</filePath>
     <cve>CVE-2022-1471</cve>
+  </suppress>
+  <suppress>
+    <filePath regex="true">.*\bguava-31\.1-jre\.jar</filePath>
+    <cve>CVE-2020-8908</cve>
   </suppress>
 </suppressions>

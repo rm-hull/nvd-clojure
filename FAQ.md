@@ -10,6 +10,14 @@ So breaking API changes aren't drastically different from the other changes that
 
 With that said, there is active effort to avoid superflous API changes. We do intend to keep whatever can be reasonably kept.
 
+### What is classpath interference?
+
+nvd-clojure has some Java dependencies, which in turn can have CVEs themselves.
+
+Likewise, a given project's dependencies can overlap and therefore affect nvd-clojure's, leading it to incorrect functioning.
+
+For these reasons, it is strongly advised to follow the provided installation/usage instructions carefully, so that the classpath that nvd-clojure itself uses is fully decoupled from the classpath being analysed.
+
 ### How do I migrate from the .json config format to .edn?
 
 The .json config file format is considered legacy now, although it will remain supported.
