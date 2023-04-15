@@ -48,8 +48,8 @@ body:
       label: Installation compliance
       description: 
       options:
-        - label: I have read again and made sure that I'm following **exactly** the instructions for my tool of choice ([Leiningen](https://github.com/rm-hull/nvd-clojure/tree/v3.1.0#leiningen), [Clojure CLI](https://github.com/rm-hull/nvd-clojure/tree/v3.1.0#clojure-cli), [Clojure CLI Tool](https://github.com/rm-hull/nvd-clojure/tree/v3.1.0#clojure-cli-tool)).
+        - label: I have read again and made sure that I'm following **exactly** the instructions for my tool of choice ([Leiningen](https://github.com/rm-hull/nvd-clojure/tree/v3.2.0#leiningen), [Clojure CLI](https://github.com/rm-hull/nvd-clojure/tree/v3.2.0#clojure-cli), [Clojure CLI Tool](https://github.com/rm-hull/nvd-clojure/tree/v3.2.0#clojure-cli-tool)).
           required: true
-        - label: I understand that false positives [can be skipped locally](https://github.com/rm-hull/nvd-clojure/tree/v3.1.0#configuration-options) and should be reported to [DependencyCheck](https://github.com/jeremylong/DependencyCheck).
+        - label: I understand that false positives [can be skipped locally](https://github.com/rm-hull/nvd-clojure/tree/v3.2.0#configuration-options) and should be reported to [DependencyCheck](https://github.com/jeremylong/DependencyCheck).
           required: false
           
