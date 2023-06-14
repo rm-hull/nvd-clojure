@@ -6,7 +6,7 @@
 
 ;; Feel free to tweak it, version-control it and remove any comment.
 
-;; Configuration reference: https://github.com/rm-hull/nvd-clojure/tree/v3.2.0#configuration-options
+;; Configuration reference: https://github.com/rm-hull/nvd-clojure/tree/v3.3.0#configuration-options
 
 {;; You can use the `:suppression-file` in order to silence false positives.
  ;; This file will be automatically created, with whatever filename is specified here, if it didn't exist already.

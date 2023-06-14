@@ -1,3 +1,7 @@
+## Changes from 3.2.0 to 3.3.0
+
+* Update `dependency-check-core`.
+
 ## Changes from 3.1.0 to 3.2.0
 
 * Update `dependency-check-core`.
