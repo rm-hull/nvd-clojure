@@ -18,18 +18,18 @@ will be checked for known security vulnerabilities. `nvd-clojure` passes them to
 
 ### Installation and basic usage
 
-> _Please see also:_ [Avoiding classpath interference](https://github.com/rm-hull/nvd-clojure/blob/v3.2.0/FAQ.md#what-is-classpath-interference)
+> _Please see also:_ [Avoiding classpath interference](https://github.com/rm-hull/nvd-clojure/blob/v3.3.0/FAQ.md#what-is-classpath-interference)
 
 #### Leiningen
 
 <details>
 
-Please create a separate project consisting of `[nvd-clojure/nvd-clojure "3.2.0"]`. Said project can be located inside the targeted repo's Git repository.
+Please create a separate project consisting of `[nvd-clojure/nvd-clojure "3.3.0"]`. Said project can be located inside the targeted repo's Git repository.
 
 ```clj
 (defproject nvd-helper "local"
   :description "nvd-clojure helper project"
-  :dependencies [[nvd-clojure "3.2.0"]
+  :dependencies [[nvd-clojure "3.3.0"]
                  [org.clojure/clojure "1.11.1"]]
   :jvm-opts ["-Dclojure.main.report=stderr"])
 ```
@@ -54,7 +54,7 @@ If you are using a multi-modules solution (e.g. `lein-monolith`), you should ens
 
 <details>
 
-Please create a separate project consisting exclusively of `nvd-clojure/nvd-clojure {:mvn/version "3.2.0"}`. Said project can be located inside the targeted repo's Git repository.
+Please create a separate project consisting exclusively of `nvd-clojure/nvd-clojure {:mvn/version "3.3.0"}`. Said project can be located inside the targeted repo's Git repository.
 
 Please do not add nvd-clojure as a dependency in the deps.edn of the project to be analysed.
 
@@ -155,7 +155,7 @@ dependency relationships are:
 dependencies, and suggest upgraded versions, and can optionally be configured
 to update the project file.
 
-(Note that that is only one of the multiple ways of remediating a given vulnerability, please see [FAQ](https://github.com/rm-hull/nvd-clojure/blob/v3.2.0/FAQ.md#how-to-remediate-a-cve-is-it-a-good-idea-to-automate-remediation))
+(Note that that is only one of the multiple ways of remediating a given vulnerability, please see [FAQ](https://github.com/rm-hull/nvd-clojure/blob/v3.3.0/FAQ.md#how-to-remediate-a-cve-is-it-a-good-idea-to-automate-remediation))
 
 ## Configuration
 
@@ -209,7 +209,7 @@ You can also set logging properties directly through Java system properties (the
 clojure -J-Dclojure.main.report=stderr -J-Dorg.slf4j.simpleLogger.log.org.apache.commons=error -Tnvd nvd.task/check # ...
 ```
 
-## [FAQ](https://github.com/rm-hull/nvd-clojure/blob/v3.2.0/FAQ.md)
+## [FAQ](https://github.com/rm-hull/nvd-clojure/blob/v3.3.0/FAQ.md)
 
 ## Attribution
 
