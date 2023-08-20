@@ -25,4 +25,16 @@
     <filePath regex="true">.*\bguava-31\.1-jre\.jar</filePath>
     <cve>CVE-2020-8908</cve>
   </suppress>
+  <suppress>
+    <filePath regex="true">.*\bjetty-.*-12\.0\.0\.jar</filePath>
+    <cve>CVE-2023-26049</cve>
+  </suppress>
+  <suppress>
+    <filePath regex="true">.*\bjackson-databind-2\.15\.2\.jar</filePath>
+    <cve>CVE-2023-35116</cve>
+  </suppress>
+  <suppress>
+    <filePath regex="true">.*\bbcprov-jdk18on-1\.71\.jar</filePath>
+    <cve>CVE-2023-33201</cve>
+  </suppress>
 </suppressions>
