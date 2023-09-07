@@ -6,7 +6,7 @@
   :dependencies [[org.clojure/clojure "1.11.1"]
                  [clansi "1.0.0"]
                  [org.clojure/data.json "2.4.0"]
-                 [org.slf4j/slf4j-simple "2.0.7"]
+                 [org.slf4j/slf4j-simple "2.0.9"]
                  [org.owasp/dependency-check-core "8.4.0"]
                  [rm-hull/table "0.7.1"]
                  [trptcolin/versioneer "0.2.0"]
@@ -17,9 +17,9 @@
                  [com.fasterxml.jackson.core/jackson-core "2.15.2"]
                  [com.fasterxml.jackson.module/jackson-module-afterburner "2.15.2"]
                  [org.apache.maven.resolver/maven-resolver-transport-http "1.9.15" #_"Fixes a CVE"]
-                 [org.yaml/snakeyaml "2.1" #_"Fixes a CVE"]
+                 [org.yaml/snakeyaml "2.2" #_"Fixes a CVE"]
                  [org.apache.maven/maven-core "3.9.4" #_"Fixes a CVE"]
-                 [org.eclipse.jetty/jetty-client "12.0.0" #_"Fixes a CVE" :exclusions [org.slf4j/slf4j-api]]
+                 [org.eclipse.jetty/jetty-client "12.0.1" #_"Fixes a CVE" :exclusions [org.slf4j/slf4j-api]]
                  [org.apache.maven.resolver/maven-resolver-spi "1.9.15" #_"Satisfies :pedantic?"]
                  [org.apache.maven.resolver/maven-resolver-api "1.9.15" #_"Satisfies :pedantic?"]
                  [org.apache.maven.resolver/maven-resolver-util "1.9.15" #_"Satisfies :pedantic?"]
@@ -43,10 +43,10 @@
                              [jonase/eastwood "1.4.0"]]
                    :eastwood {:add-linters [:boxed-math
                                             :performance]}
-                   :dependencies [[clj-kondo "2023.07.13"]
+                   :dependencies [[clj-kondo "2023.09.07"]
                                   [commons-collections "20040616"]]}
              :ci {:pedantic? :abort}
-             :clj-kondo {:dependencies [[clj-kondo "2023.07.13"]]}
+             :clj-kondo {:dependencies [[clj-kondo "2023.09.07"]]}
              :skip-self-check {:jvm-opts ["-Dnvd-clojure.internal.skip-self-check=true"]}}
   :deploy-repositories [["clojars" {:url "https://clojars.org/repo"
                                     :username :env/clojars_username
