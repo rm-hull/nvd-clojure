@@ -37,4 +37,8 @@
     <filePath regex="true">.*\bbcprov-jdk18on-1\.71\.jar</filePath>
     <cve>CVE-2023-33201</cve>
   </suppress>
+  <suppress base="true">
+    <packageUrl regex="true">^pkg:maven/org\.codehaus\.plexus/plexus-.*$</packageUrl>
+    <cpe>cpe:/a:codehaus-plexus_project:codehaus-plexus</cpe>
+  </suppress>
 </suppressions>
