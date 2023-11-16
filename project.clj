@@ -1,4 +1,4 @@
-(defproject nvd-clojure "3.5.0"
+(defproject nvd-clojure "3.6.0"
   :description "National Vulnerability Database dependency checker"
   :url "https://github.com/rm-hull/nvd-clojure"
   :license {:name "The MIT License (MIT)"
@@ -7,19 +7,19 @@
                  [clansi "1.0.0"]
                  [org.clojure/data.json "2.4.0"]
                  [org.slf4j/slf4j-simple "2.0.9"]
-                 [org.owasp/dependency-check-core "8.4.2"]
+                 [org.owasp/dependency-check-core "8.4.3"]
                  [rm-hull/table "0.7.1"]
                  [trptcolin/versioneer "0.2.0"]
                  ;; Explicitly depend on a certain Jackson, consistently.
                  ;; (See also: https://github.com/jeremylong/DependencyCheck/issues/3441)
-                 [com.fasterxml.jackson.core/jackson-databind "2.15.3"]
-                 [com.fasterxml.jackson.core/jackson-annotations "2.15.3"]
-                 [com.fasterxml.jackson.core/jackson-core "2.15.3"]
-                 [com.fasterxml.jackson.module/jackson-module-afterburner "2.15.3"]
+                 [com.fasterxml.jackson.core/jackson-databind "2.16.0"]
+                 [com.fasterxml.jackson.core/jackson-annotations "2.16.0"]
+                 [com.fasterxml.jackson.core/jackson-core "2.16.0"]
+                 [com.fasterxml.jackson.module/jackson-module-afterburner "2.16.0"]
                  [org.apache.maven.resolver/maven-resolver-transport-http "1.9.16" #_"Fixes a CVE"]
                  [org.yaml/snakeyaml "2.2" #_"Fixes a CVE"]
                  [org.apache.maven/maven-core "3.9.5" #_"Fixes a CVE"]
-                 [org.eclipse.jetty/jetty-client "12.0.2" #_"Fixes a CVE" :exclusions [org.slf4j/slf4j-api]]
+                 [org.eclipse.jetty/jetty-client "12.0.3" #_"Fixes a CVE" :exclusions [org.slf4j/slf4j-api]]
                  [org.apache.maven.resolver/maven-resolver-spi "1.9.16" #_"Satisfies :pedantic?"]
                  [org.apache.maven.resolver/maven-resolver-api "1.9.16" #_"Satisfies :pedantic?"]
                  [org.apache.maven.resolver/maven-resolver-util "1.9.16" #_"Satisfies :pedantic?"]
