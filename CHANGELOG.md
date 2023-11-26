@@ -1,3 +1,10 @@
+## Changes from 4.0.0 to 4.0.0
+
+* Update `dependency-check-core` to the 9.x series ([9.0.8](https://github.com/jeremylong/DependencyCheck/blob/v9.0.8/CHANGELOG.md))
+  * This **requires** nvd-clojure users to request a NVD API key and configure it correctly.
+    * You can [obtain an API key](https://nvd.nist.gov/developers/request-an-api-key) in a few minutes - it's an automated process.
+    * Then, you can configure it in nvd-clojure by setting it in the `:nvd-api :key` path, or as a `NVD_API_TOKEN` environment variable.
+
 ## Changes from 3.5.0 to 3.6.0
 
 * Update `dependency-check-core`.
