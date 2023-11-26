@@ -42,7 +42,7 @@ Then you can run, within this helper project:
 lein with-profile -user run -m nvd.task.check "nvd-clojure.edn" "$(cd <YOUR_PROJECT>; lein with-profile -user,-dev classpath)"
 ```
 
-The first argument denotes a .edn file with extra options ([example](https://github.com/rm-hull/nvd-clojure/blob/master/.github/nvd-config.edn), [doc](#configuration-options)). You can pass an empty string `""` to mean "please use the default filename" (which is `nvd-clojure.edn`). If this file didn't exist, it will be automatically created for you, with some useful contents and comments.
+The first argument denotes a .edn file with extra options ([example](https://github.com/rm-hull/nvd-clojure/blob/main/.github/nvd-config.edn), [doc](#configuration-options)). You can pass an empty string `""` to mean "please use the default filename" (which is `nvd-clojure.edn`). If this file didn't exist, it will be automatically created for you, with some useful contents and comments.
 
 The `classpath` Leiningen command should reflect a production-like classpath as closely as possible: it should not include dev/test tooling, plugins, etc.
 
@@ -66,7 +66,7 @@ Then you can run, within this helper project:
 clojure -J-Dclojure.main.report=stderr -M -m nvd.task.check "nvd-clojure.edn" "$(cd <YOUR_PROJECT>; clojure -Spath -A:any:aliases)"
 ```
 
-The first argument denotes a .edn file with extra options ([example](https://github.com/rm-hull/nvd-clojure/blob/master/.github/nvd-config.edn), [doc](#configuration-options)). You can pass an empty string `""` to mean "please use the default filename" (which is `nvd-clojure.edn`). If this file didn't exist, it will be automatically created for you, with some useful contents and comments.
+The first argument denotes a .edn file with extra options ([example](https://github.com/rm-hull/nvd-clojure/blob/main/.github/nvd-config.edn), [doc](#configuration-options)). You can pass an empty string `""` to mean "please use the default filename" (which is `nvd-clojure.edn`). If this file didn't exist, it will be automatically created for you, with some useful contents and comments.
 
 The `-Spath` command should reflect a production-like classpath as closely as possible: it should not include dev/test tooling, etc.
 
@@ -90,7 +90,7 @@ Then you can run:
 clojure -J-Dclojure.main.report=stderr -Tnvd nvd.task/check :classpath \""$(clojure -Spath -A:any:aliases)\"" :config-filename \""nvd-config.edn\""
 ```
 
-The `:config-filename` argument denotes an .edn file with extra options ([example](https://github.com/rm-hull/nvd-clojure/blob/master/.github/nvd-config.edn), [doc](#configuration-options)).
+The `:config-filename` argument denotes an .edn file with extra options ([example](https://github.com/rm-hull/nvd-clojure/blob/main/.github/nvd-config.edn), [doc](#configuration-options)).
 If this file didn't exist, it will be automatically created for you, with some useful contents and comments.
 
 The `-Spath` command should reflect a production-like classpath as closely as possible: it should not include dev/test tooling, etc.
@@ -114,7 +114,7 @@ setting a `:fail-threshold` in the project [configuration](#configuration-option
 
 ### Example
 
-There is an [example project](https://github.com/rm-hull/nvd-clojure/blob/master/example/project.clj)
+There is an [example project](https://github.com/rm-hull/nvd-clojure/blob/main/example/project.clj)
 which has dependencies with known vulnerabilities
 ([CVE-2016-3720](https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2016-3720),
 [CVE-2015-5262](https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2015-5262),
@@ -130,7 +130,7 @@ This will download the NVD database, and then cross-check the classpath
 dependencies against known vulnerabilities. The following summary report will
 be displayed on the console:
 
-![summary-report](https://raw.githubusercontent.com/rm-hull/nvd-clojure/master/example/img/summary-report.png)
+![summary-report](https://raw.githubusercontent.com/rm-hull/nvd-clojure/main/example/img/summary-report.png)
 
 Note that as there were some vulnerabilities detected, the process was aborted,
 with error code `-1` hence the reported `subprocess failed` message.
@@ -139,7 +139,7 @@ More detailed reports (both HTML & XML) are written into the
 `./example/target/nvd/` directory as follows:
 
 ---
-![detail-report](https://raw.githubusercontent.com/rm-hull/nvd-clojure/master/example/img/detail-report.png)
+![detail-report](https://raw.githubusercontent.com/rm-hull/nvd-clojure/main/example/img/detail-report.png)
 
 ## Upgrading dependencies
 
@@ -160,7 +160,7 @@ to update the project file.
 ## Configuration
 
 The default settings for `nvd-clojure` are usually sufficient for most projects, but
-can be customized with an .edn config file ([example](https://github.com/rm-hull/nvd-clojure/blob/master/.github/nvd-config.edn)).
+can be customized with an .edn config file ([example](https://github.com/rm-hull/nvd-clojure/blob/main/.github/nvd-config.edn)).
 The filename denoting that file is the first argument to be passed to nvd-clojure when invoking it as a `main` (`-m`) program.
 
 When invoking it via Clojure Tools, it must be passed as a `:config-filename` option, e.g.
@@ -175,7 +175,7 @@ Note the escaped double quotes around the filename, to ensure that Clojure reads
 
 There are many DependencyCheck settings (for example to connect via a proxy, or
 to specify an alternative to the H2 database). The exact settings can be seen
-in the [config.clj](https://github.com/rm-hull/nvd-clojure/blob/master/src/nvd/config.clj) source file and cross-referenced to the DependencyCheck
+in the [config.clj](https://github.com/rm-hull/nvd-clojure/blob/main/src/nvd/config.clj) source file and cross-referenced to the DependencyCheck
 wiki.
 
 There are some specific settings below which are worthy of a few comments:

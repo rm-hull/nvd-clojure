@@ -58,4 +58,4 @@ jobs:
           commit-message: Update stale dependencies
           title: Update stale dependencies
           branch: update-dependencies
-          base: master
+          base: main

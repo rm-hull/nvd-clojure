@@ -32,7 +32,7 @@
   :jar-exclusions [#"(?:^|/).git"]
   :codox {:source-paths ["src"]
           :output-path "doc/api"
-          :source-uri "https://github.com/rm-hull/nvd-clojure/blob/master/{filepath}#L{line}"}
+          :source-uri "https://github.com/rm-hull/nvd-clojure/blob/main/{filepath}#L{line}"}
   :min-lein-version "2.8.1"
   :target-path "target/%s"
   :jvm-opts ["-Dclojure.main.report=stderr"]
