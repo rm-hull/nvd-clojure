@@ -46,10 +46,15 @@
    Settings$KEYS/DB_DRIVER_PATH            [:database :driver-path]
    Settings$KEYS/DB_CONNECTION_STRING      [:database :connection-string]
    Settings$KEYS/DB_USER                   [:database :user]
-   Settings$KEYS/DB_PASSWORD               [:database :password]})
-
-(def ^:private integer-mappings
-  {Settings$KEYS/CVE_CHECK_VALID_FOR_HOURS [:cve :valid-for-hours]})
+   Settings$KEYS/DB_PASSWORD               [:database :password]
+   Settings$KEYS/NVD_API_KEY               [:nvd-api :key]
+   Settings$KEYS/NVD_API_ENDPOINT          [:nvd-api :endpoint]
+   Settings$KEYS/NVD_API_DELAY             [:nvd-api :delay]
+   Settings$KEYS/NVD_API_MAX_RETRY_COUNT   [:nvd-api :max-retry-count]
+   Settings$KEYS/NVD_API_VALID_FOR_HOURS   [:nvd-api :valid-for-hours]
+   Settings$KEYS/NVD_API_DATAFEED_URL      [:nvd-api :datafeed :url]
+   Settings$KEYS/NVD_API_DATAFEED_USER     [:nvd-api :datafeed :user]
+   Settings$KEYS/NVD_API_DATAFEED_PASSWORD [:nvd-api :datafeed :password]})
 
 (def ^:private boolean-mappings
   {Settings$KEYS/ANALYZER_ARCHIVE_ENABLED                     [:analyzer :archive-enabled]
@@ -100,7 +105,9 @@
   {:exit-after-check true
    :delete-config?   true
    :verbose-summary  false
-   :nvd              {:analyzer {:assembly-enabled                    false
+   :nvd              {:nvd-api {:delay 5000 ;; Value based on https://github.com/jeremylong/DependencyCheck/commit/be5c4a4f39d
+                                :max-retry-count 10}
+                      :analyzer {:assembly-enabled                    false
                                  :archive-enabled                     true
                                  :autoconf-enabled                    false
                                  :bundle-audit-enabled                false
@@ -187,14 +194,20 @@ You can pass an empty string for an .edn file to be automatically created."
 
     (maybe-create-suppression-file! nvd-settings)
 
-    (doseq [[prop path] integer-mappings]
-      (.setIntIfNotNull settings prop (get-in nvd-settings path)))
-
     (doseq [[prop path] boolean-mappings]
       (.setBooleanIfNotNull settings prop (get-in nvd-settings path)))
 
     (doseq [[prop path] string-mappings]
       (.setStringIfNotEmpty settings prop (str (get-in nvd-settings path))))
+
+    (when (= ::not-found (get-in nvd-settings [:nvd-api :key] ::not-found))
+      (let [api-key (System/getenv "NVD_API_TOKEN")]
+
+        (when (or (not api-key)
+                  (string/blank? api-key))
+          (throw (ex-info "No NVD API key supplied as config settings or env var." {})))
+
+        (.setString settings Settings$KEYS/NVD_API_KEY api-key)))
 
     (-> project
         (assoc-in [:nvd :data-directory] (.getDataDirectory settings))

@@ -6,11 +6,15 @@
 
 ;; Feel free to tweak it, version-control it and remove any comment.
 
-;; Configuration reference: https://github.com/rm-hull/nvd-clojure/tree/v3.6.0#configuration-options
+;; Configuration reference: https://github.com/rm-hull/nvd-clojure/tree/v4.0.0#configuration-options
 
 {;; You can use the `:suppression-file` in order to silence false positives.
  ;; This file will be automatically created, with whatever filename is specified here, if it didn't exist already.
  :suppression-file "nvd_suppressions.xml"
+
+ ;; MANDATORY - please set this (or a `NVD_API_TOKEN` environment variable, deleting this entry)
+ ;; according to an API key that you can obtain in https://nvd.nist.gov/developers/request-an-api-key
+ :nvd-api {:key nil}
 
  #_:analyzer ;; Analyzer options, which are mostly advanced/internal
  #_{:ossindex-warn-only-on-remote-errors

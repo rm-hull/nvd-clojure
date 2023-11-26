@@ -22,16 +22,17 @@
 
 (ns nvd.report
   (:require
-   [clojure.string :as s]
-   [clojure.java.io :as io]
    [clansi :refer [style]]
+   [clojure.java.io :as io]
+   [clojure.string :as s]
+   [nvd.log :as log]
    [table.core :refer [table]])
   (:import
-   [java.util Arrays]
-   [org.owasp.dependencycheck Engine]
-   [org.owasp.dependencycheck.dependency Dependency Vulnerability]
-   [org.owasp.dependencycheck.exception ExceptionCollection]
-   [org.owasp.dependencycheck.reporting ReportGenerator]))
+   (java.util Arrays)
+   (org.owasp.dependencycheck Engine)
+   (org.owasp.dependencycheck.dependency Dependency Vulnerability)
+   (org.owasp.dependencycheck.exception ExceptionCollection)
+   (org.owasp.dependencycheck.reporting ReportGenerator)))
 
 (def default-output-dir "target/nvd")
 
@@ -53,9 +54,17 @@
   (let [cvss2 (.getCvssV2 vulnerability)
         cvss3 (.getCvssV3 vulnerability)]
     (cond
-      cvss2 (.getScore cvss2)
-      cvss3 (.getBaseScore cvss3)
-      :else 1)))
+      cvss2 (max (double (or (.getExploitabilityScore cvss2)
+                             0))
+                 (double (or (.getImpactScore cvss2)
+                             0)))
+      cvss3 (max (double (or (.getExploitabilityScore cvss3)
+                             0))
+                 (double (or (.getImpactScore cvss3)
+                             0)))
+      :else (do
+              (.warn log/logger (str "No CVSS found for: " (pr-str vulnerability)))
+              1))))
 
 (defn- severity [^long cvssScore]
   (cond
