@@ -200,7 +200,7 @@ You can pass an empty string for an .edn file to be automatically created."
     (doseq [[prop path] string-mappings]
       (.setStringIfNotEmpty settings prop (str (get-in nvd-settings path))))
 
-    (when (= ::not-found (get-in nvd-settings [:nvd-api :key] ::not-found))
+    (when (nil? (get-in nvd-settings [:nvd-api :key]))
       (let [api-key (System/getenv "NVD_API_TOKEN")]
 
         (when (or (not api-key)
