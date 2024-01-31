@@ -5,6 +5,9 @@
     "delete-config?": false,
     "exit-after-check": false,
     "nvd": {
+        "nvd-api": {
+            "key": "dummy-api-key"
+        },
         "analyzer": {
             "cmake-enabled": true
         },

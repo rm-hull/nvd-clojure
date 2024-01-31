@@ -48,7 +48,8 @@
   (is (= "fred/hello-world" (sut/app-name {:name "hello-world" :group "fred" :version "0.0.1"}))))
 
 (deftest check-with-config
-  (let [expected-suppression-filename "suppress.xml"]
+  (let [expected-suppression-filename "suppress.xml"
+        expected-nvd-api-key "dummy-api-key"]
     (try
       (sut/with-config [project "test/resources/opts.json"]
         (let [path (-> project (get-in [:nvd :data-directory]) io/file .getAbsolutePath)
@@ -73,7 +74,10 @@
               (pr-str {:expected-1 expected-1
                        :expected-2 expected-2
                        :actual path})))
-        (is (= (get-in project [:nvd :suppression-file]) expected-suppression-filename))
+        (is (= expected-suppression-filename
+               (get-in project [:nvd :suppression-file])))
+        (is (= expected-nvd-api-key
+               (get-in project [:nvd :nvd-api :key])))
         (is (false? (get-in project [:nvd :analyzer :assembly-enabled])))
         (is (true? (get-in project [:nvd :analyzer :cmake-enabled])))
         (is (not (nil? (get-in project [:engine]))))
