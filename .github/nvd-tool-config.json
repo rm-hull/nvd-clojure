@@ -1,2 +1,3 @@
 {"delete-config?": false,
- "nvd": {"analyzer": {"ossindex-warn-only-on-remote-errors": true}}}
+ "nvd": {"nvd-api": {"key": null},
+         "analyzer": {"ossindex-warn-only-on-remote-errors": true}}}

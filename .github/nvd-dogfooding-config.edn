@@ -1,2 +1,3 @@
 {:suppression-file ".github/dogfooding_suppressions.xml"
+ :nvd-api {:key nil}
  :analyzer {:ossindex-warn-only-on-remote-errors true}}

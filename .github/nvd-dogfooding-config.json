@@ -1,3 +1,4 @@
 {"delete-config?": false,
  "nvd": {"suppression-file": ".github/dogfooding_suppressions.xml",
+         "nvd-api": {"key": null},
          "analyzer": {"ossindex-warn-only-on-remote-errors": true}}}
