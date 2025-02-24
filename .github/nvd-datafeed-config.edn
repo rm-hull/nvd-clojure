@@ -1,0 +1,3 @@
+{:suppression-file ".github/dogfooding_suppressions.xml"
+ :analyzer {:ossindex-warn-only-on-remote-errors true}
+ :nvd-api {:datafeed {:url "https://dependency-check.github.io/DependencyCheck_Builder/nvd_cache/"}}}
