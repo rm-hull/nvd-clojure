@@ -69,7 +69,7 @@
                               suffix-2)]
           (is (or (.endsWith path expected-1)
                   (.endsWith path expected-2)
-                  (.endsWith path "7.0")) ;; In recent releases, there's e.g. .../org/owasp/dependency-check-utils/8.0.2/data/7.0 which breaks the traditional match between versions
+                  (.endsWith path "11.0")) ;; In recent releases, there's e.g. .../org/owasp/dependency-check-utils/12.1.0/data/11.0 which breaks the traditional match between versions
               (pr-str {:expected-1 expected-1
                        :expected-2 expected-2
                        :actual path})))
