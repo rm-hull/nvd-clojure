@@ -15,6 +15,7 @@ CONFIG_FILE="$PROJECT_DIR/.github/nvd-config.edn"
 CONFIG_FILE_USING_DEFAULT_FILENAME="$PROJECT_DIR/nvd-clojure.edn"
 DOGFOODING_CONFIG_FILE="$PROJECT_DIR/.github/nvd-dogfooding-config.edn"
 TOOLS_CONFIG_FILE="$PROJECT_DIR/.github/nvd-tool-config.edn"
+DATAFEED_CONFIG_FILE="$PROJECT_DIR/.github/nvd-datafeed-config.edn"
 
 JSON_CONFIG_FILE="$PROJECT_DIR/.github/nvd-config.json"
 JSON_DOGFOODING_CONFIG_FILE="$PROJECT_DIR/.github/nvd-dogfooding-config.json"
@@ -86,6 +87,25 @@ fi
 
 if ! grep --silent "$A_CUSTOM_CHANGE" "$CONFIG_FILE_USING_DEFAULT_FILENAME"; then
   echo "Passing an empty string as the config name should not result in the config file being overriden!"
+  exit 1
+fi
+
+# 1.- Exercise `main` program (EDN) with a datafeed
+
+cd "$PROJECT_DIR/example" || exit 1
+
+example_classpath="$(lein with-profile -user,-dev,-test classpath)"
+
+# cd to the root dir, so that one runs `defproject nvd-clojure` which is the most clean and realistic way to run `main`:
+cd "$PROJECT_DIR" || exit 1
+
+if lein with-profile -user,-dev,+ci run -m nvd.task.check "$DATAFEED_CONFIG_FILE" "$example_classpath" > example-lein-output; then
+  echo "Should have failed with non-zero code!"
+  exit 1
+fi
+
+if ! grep --silent "$SUCCESS_REGEX" example-lein-output; then
+  echo "Should have found vulnerabilities! (Step 1 - EDN)"
   exit 1
 fi
 
