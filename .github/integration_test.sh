@@ -3,6 +3,11 @@ set -Euxo pipefail
 
 cd "${BASH_SOURCE%/*}/.." || exit 1
 
+if [ -z "${NVD_API_TOKEN}" ]; then
+  echo "NVD_API_TOKEN not set!"
+  exit 1
+fi
+
 export LEIN_JVM_OPTS="-Dclojure.main.report=stderr"
 PROJECT_DIR="$PWD"
 
