@@ -123,9 +123,11 @@
 
 (defn fail-build? [project]
   (let [^Engine engine (:engine project)
-        highest-score (long (apply max 0 (scores engine)))
+        all-scores (scores engine)
+        highest-score (long (apply max 0 all-scores))
         fail-threshold (long (get-in project [:nvd :fail-threshold] 0))]
     (->
      project
      (assoc-in [:nvd :highest-score] highest-score)
-     (assoc :failed? (> highest-score fail-threshold)))))
+     (assoc :failed? (and (seq all-scores)
+                          (> highest-score fail-threshold))))))
