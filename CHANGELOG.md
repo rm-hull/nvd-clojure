@@ -1,6 +1,11 @@
+## Changes from 4.0.0 to 5.0.0 
+
+* Update `dependency-check-core` to the 12.x series ([12.1.0](https://github.com/dependency-check/DependencyCheck/blob/main/CHANGELOG.md#version-1210-2025-02-16))
+  * This upgrade required dropping support for Java 8, so nvd-clojure will no longer work with Java 8.
+
 ## Changes from 3.6.0 to 4.0.0
 
-* Update `dependency-check-core` to the 9.x series ([9.0.8](https://github.com/jeremylong/DependencyCheck/blob/v9.0.8/CHANGELOG.md))
+* Update `dependency-check-core` to the 9.x series ([9.0.8](https://github.com/dependency-check/DependencyCheck/blob/main/CHANGELOG.md#version-908-2024-01-06))
   * This **requires** nvd-clojure users to request a NVD API key and configure it correctly.
     * You can [obtain an API key](https://nvd.nist.gov/developers/request-an-api-key) in a few minutes - it's an automated process.
     * Then, you can configure it in nvd-clojure by setting it in the `:nvd-api :key` path, or as a `NVD_API_TOKEN` environment variable.
