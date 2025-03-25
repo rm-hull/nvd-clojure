@@ -2,7 +2,7 @@
 
 # Example usage:
 # copy a one-off Clojars token to your clipboard
-# GIT_TAG=v4.0.0 CLOJARS_USERNAME=$USER CLOJARS_PASSWORD=$(pbpaste) make deploy
+# GIT_TAG=v5.0.0 CLOJARS_USERNAME=$USER CLOJARS_PASSWORD=$(pbpaste) make deploy
 
 deploy: check-env
 	lein clean
