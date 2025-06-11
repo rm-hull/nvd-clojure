@@ -6,7 +6,7 @@
     <cve>CVE-2021-23463</cve>
   </suppress>
   <suppress>
-    <filePath regex="true">.*\bh2-2\.1\.214\.jar</filePath>
+    <filePath regex="true">.*\bh2-2\.3\.232\.jar</filePath>
     <cve>CVE-2018-14335</cve>
   </suppress>
   <suppress>
