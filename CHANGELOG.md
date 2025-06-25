@@ -1,3 +1,8 @@
+# Changes from 5.0.0 to 5.1.0
+
+* Update `dependency-check-core` from 12.1.0 to [12.1.3](https://github.com/dependency-check/DependencyCheck/blob/main/CHANGELOG.md#version-1213-2025-06-10).
+* Support [reporting on vulnerabilities with a score of 0](https://github.com/rm-hull/nvd-clojure/pull/187)
+
 ## Changes from 4.0.0 to 5.0.0 
 
 * Update `dependency-check-core` to the 12.x series ([12.1.0](https://github.com/dependency-check/DependencyCheck/blob/main/CHANGELOG.md#version-1210-2025-02-16))
