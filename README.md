@@ -183,10 +183,10 @@ There are some specific settings below which are worthy of a few comments:
 * `:nvd-api` - map of:
   * :key - **MANDATORY** (unless you set an `NVD_API_TOKEN` environment variable) - must contain an API key that you can obtain in https://nvd.nist.gov/developers/request-an-api-key
   * other keys: `:endpoint`, `:delay`, `:max-retry-count`, `:valid-for-hours`, `:datafeed` - advanced, please refer to the source code.
-* `:fail-threshold` default value `0`; checks the highest CVSS score across all dependencies, and fails if this threshold is breached.
-  - As CVSS score ranges from `0..10`, the default value will cause a build to fail even for the lowest rated
-  vulnerability.
+* `:fail-threshold` default value `0`; checks the highest CVSS score across all dependencies, and fails if this threshold is breached (i.e. the highest score is greater than the threshold).
+  - As CVSS score ranges from `0..10`, the default value will cause a build to fail if at least one vulnerability with a score > 0 is detected.
   - Set to `11` if you never want the build to fail.
+  - Set to `-1` if you also want the build to fail when any vulnerabilities of score 0 or higher were detected (useful to be alerted of vulnerabilities which haven't yet been assigned a CVSS score, so have a score of 0).
 * `:data-directory` default value is the data dir of `DependencyCheck`, e.g. `~/.m2/repository/org/owasp/dependency-check-utils/3.2.1/data/`
   - It shouldn't normally be necessary to change this
 * `:suppression-file` default unset
