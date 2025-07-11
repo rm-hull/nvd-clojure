@@ -7,7 +7,7 @@
                  [clansi "1.0.0"]
                  ;; dependency-check-core transitively brings in two versions of
                  ;; this dependency, so we explicitly depend on the latest
-                 [com.google.errorprone/error_prone_annotations "2.38.0"]
+                 [com.google.errorprone/error_prone_annotations "2.40.0"]
                  [org.clojure/data.json "2.5.1"]
                  [org.slf4j/slf4j-simple "2.0.17"]
                  [org.owasp/dependency-check-core "12.1.3"]
