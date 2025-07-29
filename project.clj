@@ -7,7 +7,7 @@
                  [clansi "1.0.0"]
                  ;; dependency-check-core transitively brings in two versions of
                  ;; this dependency, so we explicitly depend on the latest
-                 [com.google.errorprone/error_prone_annotations "2.38.0"]
+                 [com.google.errorprone/error_prone_annotations "2.41.0"]
                  [org.clojure/data.json "2.5.1"]
                  [org.slf4j/slf4j-simple "2.0.17"]
                  [org.owasp/dependency-check-core "12.1.3"]
@@ -30,10 +30,10 @@
                              [jonase/eastwood "1.4.0"]]
                    :eastwood {:add-linters [:boxed-math
                                             :performance]}
-                   :dependencies [[clj-kondo "2025.06.05"]
+                   :dependencies [[clj-kondo "2025.07.28"]
                                   [commons-collections "20040616"]]}
              :ci {:pedantic? :abort}
-             :clj-kondo {:dependencies [[clj-kondo "2025.06.05"]]}
+             :clj-kondo {:dependencies [[clj-kondo "2025.07.28"]]}
              :skip-self-check {:jvm-opts ["-Dnvd-clojure.internal.skip-self-check=true"]}}
   :deploy-repositories [["clojars" {:url "https://clojars.org/repo"
                                     :username :env/clojars_username
