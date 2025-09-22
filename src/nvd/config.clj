@@ -33,28 +33,30 @@
    (org.owasp.dependencycheck.utils Downloader Settings Settings$KEYS)))
 
 (def ^:private string-mappings
-  {Settings$KEYS/ANALYZER_NEXUS_URL        [:analyzer :nexus-url]
-   Settings$KEYS/SUPPRESSION_FILE          [:suppression-file]
-   Settings$KEYS/ADDITIONAL_ZIP_EXTENSIONS [:zip-extensions]
-   Settings$KEYS/PROXY_SERVER              [:proxy :server]
-   Settings$KEYS/PROXY_PORT                [:proxy :port]
-   Settings$KEYS/PROXY_USERNAME            [:proxy :user]
-   Settings$KEYS/PROXY_PASSWORD            [:proxy :password]
-   Settings$KEYS/CONNECTION_TIMEOUT        [:database :connection-timeout]
-   Settings$KEYS/DATA_DIRECTORY            [:data-directory]
-   Settings$KEYS/DB_DRIVER_NAME            [:database :driver-name]
-   Settings$KEYS/DB_DRIVER_PATH            [:database :driver-path]
-   Settings$KEYS/DB_CONNECTION_STRING      [:database :connection-string]
-   Settings$KEYS/DB_USER                   [:database :user]
-   Settings$KEYS/DB_PASSWORD               [:database :password]
-   Settings$KEYS/NVD_API_KEY               [:nvd-api :key]
-   Settings$KEYS/NVD_API_ENDPOINT          [:nvd-api :endpoint]
-   Settings$KEYS/NVD_API_DELAY             [:nvd-api :delay]
-   Settings$KEYS/NVD_API_MAX_RETRY_COUNT   [:nvd-api :max-retry-count]
-   Settings$KEYS/NVD_API_VALID_FOR_HOURS   [:nvd-api :valid-for-hours]
-   Settings$KEYS/NVD_API_DATAFEED_URL      [:nvd-api :datafeed :url]
-   Settings$KEYS/NVD_API_DATAFEED_USER     [:nvd-api :datafeed :user]
-   Settings$KEYS/NVD_API_DATAFEED_PASSWORD [:nvd-api :datafeed :password]})
+  {Settings$KEYS/ANALYZER_NEXUS_URL         [:analyzer :nexus-url]
+   Settings$KEYS/SUPPRESSION_FILE           [:suppression-file]
+   Settings$KEYS/ADDITIONAL_ZIP_EXTENSIONS  [:zip-extensions]
+   Settings$KEYS/PROXY_SERVER               [:proxy :server]
+   Settings$KEYS/PROXY_PORT                 [:proxy :port]
+   Settings$KEYS/PROXY_USERNAME             [:proxy :user]
+   Settings$KEYS/PROXY_PASSWORD             [:proxy :password]
+   Settings$KEYS/CONNECTION_TIMEOUT         [:database :connection-timeout]
+   Settings$KEYS/DATA_DIRECTORY             [:data-directory]
+   Settings$KEYS/DB_DRIVER_NAME             [:database :driver-name]
+   Settings$KEYS/DB_DRIVER_PATH             [:database :driver-path]
+   Settings$KEYS/DB_CONNECTION_STRING       [:database :connection-string]
+   Settings$KEYS/DB_USER                    [:database :user]
+   Settings$KEYS/DB_PASSWORD                [:database :password]
+   Settings$KEYS/NVD_API_KEY                [:nvd-api :key]
+   Settings$KEYS/NVD_API_ENDPOINT           [:nvd-api :endpoint]
+   Settings$KEYS/NVD_API_DELAY              [:nvd-api :delay]
+   Settings$KEYS/NVD_API_MAX_RETRY_COUNT    [:nvd-api :max-retry-count]
+   Settings$KEYS/NVD_API_VALID_FOR_HOURS    [:nvd-api :valid-for-hours]
+   Settings$KEYS/NVD_API_DATAFEED_URL       [:nvd-api :datafeed :url]
+   Settings$KEYS/NVD_API_DATAFEED_USER      [:nvd-api :datafeed :user]
+   Settings$KEYS/NVD_API_DATAFEED_PASSWORD  [:nvd-api :datafeed :password]
+   Settings$KEYS/ANALYZER_OSSINDEX_USER     [:analyzer :ossindex-user]
+   Settings$KEYS/ANALYZER_OSSINDEX_PASSWORD [:analyzer :ossindex-password]})
 
 (def ^:private boolean-mappings
   {Settings$KEYS/ANALYZER_ARCHIVE_ENABLED                     [:analyzer :archive-enabled]
@@ -208,6 +210,14 @@ You can pass an empty string for an .edn file to be automatically created."
           (throw (ex-info "No NVD API key supplied as config settings or env var." {})))
 
         (.setString settings Settings$KEYS/NVD_API_KEY api-key)))
+
+    (when (= ::not-found (get-in nvd-settings [:analyzer :ossindex-user] ::not-found))
+      (when-some [ossindex-user (System/getenv "ANALYZER_OSSINDEX_USER")]
+        (.setString settings Settings$KEYS/ANALYZER_OSSINDEX_USER ossindex-user)))
+
+    (when (= ::not-found (get-in nvd-settings [:analyzer :ossindex-password] ::not-found))
+      (when-some [ossindex-password (System/getenv "ANALYZER_OSSINDEX_PASSWORD")]
+        (.setString settings Settings$KEYS/ANALYZER_OSSINDEX_PASSWORD ossindex-password)))
 
     (.configure (Downloader/getInstance) settings)
 

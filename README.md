@@ -199,6 +199,8 @@ There are some specific settings below which are worthy of a few comments:
 * `:output-dir` default value `target/nvd/`: the directory to save reports into
 * `:throw-if-check-unsuccessful` - makes the program exit by throwing an exception instead of by invoking `System/exit`.
   - This can ease certain usages.
+* `:ossindex-user` & `:ossindex-password` (within the `:analyzer` map): These are **MANDATORY** if you want to use the OSS Index analyzer. Without
+  them set, the OSS Index analyzer will be disabled (see https://ossindex.sonatype.org/doc/auth-required) Note that you can alternatively set the `ANALYZER_OSSINDEX_USER` and `ANALYZER_OSSINDEX_PASSWORD` environment variables.
 
 ## Logging
 
