@@ -3,15 +3,20 @@
   :url "https://github.com/rm-hull/nvd-clojure"
   :license {:name "The MIT License (MIT)"
             :url "https://opensource.org/licenses/MIT"}
-  :dependencies [[org.clojure/clojure "1.12.1"]
-                 [clansi "1.0.0"]
+  :dependencies [[clansi "1.0.0"]
+
                  ;; dependency-check-core transitively brings in two versions of
-                 ;; this dependency, so we explicitly depend on the latest
+                 ;; these dependencies, so we explicitly depend on the latest
                  [com.google.errorprone/error_prone_annotations "2.38.0"]
+                 [commons-logging/commons-logging "1.3.5"]
+
+                 [org.clojure/clojure "1.12.1"]
                  [org.clojure/data.json "2.5.1"]
                  [org.slf4j/slf4j-simple "2.0.17"]
-                 [org.owasp/dependency-check-core "12.1.3"]
+                 [org.owasp/dependency-check-core "12.1.6" :exclusions [commons-logging]]
+
                  [rm-hull/table "0.7.1"]
+
                  [trptcolin/versioneer "0.2.0"]]
   :managed-dependencies [[com.google.code.gson/gson "2.13.1"]]
   :scm {:url "git@github.com:rm-hull/nvd-clojure.git"}
