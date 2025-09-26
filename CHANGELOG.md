@@ -1,3 +1,8 @@
+# Changes from 5.1.0 to 5.2.0
+
+* Update `dependency-check-core` from 12.1.3 to [12.1.6](https://github.com/dependency-check/DependencyCheck/blob/main/CHANGELOG.md#version-1216-2025-09-24).
+* Support [setting user & password for OSS Index analyzer](https://github.com/rm-hull/nvd-clojure/tree/v5.2.0#configuration-options), as OSS Index [now requires authentication](https://ossindex.sonatype.org/doc/auth-required) 
+
 # Changes from 5.0.0 to 5.1.0
 
 * Update `dependency-check-core` from 12.1.0 to [12.1.3](https://github.com/dependency-check/DependencyCheck/blob/main/CHANGELOG.md#version-1213-2025-06-10).
