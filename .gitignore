@@ -12,8 +12,8 @@
 .portal/vs-code.edn
 /checkouts/
 /classes/
-/example-lein-output
-/example/example-lein-output
+/test-output
+/example/test-output
 /example/target/
 /lib/
 /plugin/target/

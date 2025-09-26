@@ -32,197 +32,204 @@ if ! clojure -Ttools install nvd-clojure/nvd-clojure '{:mvn/version "RELEASE"}' 
   exit 1
 fi
 
-# 1.- Exercise `main` program (EDN)
+# 1.- Exercise check via lein
 
 cd "$PROJECT_DIR/example" || exit 1
 
-example_classpath="$(lein with-profile -user,-dev,-test classpath)"
+lein_example_classpath="$(lein with-profile -user,-dev,-test classpath)"
 
 # cd to the root dir, so that one runs `defproject nvd-clojure` which is the most clean and realistic way to run `main`:
 cd "$PROJECT_DIR" || exit 1
 
-if lein with-profile -user,-dev,+ci run -m nvd.task.check "$CONFIG_FILE" "$example_classpath" > example-lein-output; then
-  echo "Should have failed with non-zero code!"
+# 1.1 - lein w/EDN config
+step_name=">>> [Step 1.1 - lein & EDN]"
+
+echo "$step_name starting..."
+
+if lein with-profile -user,-dev,+ci run -m nvd.task.check "$CONFIG_FILE" "$lein_example_classpath" > test-output; then
+  echo "$step_name Should have failed with non-zero code!"
   exit 1
 fi
 
-if ! grep --silent "$SUCCESS_REGEX" example-lein-output; then
-  echo "Should have found vulnerabilities! (Step 1 - EDN)"
+if ! grep --silent "$SUCCESS_REGEX" test-output; then
+  echo "$step_name Should have found vulnerabilities!"
   exit 1
 fi
 
-if grep --silent "$A_CUSTOM_CHANGE" example-lein-output; then
-  echo "$CONFIG_FILE and $CONFIG_FILE_USING_DEFAULT_FILENAME should have different contents!"
+if grep --silent "$A_CUSTOM_CHANGE" test-output; then
+  echo "$step_name $CONFIG_FILE and $CONFIG_FILE_USING_DEFAULT_FILENAME should have different contents!"
   exit 1
 fi
 
 if grep --silent "$A_CUSTOM_CHANGE" "$CONFIG_FILE"; then
-  echo "$CONFIG_FILE and $CONFIG_FILE_USING_DEFAULT_FILENAME should have different contents!"
+  echo "$step_name $CONFIG_FILE and $CONFIG_FILE_USING_DEFAULT_FILENAME should have different contents!"
   exit 1
 fi
 
-# 1.- Exercise `main` program (EDN; implicitly using the default filename by specifying the empty string)
+# 1.2 - Exercise `main` program (EDN; implicitly using the default filename by specifying the empty string)
 
-cd "$PROJECT_DIR/example" || exit 1
+step_name=">>> [Step 1.2 lein & EDN - default filename]"
 
-example_classpath="$(lein with-profile -user,-dev,-test classpath)"
+echo "$step_name starting..."
 
-# cd to the root dir, so that one runs `defproject nvd-clojure` which is the most clean and realistic way to run `main`:
-cd "$PROJECT_DIR" || exit 1
-
-if lein with-profile -user,-dev,+ci run -m nvd.task.check "" "$example_classpath" > example-lein-output 2>&1; then
-  echo "Should have failed with non-zero code!"
+if lein with-profile -user,-dev,+ci run -m nvd.task.check "" "$lein_example_classpath" > test-output 2>&1; then
+  echo "$step_name Should have failed with non-zero code!"
   exit 1
 fi
 
-if ! grep --silent "$SUCCESS_REGEX" example-lein-output; then
-  echo "Should have found vulnerabilities! (Step 1 - EDN - default filename)"
+if ! grep --silent "$SUCCESS_REGEX" test-output; then
+  echo "$step_name Should have found vulnerabilities!"
   exit 1
 fi
 
-if ! grep --silent "$A_CUSTOM_CHANGE" example-lein-output; then
-  echo "Passing an empty string as the config name should result in the config having the default filename being used!"
+if ! grep --silent "$A_CUSTOM_CHANGE" test-output; then
+  echo "$step_name Passing an empty string as the config name should result in the config having the default filename being used!"
   exit 1
 fi
 
 if ! grep --silent "$A_CUSTOM_CHANGE" "$CONFIG_FILE_USING_DEFAULT_FILENAME"; then
-  echo "Passing an empty string as the config name should not result in the config file being overriden!"
+  echo "$step_name Passing an empty string as the config name should not result in the config file being overriden!"
   exit 1
 fi
 
-# 1.- Exercise `main` program (EDN) with a datafeed
+# 1.3 - Exercise `main` program (EDN) with a datafeed
+step_name=">>> [Step 1.3 lein & EDN - w/datafeed]"
 
-cd "$PROJECT_DIR/example" || exit 1
+echo "$step_name starting..."
 
-example_classpath="$(lein with-profile -user,-dev,-test classpath)"
+if lein with-profile -user,-dev,+ci run -m nvd.task.check "$DATAFEED_CONFIG_FILE" "$lein_example_classpath" > test-output; then
+  echo "$step_name Should have failed with non-zero code!"
+  exit 1
+fi
+
+if ! grep --silent "$SUCCESS_REGEX" test-output; then
+  echo "$step_name Should have found vulnerabilities!"
+  exit 1
+fi
+
+# 1.4 - Exercise `main` program (JSON)
+
+step_name=">>> [Step 1.4 lein & JSON]"
+
+echo "$step_name starting..."
+
+if lein with-profile -user,-dev,+ci run -m nvd.task.check "$JSON_CONFIG_FILE" "$lein_example_classpath" > test-output; then
+  echo "$step_name Should have failed with non-zero code!"
+  exit 1
+fi
+
+if ! grep --silent "$SUCCESS_REGEX" test-output; then
+  echo "$step_name Should have found vulnerabilities!"
+  exit 1
+fi
 
 # cd to the root dir, so that one runs `defproject nvd-clojure` which is the most clean and realistic way to run `main`:
 cd "$PROJECT_DIR" || exit 1
 
-if lein with-profile -user,-dev,+ci run -m nvd.task.check "$DATAFEED_CONFIG_FILE" "$example_classpath" > example-lein-output; then
-  echo "Should have failed with non-zero code!"
-  exit 1
-fi
-
-if ! grep --silent "$SUCCESS_REGEX" example-lein-output; then
-  echo "Should have found vulnerabilities! (Step 1 - EDN)"
-  exit 1
-fi
-
-# 1.- Exercise `main` program (JSON)
+# 2.- Exercise `tools.deps` integration
 
 cd "$PROJECT_DIR/example" || exit 1
 
-example_classpath="$(lein with-profile -user,-dev,-test classpath)"
+clojure_example_classpath="$(clojure -Spath)"
 
 # cd to the root dir, so that one runs `defproject nvd-clojure` which is the most clean and realistic way to run `main`:
 cd "$PROJECT_DIR" || exit 1
 
-if lein with-profile -user,-dev,+ci run -m nvd.task.check "$JSON_CONFIG_FILE" "$example_classpath" > example-lein-output; then
-  echo "Should have failed with non-zero code!"
+# 2.1 Exercise `tools.deps` integration (EDN)
+step_name=">>> [Step 2.1 deps & EDN]"
+
+echo "$step_name starting..."
+
+if clojure -J-Dclojure.main.report=stderr -M -m nvd.task.check "$CONFIG_FILE" "$clojure_example_classpath" > test-output; then
+  echo "$step_name Should have failed with non-zero code!"
   exit 1
 fi
 
-if ! grep --silent "$SUCCESS_REGEX" example-lein-output; then
-  echo "Should have found vulnerabilities! (Step 1 - JSON)"
+if ! grep --silent "$SUCCESS_REGEX" test-output; then
+  echo "$step_name Should have found vulnerabilities!"
   exit 1
 fi
 
-# 2.- Exercise `tools.deps` integration (EDN)
+# 2.2 - Exercise `tools.deps` integration (JSON)
+step_name=">>> [Step 2.2 deps & JSON]"
+
+echo "$step_name starting..."
+
+if clojure -J-Dclojure.main.report=stderr -M -m nvd.task.check "$JSON_CONFIG_FILE" "$clojure_example_classpath" > test-output; then
+  echo "$step_name Should have failed with non-zero code!"
+  exit 1
+fi
+
+if ! grep --silent "$SUCCESS_REGEX" test-output; then
+  echo "$step_name Should have found vulnerabilities!"
+  exit 1
+fi
+
+# 3. - Exercise Clojure CLI Tools integration
 
 cd "$PROJECT_DIR/example" || exit 1
 
-example_classpath="$(clojure -Spath)"
-
-# cd to the root dir, so that one runs `defproject nvd-clojure` which is the most clean and realistic way to run `main`:
-cd "$PROJECT_DIR" || exit 1
-
-if clojure -J-Dclojure.main.report=stderr -M -m nvd.task.check "$CONFIG_FILE" "$example_classpath" > example-lein-output; then
-  echo "Should have failed with non-zero code!"
-  exit 1
-fi
-
-if ! grep --silent "$SUCCESS_REGEX" example-lein-output; then
-  echo "Should have found vulnerabilities! (Step 2 - EDN)"
-  exit 1
-fi
-
-# 2.- Exercise `tools.deps` integration (JSON)
-
-cd "$PROJECT_DIR/example" || exit 1
-
-example_classpath="$(clojure -Spath)"
-
-# cd to the root dir, so that one runs `defproject nvd-clojure` which is the most clean and realistic way to run `main`:
-cd "$PROJECT_DIR" || exit 1
-
-if clojure -J-Dclojure.main.report=stderr -M -m nvd.task.check "$JSON_CONFIG_FILE" "$example_classpath" > example-lein-output; then
-  echo "Should have failed with non-zero code!"
-  exit 1
-fi
-
-if ! grep --silent "$SUCCESS_REGEX" example-lein-output; then
-  echo "Should have found vulnerabilities! (Step 2 - JSON)"
-  exit 1
-fi
-
-# 3.- Exercise Clojure CLI Tools integration (EDN)
-
-cd "$PROJECT_DIR/example" || exit 1
-
-example_classpath="$(clojure -Spath)"
+clojure_example_classpath="$(clojure -Spath)"
 
 # cd to $HOME, to demonstrate that the Tool does not depend on a deps.edn file:
 cd || exit 1
 
-if clojure -J-Dclojure.main.report=stderr -Tnvd nvd.task/check :classpath \""$example_classpath\"" :config-filename \""$TOOLS_CONFIG_FILE\"" > example-lein-output; then
-  echo "Should have failed with non-zero code!"
+# 3.1 - Exercise Clojure CLI Tools integration (EDN)
+step_name=">>> [Step 3.1 clojure tool & EDN]"
+
+echo "$step_name starting..."
+
+if clojure -J-Dclojure.main.report=stderr -Tnvd nvd.task/check :classpath \""$clojure_example_classpath\"" :config-filename \""$TOOLS_CONFIG_FILE\"" > test-output; then
+  echo "$step_name Should have failed with non-zero code!"
   exit 1
 fi
 
-if ! grep --silent "$SUCCESS_REGEX" example-lein-output; then
-  echo "Should have found vulnerabilities! (Step 3 - EDN)"
+if ! grep --silent "$SUCCESS_REGEX" test-output; then
+  echo "$step_name Should have found vulnerabilities!"
   exit 1
 fi
 
-# 3.- Exercise Clojure CLI Tools integration (JSON)
+# 3.2 - Exercise Clojure CLI Tools integration (JSON)
 
-cd "$PROJECT_DIR/example" || exit 1
+step_name=">>> [Step 3.2 clojure tool & JSON]"
 
-example_classpath="$(clojure -Spath)"
+echo "$step_name starting..."
 
-# cd to $HOME, to demonstrate that the Tool does not depend on a deps.edn file:
-cd || exit 1
-
-if clojure -J-Dclojure.main.report=stderr -Tnvd nvd.task/check :classpath \""$example_classpath\"" :config-filename \""$JSON_TOOLS_CONFIG_FILE\"" > example-lein-output; then
-  echo "Should have failed with non-zero code!"
+if clojure -J-Dclojure.main.report=stderr -Tnvd nvd.task/check :classpath \""$clojure_example_classpath\"" :config-filename \""$JSON_TOOLS_CONFIG_FILE\"" > test-output; then
+  echo "$step_name Should have failed with non-zero code!"
   exit 1
 fi
 
-if ! grep --silent "$SUCCESS_REGEX" example-lein-output; then
-  echo "Should have found vulnerabilities! (Step 3 - JSON)"
+if ! grep --silent "$SUCCESS_REGEX" test-output; then
+  echo "$step_name Should have found vulnerabilities!"
   exit 1
 fi
 
-# 4.- Dogfood the `nvd-clojure` project (EDN)
+# 4.- Dogfood the `nvd-clojure` project
 
 cd "$PROJECT_DIR" || exit 1
 
 own_classpath="$(lein with-profile -user,-dev,-test classpath)"
+
+# 4.1 - Dogfood the `nvd-clojure` project (EDN)
+#
+step_name=">>> [Step 4.1 lein dogfooding & EDN]"
+
+echo "$step_name starting..."
 
 if ! lein with-profile -user,-dev,+ci,+skip-self-check run -m nvd.task.check "$DOGFOODING_CONFIG_FILE" "$own_classpath"; then
-  echo "nvd-clojure did not pass dogfooding! (EDN)"
+  echo "$step_name nvd-clojure did not pass dogfooding! (EDN)"
   exit 1
 fi
 
-# 4.- Dogfood the `nvd-clojure` project (JSON)
+# 4.2. - Dogfood the `nvd-clojure` project (JSON)
 
-cd "$PROJECT_DIR" || exit 1
+step_name=">>> [Step 4.2 lein dogfooding & JSON]"
 
-own_classpath="$(lein with-profile -user,-dev,-test classpath)"
+echo "$step_name starting..."
 
 if ! lein with-profile -user,-dev,+ci,+skip-self-check run -m nvd.task.check "$JSON_DOGFOODING_CONFIG_FILE" "$own_classpath"; then
-  echo "nvd-clojure did not pass dogfooding! (JSON)"
+  echo "$step_name nvd-clojure did not pass dogfooding! (JSON)"
   exit 1
 fi
 
