@@ -37,11 +37,31 @@
   (delay {:nvd-clojure (get-version "nvd-clojure" "nvd-clojure")
           :dependency-check (.getImplementationVersion (.getPackage Engine))}))
 
+(def classpath-separator-re
+  (re-pattern (str File/pathSeparatorChar)))
+
 (defn absolute-path ^String [file]
   (s/replace-first file #"^~" (System/getProperty "user.home")))
 
+(defn parse-classpath
+  "Accepts a classpath string (i.e. colon-separated paths) and returns a sequence of analyzable
+  absolute paths.
+
+  In particular, source paths such as `src`, while part of the classpath, won't be meaningfully
+  analyzed by dependency-check-core. We only care about regular files (e.g. *.jar or
+  package-lock.json). Thus, skip directories in general as well as non-existing files."
+  [classpath-string]
+  (into []
+        (comp (remove (fn [^String s]
+                        (let [file (io/file s)]
+                          (or (.isDirectory file)
+                              (not (.exists file))))))
+              (map absolute-path))
+        (s/split classpath-string classpath-separator-re)))
+
 (defn- scan-and-analyze [project]
   (let [^Engine engine (:engine project)]
+    ;; See `parse-classpath` for details on which classpath entries are considered here.
     (doseq [p (:classpath project)]
       (.scan engine ^String p))
     (try
@@ -90,24 +110,12 @@
         fail-build?
         conditional-exit)))
 
-(def classpath-separator-re
-  (re-pattern (str File/pathSeparatorChar)))
-
 (defn -main [& [config-filename ^String classpath-string]]
   (when (s/blank? classpath-string)
     (throw (ex-info "nvd-clojure requires a classpath value to be explicitly passed as a CLI argument.
 Older usages are deprecated." {})))
 
-  (let [classpath (s/split classpath-string classpath-separator-re)
-        classpath (into []
-                        (remove (fn [^String s]
-                                  ;; Source paths such as `src`, while part of the classpath, won't
-                                  ;; be meaningfully analyzed by dependency-check-core. Thus, skip
-                                  ;; directories in general as well as non-existing files.
-                                  (let [file (io/file s)]
-                                    (or (.isDirectory file)
-                                        (not (.exists file))))))
-                        classpath)]
+  (let [classpath (parse-classpath classpath-string)]
 
     (when-not (System/getProperty "nvd-clojure.internal.skip-self-check")
       (when-let [bad-entry (->> classpath
