@@ -37,17 +37,13 @@
   (delay {:nvd-clojure (get-version "nvd-clojure" "nvd-clojure")
           :dependency-check (.getImplementationVersion (.getPackage Engine))}))
 
-(defn jar? [^String filename]
-  (.endsWith filename ".jar"))
-
 (defn absolute-path ^String [file]
   (s/replace-first file #"^~" (System/getProperty "user.home")))
 
 (defn- scan-and-analyze [project]
   (let [^Engine engine (:engine project)]
     (doseq [p (:classpath project)]
-      (when (jar? p)
-        (.scan engine (absolute-path p))))
+      (.scan engine ^String p))
     (try
       (.analyzeDependencies engine)
       (catch ExceptionCollection e
@@ -105,10 +101,9 @@ Older usages are deprecated." {})))
   (let [classpath (s/split classpath-string classpath-separator-re)
         classpath (into []
                         (remove (fn [^String s]
-                                  ;; Only .jar (and perhaps .zip) files are relevant.
-                                  ;; source paths such as `src`, while are part of the classpath,
-                                  ;; won't be meaningfully analyzed by dependency-check-core.
-                                  ;; Keeping only .jars facilitates various usage patterns.
+                                  ;; Source paths such as `src`, while part of the classpath, won't
+                                  ;; be meaningfully analyzed by dependency-check-core. Thus, skip
+                                  ;; directories in general as well as non-existing files.
                                   (let [file (io/file s)]
                                     (or (.isDirectory file)
                                         (not (.exists file))))))
