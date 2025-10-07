@@ -117,6 +117,12 @@ Older usages are deprecated." {})))
 
   (let [classpath (parse-classpath classpath-string)]
 
+    (when (empty? classpath)
+      (throw (ex-info "No entries in given classpath qualify for analysis.
+
+Note that only regular files (non-directories) are considered."
+                      {:classpath classpath-string})))
+
     (when-not (System/getProperty "nvd-clojure.internal.skip-self-check")
       (when-let [bad-entry (->> classpath
                                 (some (fn [^String entry]
@@ -129,19 +135,6 @@ Older usages are deprecated." {})))
 Please refer to the project's README for recommended usages."
                         {:bad-entry bad-entry
                          :classpath classpath-string}))))
-
-    ;; perform some sanity checks for ensuring the calculated classpath has the expected format:
-    (let [f (-> classpath ^String (first) File.)]
-      (when-not (.exists f)
-        (throw (ex-info (str "The classpath variable should be a vector of simple strings denoting existing files: "
-                             (pr-str f))
-                        {}))))
-
-    (let [f (-> classpath ^String (last) File.)]
-      (when-not (.exists f)
-        (throw (ex-info (str "The classpath variable should be a vector of simple strings denoting existing files: "
-                             (pr-str f))
-                        {}))))
 
     ;; specifically handle blank strings (in addition to nil)
     ;; so that CLI callers can skip the first argument by simply passing an empty string:
