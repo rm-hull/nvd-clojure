@@ -41,7 +41,7 @@
   (re-pattern (str File/pathSeparatorChar)))
 
 (defn absolute-path ^String [file]
-  (s/replace-first file #"^~" (System/getProperty "user.home")))
+  (s/replace-first file #"^~(?=$|/)" (System/getProperty "user.home")))
 
 (defn parse-classpath
   "Accepts a classpath string (i.e. colon-separated paths) and returns a sequence of analyzable
