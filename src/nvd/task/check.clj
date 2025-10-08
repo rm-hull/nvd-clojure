@@ -52,11 +52,11 @@
   package-lock.json). Thus, skip directories in general as well as non-existing files."
   [classpath-string]
   (into []
-        (comp (remove (fn [^String s]
+        (comp (map absolute-path)
+              (remove (fn [^String s]
                         (let [file (io/file s)]
                           (or (.isDirectory file)
-                              (not (.exists file))))))
-              (map absolute-path))
+                              (not (.exists file)))))))
         (s/split classpath-string classpath-separator-re)))
 
 (defn- scan-and-analyze [project]
