@@ -16,13 +16,14 @@ CONFIG_FILE_USING_DEFAULT_FILENAME="$PROJECT_DIR/nvd-clojure.edn"
 DOGFOODING_CONFIG_FILE="$PROJECT_DIR/.github/nvd-dogfooding-config.edn"
 TOOLS_CONFIG_FILE="$PROJECT_DIR/.github/nvd-tool-config.edn"
 DATAFEED_CONFIG_FILE="$PROJECT_DIR/.github/nvd-datafeed-config.edn"
+NODE_AUDIT_CONFIG_FILE="$PROJECT_DIR/.github/nvd-node-audit-config.edn"
 
 JSON_CONFIG_FILE="$PROJECT_DIR/.github/nvd-config.json"
 JSON_DOGFOODING_CONFIG_FILE="$PROJECT_DIR/.github/nvd-dogfooding-config.json"
 JSON_TOOLS_CONFIG_FILE="$PROJECT_DIR/.github/nvd-tool-config.json"
 
 A_CUSTOM_CHANGE=":a-custom-change"
-SUCCESS_REGEX="[1-9][0-9] vulnerabilities detected\. Severity: "
+SUCCESS_REGEX="[1-9][0-9]* vulnerabilities detected\. Severity: "
 
 if ! lein with-profile -user,-dev,+ci install; then
   exit 1
@@ -114,6 +115,22 @@ step_name=">>> [Step 1.4 lein & JSON]"
 echo "$step_name starting..."
 
 if lein with-profile -user,-dev,+ci run -m nvd.task.check "$JSON_CONFIG_FILE" "$lein_example_classpath" > test-output; then
+  echo "$step_name Should have failed with non-zero code!"
+  exit 1
+fi
+
+if ! grep --silent "$SUCCESS_REGEX" test-output; then
+  echo "$step_name Should have found vulnerabilities!"
+  exit 1
+fi
+
+# 1.5 - Exercise `main` program (non-default analyzer)
+
+step_name=">>> [Step 1.5 lein & non-default analyzer]"
+
+echo "$step_name starting..."
+
+if lein with-profile -user,-dev,+ci run -m nvd.task.check "$NODE_AUDIT_CONFIG_FILE" example/package-lock.json > test-output; then
   echo "$step_name Should have failed with non-zero code!"
   exit 1
 fi
