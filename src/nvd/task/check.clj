@@ -30,6 +30,7 @@
    [trptcolin.versioneer.core :refer [get-version]])
   (:import
    (java.io File)
+   (java.util.regex Pattern)
    (org.owasp.dependencycheck Engine)
    (org.owasp.dependencycheck.exception ExceptionCollection)))
 
@@ -38,7 +39,7 @@
           :dependency-check (.getImplementationVersion (.getPackage Engine))}))
 
 (def classpath-separator-re
-  (re-pattern (str File/pathSeparatorChar)))
+  (re-pattern (Pattern/quote File/pathSeparator)))
 
 (defn absolute-path ^String [file]
   (s/replace-first file #"^~(?=$|/)" (System/getProperty "user.home")))
