@@ -3,6 +3,6 @@
   "version": "1.4.17",
   "private": true,
   "dependencies": {
-    "tar-fs": "2.1.3"
+    "tar-fs": "2.1.4"
   }
 }
