@@ -1,3 +1,8 @@
+# Changes from 5.2.0 to 5.3.0
+
+* Update `dependency-check-core` from 12.1.6 to [12.2.0](https://github.com/dependency-check/DependencyCheck/blob/main/CHANGELOG.md#version-1220-2026-01-09).
+* [Support for scanning all artifacts on the classpath, not just jars](https://github.com/rm-hull/nvd-clojure/pull/195). This allows the [Node Audit Analyzer](https://dependency-check.github.io/DependencyCheck/analyzers/node-audit-analyzer.html) to be used to analyze `package-lock.json` files.
+
 # Changes from 5.1.0 to 5.2.0
 
 * Update `dependency-check-core` from 12.1.3 to [12.1.6](https://github.com/dependency-check/DependencyCheck/blob/main/CHANGELOG.md#version-1216-2025-09-24).
