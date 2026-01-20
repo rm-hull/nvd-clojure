@@ -7,13 +7,13 @@
 
                  ;; dependency-check-core transitively brings in two versions of
                  ;; these dependencies, so we explicitly depend on the latest
-                 [com.google.errorprone/error_prone_annotations "2.42.0"]
+                 [com.google.errorprone/error_prone_annotations "2.46.0"]
                  [commons-logging/commons-logging "1.3.5"]
 
                  [org.clojure/clojure "1.12.3"]
-                 [org.clojure/data.json "2.5.1"]
+                 [org.clojure/data.json "2.5.2"]
                  [org.slf4j/slf4j-simple "2.0.17"]
-                 [org.owasp/dependency-check-core "12.1.6" :exclusions [commons-logging]]
+                 [org.owasp/dependency-check-core "12.2.0" :exclusions [commons-logging]]
 
                  [rm-hull/table "0.7.1"]
 
@@ -36,10 +36,10 @@
                              [lein-codox "0.10.7"]]
                    :eastwood {:add-linters [:boxed-math
                                             :performance]}
-                   :dependencies [[clj-kondo "2025.09.22"]
+                   :dependencies [[clj-kondo "2026.01.19"]
                                   [commons-collections "20040616"]]}
              :ci {:pedantic? :abort}
-             :clj-kondo {:dependencies [[clj-kondo "2025.09.22"]]}
+             :clj-kondo {:dependencies [[clj-kondo "2026.01.19"]]}
              :skip-self-check {:jvm-opts ["-Dnvd-clojure.internal.skip-self-check=true"]}}
   :deploy-repositories [["clojars" {:url "https://clojars.org/repo"
                                     :username :env/clojars_username
