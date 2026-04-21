@@ -8,7 +8,7 @@
 [National Vulnerability Database](https://nvd.nist.gov/) dependency checker tool.
 
 For a given project, all the .jar files from its classpath
-will be checked for known security vulnerabilities. `nvd-clojure` passes them to a library called [DependencyCheck](https://github.com/jeremylong/DependencyCheck) which does the vulnerability analysis. Quoting the README from that library:
+will be checked for known security vulnerabilities. `nvd-clojure` passes them to a library called [DependencyCheck](https://github.com/dependency-check/DependencyCheck) which does the vulnerability analysis. Quoting the README from that library:
 
 > DependencyCheck is a utility that attempts to detect publicly disclosed
 > vulnerabilities contained within project dependencies. It does this by
@@ -191,7 +191,7 @@ There are some specific settings below which are worthy of a few comments:
   - It shouldn't normally be necessary to change this
 * `:suppression-file` default unset
   - Allows for CVEs to be permanently or temporarily suppressed.
-  - See [DependencyCheck documentation](https://jeremylong.github.io/DependencyCheck/general/suppression.html) for the XML file format.
+  - See [DependencyCheck documentation](https://dependency-check.github.io/DependencyCheck/general/suppression.html) for the XML file format.
   - If a nvd-clojure.edn file was automatically generated for you, then this file will also be automatically generated (and enabled) for you.
 * `:verbose-summary` default false
   - When set to true, the summary table includes a severity determination for all dependencies.
@@ -218,14 +218,14 @@ clojure -J-Dclojure.main.report=stderr -J-Dorg.slf4j.simpleLogger.log.org.apache
 
 ## Attribution
 
-`nvd-clojure` uses Jeremy Long's [DependencyCheck](https://github.com/jeremylong/DependencyCheck)
+`nvd-clojure` uses Jeremy Long's [DependencyCheck](https://github.com/dependency-check/DependencyCheck)
 library to do the heavy lifting.
 
 ## References
 
 * https://nvd.nist.gov/
 * https://www.owasp.org/index.php/OWASP_Dependency_Check
-* https://github.com/jeremylong/DependencyCheck
+* https://github.com/dependency-check/DependencyCheck
 * https://github.com/liquidz/antq
 
 ## License
