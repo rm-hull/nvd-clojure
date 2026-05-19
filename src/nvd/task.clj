@@ -23,9 +23,15 @@
 (ns nvd.task
   "Clojure CLI tool entry points: `check`."
   (:require
-   [nvd.task.check :refer [-main]]))
+   [nvd.task.check :as check]
+   [nvd.task.prepopulate-db :as prepopulate-db]))
 
 (defn check
   "Arguments: `:config-filename` (optional), `:classpath` (required)."
   [{:keys [config-filename classpath]}]
-  (-main (or config-filename "") classpath))
+  (check/-main (or config-filename "") classpath))
+
+(defn prepopulate-db
+  "Arguments: `:config-filename` (optional)."
+  [{:keys [config-filename]}]
+  (prepopulate-db/-main (or config-filename "")))
